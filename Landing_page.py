@@ -39,15 +39,23 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Main banner
-# Logo + Header (updated)
+# Logo + Header 
 st.markdown("""
     <div style='text-align: center;'>
         <svg width="120" height="120" viewBox="0 0 100 100" style="margin-bottom: -20px;">
+            <!-- Outer Gear (Blue) -->
             <circle cx="50" cy="50" r="40" fill="none" stroke="#0d47a1" stroke-width="6"/>
+            <!-- Gear Teeth (Red) -->
             <path d="M50,10 L50,30 M70,50 L90,50 M50,70 L50,90 M30,50 L10,50" 
-                  stroke="#90caf9" stroke-width="4" stroke-linecap="round"/>
-            <rect x="35" y="35" width="30" height="30" fill="none" stroke="#0d47a1" stroke-width="3"/>
+                  stroke="#e53935" stroke-width="4" stroke-linecap="round"/>
+            <!-- Bridge (Green) -->
+            <path d="M20,60 L35,45 L50,60 L65,45 L80,60" 
+                  stroke="#43a047" stroke-width="3" fill="none"/>
+            <path d="M35,45 L35,30 L65,30 L65,45" 
+                  stroke="#43a047" stroke-width="3" fill="none"/>
+            <!-- Support Pillars (Blue) -->
+            <line x1="35" y1="60" x2="35" y2="75" stroke="#0d47a1" stroke-width="2"/>
+            <line x1="65" y1="60" x2="65" y2="75" stroke="#0d47a1" stroke-width="2"/>
         </svg>
         <h1 style='color: #0d47a1; margin-top: 0;'>Automation_Hub</h1>
         <h3 style='color: #1565c0;'>Smart, practical tools for Geotechnical and Materials Engineers</h3>
