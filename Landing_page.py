@@ -40,10 +40,19 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Main banner
+# Logo + Header (updated)
 st.markdown("""
-    <h1 style='text-align: center;'>🛠️ Automation_Hub</h1>
-    <h3 style='text-align: center;'>Smart, practical tools for Geotechnical and Materials Engineers</h3>
-    <p style='text-align: center; font-style: italic;'>Built for engineers. Powered by code.</p>
+    <div style='text-align: center;'>
+        <svg width="120" height="120" viewBox="0 0 100 100" style="margin-bottom: -20px;">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#0d47a1" stroke-width="6"/>
+            <path d="M50,10 L50,30 M70,50 L90,50 M50,70 L50,90 M30,50 L10,50" 
+                  stroke="#90caf9" stroke-width="4" stroke-linecap="round"/>
+            <rect x="35" y="35" width="30" height="30" fill="none" stroke="#0d47a1" stroke-width="3"/>
+        </svg>
+        <h1 style='color: #0d47a1; margin-top: 0;'>Automation_Hub</h1>
+        <h3 style='color: #1565c0;'>Smart, practical tools for Geotechnical and Materials Engineers</h3>
+        <p style='font-style: italic;'>Built for engineers. Powered by code.</p>
+    </div>
     <hr style='border:1px solid #90caf9'/>
 """, unsafe_allow_html=True)
 
@@ -98,7 +107,7 @@ Let’s build tools that make real impact in the field.
 st.markdown("""
 ---
 <p style='text-align: center; font-size: 0.9em; color: #78909c;'>
-    © 2025 Automation_Hub | Built by Bernard Wiafe-Akenteng  
+    © 2025 Automation_Hub | Built by Automation_Hub  
     | <a href='https://github.com/IngBeno28'>GitHub</a>
     | MIT Licensed<br>
     <em>Built for engineers. Powered by code.</em>
