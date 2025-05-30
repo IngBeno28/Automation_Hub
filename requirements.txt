@@ -5,3 +5,4 @@ paystackapi==1.0.0
 python-dotenv==1.0.1
 matplotlib==3.8.2
 pandas==2.1.4
+fpdf2[fonts]==2.7.7
