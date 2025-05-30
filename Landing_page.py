@@ -1,5 +1,21 @@
 import streamlit as st
 from PIL import Image
+from fpdf import FPDF
+from datetime import datetime
+import base64
+import paystackapi
+from paystackapi.transaction import Transaction
+import time
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Paystack configuration
+PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY")
+paystackapi.SECRET_KEY = PAYSTACK_SECRET_KEY
+PRO_PRICE = 5000  # 5000 Naira (~$5 equivalent)
 
 # Page config
 st.set_page_config(
@@ -36,8 +52,65 @@ st.markdown("""
         background-color: #0d47a1;
         color: #e3f2fd;
     }
+    .pro-feature {
+        border-left: 4px solid #43a047;
+        padding-left: 1rem;
+        margin: 1rem 0;
+    }
+    .pro-badge {
+        background-color: #43a047;
+        color: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8em;
+        font-weight: bold;
+        margin-left: 0.5rem;
+    }
     </style>
 """, unsafe_allow_html=True)
+
+# PDF Generation Class
+class ProfessionalPDF(FPDF):
+    def __init__(self):
+        super().__init__()
+        self.set_auto_page_break(auto=True, margin=15)
+        self.add_font('DejaVu', '', 'DejaVuSansCondensed.ttf', uni=True)
+        self.add_font('DejaVu', 'B', 'DejaVuSansCondensed-Bold.ttf', uni=True)
+        self.set_font('DejaVu', '', 10)
+        
+    def header(self):
+        self.image('logo.png', 10, 8, 33)
+        self.set_font('DejaVu', 'B', 16)
+        self.cell(0, 10, 'Professional Concrete Mix Design Report', 0, 1, 'C')
+        self.set_font('DejaVu', '', 10)
+        self.cell(0, 10, f'Generated on {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', 0, 1, 'C')
+        self.ln(10)
+        
+    def footer(self):
+        self.set_y(-15)
+        self.set_font('DejaVu', 'I', 8)
+        self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
+
+# Payment Functions
+def handle_payment(email, amount, callback_url=None):
+    try:
+        response = Transaction.initialize(
+            email=email,
+            amount=amount * 100,
+            callback_url=callback_url
+        )
+        return response
+    except Exception as e:
+        st.error(f"Payment initialization failed: {str(e)}")
+        return None
+
+def verify_payment(reference):
+    try:
+        response = Transaction.verify(reference)
+        return response
+    except Exception as e:
+        st.error(f"Payment verification failed: {str(e)}")
+        return None
 
 # Logo + Header 
 st.markdown("""
@@ -64,7 +137,91 @@ st.markdown("""
     <hr style='border:1px solid #90caf9'/>
 """, unsafe_allow_html=True)
 
-# AASHTO Tool Section
+# Demo PDF Generation (for illustration)
+def generate_sample_pdf():
+    pdf = ProfessionalPDF()
+    pdf.alias_nb_pages()
+    pdf.add_page()
+    pdf.set_font('DejaVu', 'B', 18)
+    pdf.cell(0, 10, 'Sample Professional Report', 0, 1, 'C')
+    pdf.ln(20)
+    pdf.set_font('DejaVu', '', 12)
+    pdf.multi_cell(0, 10, "This is a sample of the professional PDF report you'll receive with Pro access. The full version includes detailed mix designs, calculations, and professional formatting.")
+    return pdf.output(dest='S').encode('latin1')
+
+# Pro CTA Section - Enhanced with Payment
+st.subheader("🔐 Pro Access - Unlock Premium Features")
+st.markdown("""
+<div class="pro-feature">
+    <h4>Professional PDF Reports <span class="pro-badge">PRO</span></h4>
+    <p>Download beautifully formatted, ready-to-print reports with all calculations and specifications.</p>
+</div>
+
+<div class="pro-feature">
+    <h4>Advanced Calculations <span class="pro-badge">PRO</span></h4>
+    <p>Get additional calculation methods and optimization suggestions not available in the free version.</p>
+</div>
+
+<div class="pro-feature">
+    <h4>Team Licenses <span class="pro-badge">PRO</span></h4>
+    <p>Special pricing for labs, universities, and engineering teams.</p>
+</div>
+""", unsafe_allow_html=True)
+
+# Payment Flow
+if 'payment_verified' not in st.session_state:
+    st.session_state.payment_verified = False
+
+with st.expander("💰 Get Pro Access Now", expanded=False):
+    if not st.session_state.payment_verified:
+        with st.form("payment_form"):
+            email = st.text_input("📧 Your Email Address", help="We'll send your receipt and download link here")
+            if st.form_submit_button(f"🔓 Unlock Pro Features (₦{PRO_PRICE:,})"):
+                if not email:
+                    st.error("Please enter your email address")
+                else:
+                    response = handle_payment(
+                        email=email,
+                        amount=PRO_PRICE,
+                        callback_url="https://your-streamlit-app-url.com"  # Update with your URL
+                    )
+                    
+                    if response and response.get('status'):
+                        st.session_state.payment_reference = response['data']['reference']
+                        st.session_state.payment_email = email
+                        st.success(f"Payment initialized! Please complete payment at: {response['data']['authorization_url']}")
+                        st.markdown(f"[👉 Click here to complete payment]({response['data']['authorization_url']})")
+                        
+                        with st.spinner("Waiting for payment confirmation..."):
+                            for i in range(30):
+                                time.sleep(1)
+                                verification = verify_payment(st.session_state.payment_reference)
+                                if verification and verification['data']['status'] == 'success':
+                                    st.session_state.payment_verified = True
+                                    st.rerun()
+                                    break
+                            if not st.session_state.payment_verified:
+                                st.error("Payment not completed in time. Please try again.")
+    
+    if st.session_state.payment_verified:
+        st.success("✅ Payment verified! Thank you for your purchase.")
+        sample_pdf = generate_sample_pdf()
+        
+        st.download_button(
+            "⬇️ Download Sample Professional Report",
+            data=sample_pdf,
+            file_name="AutomationHub_Sample_Report.pdf",
+            mime="application/pdf"
+        )
+        
+        st.markdown("""
+        **Next Steps:**
+        1. You'll receive an email with your Pro access credentials
+        2. Your account will be upgraded within 24 hours
+        3. All tools will now show Pro features
+        """)
+
+# Tools Sections (unchanged)
 st.subheader("📊 AASHTO Soil Classification Tool")
 st.markdown("""
 The AASHTO Classification Tool helps engineers quickly classify natural gravel materials 
@@ -80,7 +237,6 @@ with col2:
 
 st.markdown("---")
 
-# Concrete Optimizer Section
 st.subheader("🧪 Concrete Mix Design Optimizer")
 st.markdown("""
 The Concrete Mix Design Optimizer automates your ACI 211.1 mix proportion calculations. 
@@ -96,21 +252,6 @@ with col4:
 
 st.markdown("---")
 
-# Pro CTA
-st.subheader("🔐 Want Pro Access?")
-st.markdown("""
-Pro versions include:
-- Downloadable PDF reports
-- Offline/mobile versions
-- Extra customization for teams or labs
-
-**Interested?**
-📩 Email: [wiafe1713@gmail.com](mailto:wiafe1713@gmail.com)  
-🔗 LinkedIn: [Bernard Wiafe-Akenteng, P.E.](https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-93005124b/)
-
-Let’s build tools that make real impact in the field.
-""")
-
 # Footer
 st.markdown("""
 ---
@@ -121,4 +262,3 @@ st.markdown("""
     <em>Built for engineers. Powered by code.</em>
 </p>
 """, unsafe_allow_html=True)
-
