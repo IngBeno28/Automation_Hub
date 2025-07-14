@@ -80,7 +80,7 @@ def show_pro_landing():
     \"\"\", unsafe_allow_html=True)
 """
 
-'''with open(streamlit_py_path, "w") as f:
+with open(streamlit_py_path, "w") as f:
     f.write(streamlit_function)
 
-streamlit_py_path'''
+streamlit_py_path
