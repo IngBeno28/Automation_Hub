@@ -48,8 +48,6 @@ def show_pro_landing():
     email = st.text_input("Enter your email to unlock Pro features (via Paystack):")
     if email:
         st.markdown(f"""
-        <script src="https://js.paystack.co/v1/inline.js"></script>
-       st.markdown(f"""
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <div id="paystack-button-container"></div>
 <script>
@@ -101,7 +99,7 @@ def show_pro_landing():
     <a href='/sample-report.pdf' target='_blank'>📄 View Sample PDF Report</a>
 
     <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
-      <h3>What You’ll Save</h3>
+      <h3>What You'll Save</h3>
       <ul>
         <li>⏱️ Hours of Excel formula headaches</li>
         <li>💸 Unnecessary cement & aggregate waste</li>
