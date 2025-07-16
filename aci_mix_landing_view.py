@@ -11,7 +11,7 @@ def show_pro_landing():
       <h2>Design accurate, standards-based concrete mix proportions in minutes — no spreadsheets, no confusion, no wasted materials.</h2>
     </div>
 
-    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba://cdn.example.com/0,0,0,0.1);'>
+    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
       <h3>🔍 Built by engineers. Powered by ACI.</h3>
       <ul>
         <li>📐 ACI 211-based mix design</li>
@@ -50,36 +50,44 @@ def show_pro_landing():
         st.session_state.pro_email = ""
 
     # Email input with validation
-    # Use key to make sure the widget's state is correctly managed by Streamlit
     email = st.text_input("Enter your email to unlock Pro features (via Paystack):",
                          placeholder="your.email@example.com",
                          key="pro_email_input",
-                         value=st.session_state.pro_email) # Set initial value from session state
+                         value=st.session_state.pro_email)
 
-    # Update session state when email input changes
-    st.session_state.pro_email = email
+    st.session_state.pro_email = email # Update session state when email input changes
 
-    if st.session_state.pro_email: # Use session state for logic
+    if st.session_state.pro_email: # Only show Paystack if email is provided
         if "@" in st.session_state.pro_email and "." in st.session_state.pro_email.split("@")[-1]:  # Basic email validation
-            # Only render the JS if it hasn't been rendered yet or if conditions change
-            # We'll use a unique key for the markdown to prevent re-execution conflicts
-            # Or, more robustly, ensure the container div is uniquely identified and reliably present
+            # Use a div to place the button. Give it a unique Streamlit key to ensure it's re-rendered correctly.
+            paystack_button_placeholder = st.empty() # Create a placeholder for the button HTML
+
+            # Construct the JavaScript dynamically
+            # Ensure email is properly escaped for JavaScript string
+            js_email = st.session_state.pro_email.replace("'", "\\'").replace('"', '\\"')
+            # Use a slightly different ref generation or ensure it's random enough
+            js_ref = f"ACI_{st.session_state.pro_email.replace('@', '_').replace('.', '_')}_{st.session_state.get('paystack_ref_counter', 0)}"
+            st.session_state.paystack_ref_counter = st.session_state.get('paystack_ref_counter', 0) + 1
+
+
             paystack_html = f"""
             <script src="https://js.paystack.co/v1/inline.js"></script>
             <div id="paystack-button-container" style="margin-top:1rem;"></div>
             <script>
               // Check if the button already exists to prevent re-appending on reruns
+              // We'll use a specific ID for the button itself: 'paystack-pay-button'
               if (!document.getElementById('paystack-pay-button')) {{
                   function payWithPaystack() {{
                       var handler = PaystackPop.setup({{
                           key: 'pk_live_2729231e26ba51d2cfa2735e68593252effe2957',
-                          email: '{st.session_state.pro_email}', // Use session state email
+                          email: '{js_email}', // Use the escaped email here
                           amount: 1000000,
                           currency: 'GHS',
-                          ref: 'ACI_' + Math.floor((Math.random() * 1000000000) + 1),
+                          ref: '{js_ref}', // Use the generated reference
                           callback: function(response) {{
+                              // This will be executed on the client-side
                               alert('Payment successful! Reference: ' + response.reference);
-                              // Redirect to pro version after payment
+                              // Redirect. Streamlit will re-run but the URL will change.
                               window.location.href = 'https://enhancedconcretemixdesign.streamlit.app/?access_key=' + response.reference;
                           }},
                           onClose: function() {{
@@ -92,7 +100,7 @@ def show_pro_landing():
                   // Create and style the button
                   var btn = document.createElement("button");
                   btn.innerHTML = "Pay GHS 100";
-                  btn.id = "paystack-pay-button"; // Add an ID to the button for checking its existence
+                  btn.id = "paystack-pay-button"; // Add a unique ID to the button
                   btn.style.padding = "12px 25px";
                   btn.style.backgroundColor = "#0aa83f";
                   btn.style.color = "white";
@@ -107,13 +115,14 @@ def show_pro_landing():
 
                   // Add the button to the container
                   var container = document.getElementById("paystack-button-container");
-                  if (container) {{ // Check if container exists before appending
+                  if (container) {{ // Ensure the container exists before appending
                       container.appendChild(btn);
                   }}
               }}
             </script>
             """
-            st.markdown(paystack_html, unsafe_allow_html=True)
+            # Use the placeholder to render the HTML
+            paystack_button_placeholder.markdown(paystack_html, unsafe_allow_html=True)
         else:
             st.warning("Please enter a valid email address")
 
