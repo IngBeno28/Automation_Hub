@@ -40,13 +40,13 @@ def show_pro_landing():
       <div style='display:flex;gap:2rem;flex-wrap:wrap;'>
         <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
           <h4>Free</h4>
-          <p>1 design/session<br>PDF with watermark</p>
-          <strong>GH₵0</strong>
+          <p>1 design at a time<br>CSV Download</p>
+          <strong>$0</strong>
         </div>
         <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
           <h4>Pro</h4>
-          <p>Unlimited designs<br>PDF & Excel<br>Custom branding</p>
-          <strong>GH₵49/month</strong><br>
+          <p>Unlimited designs<br>PDF Download<br>Custom branding</p>
+          <strong>$10.499/month</strong><br>
           <a href='https://flutterwave.com/pay/concretepro' target='_blank'>🔓 Upgrade to Pro</a><br>
           <a href='https://enhancedconcretemixdesign.streamlit.app/?access_key=your_super_secret_key' target='_blank'>🚀 Go to Pro Version</a>
         </div>
