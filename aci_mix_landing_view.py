@@ -37,7 +37,7 @@ def show_pro_landing():
         <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
           <h4>Free</h4>
           <p>1 design at a time<br>CSV Download</p>
-          <strong>$0</strong>
+          <strong>Ghs 0</strong>
         </div>
         <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
           <h4>Pro</h4>
