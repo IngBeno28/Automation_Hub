@@ -45,58 +45,73 @@ def show_pro_landing():
           <strong>GHS 100 (One-time)</strong><br>
     """, unsafe_allow_html=True)
 
-    email = st.text_input("Enter your email to unlock Pro features (via Paystack):")
+    # Email input with validation
+    email = st.text_input("Enter your email to unlock Pro features (via Paystack):", 
+                         placeholder="your.email@example.com")
+    
     if email:
-        st.markdown(f"""
-<script src="https://js.paystack.co/v1/inline.js"></script>
-<div id="paystack-button-container"></div>
-<script>
-  function payWithPaystack() {{
-      var handler = PaystackPop.setup({{
-          key: 'pk_live_2729231e26ba51d2cfa2735e68593252effe2957',
-          email: '{email}',
-          amount: 1000000,
-          currency: 'GHS',
-          ref: '' + Math.floor((Math.random() * 1000000000) + 1),
-          callback: function(response) {{
-              alert('Payment successful! Reference: ' + response.reference);
-          }},
-          onClose: function() {{
-              alert('Payment was cancelled');
-          }}
-      }});
-      handler.openIframe();
-  }}
+        if "@" in email and "." in email.split("@")[-1]:  # Basic email validation
+            st.markdown(f"""
+            <script src="https://js.paystack.co/v1/inline.js"></script>
+            <div id="paystack-button-container" style="margin-top:1rem;"></div>
+            <script>
+              function payWithPaystack() {{
+                  var handler = PaystackPop.setup({{
+                      key: 'pk_live_2729231e26ba51d2cfa2735e68593252effe2957',
+                      email: '{email}',
+                      amount: 1000000,
+                      currency: 'GHS',
+                      ref: 'ACI_' + Math.floor((Math.random() * 1000000000) + 1),
+                      callback: function(response) {{
+                          alert('Payment successful! Reference: ' + response.reference);
+                          // Redirect to pro version after payment
+                          window.location.href = 'https://enhancedconcretemixdesign.streamlit.app/?access_key=' + response.reference;
+                      }},
+                      onClose: function() {{
+                          alert('You can complete this payment later. Window closed.');
+                      }}
+                  }});
+                  handler.openIframe();
+              }}
 
-  var btn = document.createElement("button");
-  btn.innerHTML = "Pay GHS 100";
-  btn.style.padding = "12px 25px";
-  btn.style.backgroundColor = "#0aa83f";
-  btn.style.color = "white";
-  btn.style.fontSize = "16px";
-  btn.style.border = "none";
-  btn.style.borderRadius = "8px";
-  btn.style.cursor = "pointer";
-  btn.onclick = payWithPaystack;
+              // Create and style the button
+              var btn = document.createElement("button");
+              btn.innerHTML = "Pay GHS 100";
+              btn.style.padding = "12px 25px";
+              btn.style.backgroundColor = "#0aa83f";
+              btn.style.color = "white";
+              btn.style.fontSize = "16px";
+              btn.style.border = "none";
+              btn.style.borderRadius = "8px";
+              btn.style.cursor = "pointer";
+              btn.style.transition = "all 0.3s ease";
+              btn.onmouseenter = function() {{ this.style.opacity = "0.8"; }};
+              btn.onmouseleave = function() {{ this.style.opacity = "1"; }};
+              btn.onclick = payWithPaystack;
 
-  document.getElementById("paystack-button-container").appendChild(btn);
-</script>
-""", unsafe_allow_html=True)
+              // Add the button to the container
+              document.getElementById("paystack-button-container").appendChild(btn);
+            </script>
+            """, unsafe_allow_html=True)
+        else:
+            st.warning("Please enter a valid email address")
 
     st.markdown("""
-        <a href='https://enhancedconcretemixdesign.streamlit.app/?access_key=your_super_secret_key' target='_blank'>🚀 Already paid? Go to Pro Version</a>
+        <a href='https://enhancedconcretemixdesign.streamlit.app/?access_key=your_super_secret_key' target='_blank' style='display:inline-block; margin-top:1rem;'>🚀 Already paid? Go to Pro Version</a>
         </div>
         <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
           <h4>Institution</h4>
           <p>LMS-ready version<br>Multi-user access<br>Training documents</p>
           <strong>Contact Us</strong><br>
-          <a href='mailto:wiafe1713@gmail.com?subject=Institution%20Plan%20Request'>📩 Request Quote</a>
+          <a href='mailto:wiafe1713@gmail.com?subject=Institution%20Plan%20Request' style='text-decoration:none;'>📩 Request Quote</a>
         </div>
       </div>
     </div>
 
-    <a href='https://Concreteoptimizationtool.streamlit.app' target='_blank'>👉 Start Designing for Free</a><br>
-    <a href='/sample-report.pdf' target='_blank'>📄 View Sample PDF Report</a>
+    <div style='margin-top:2rem;'>
+      <a href='https://Concreteoptimizationtool.streamlit.app' target='_blank' style='display:inline-block; padding:0.5rem 1rem; background:#f0f0f0; border-radius:4px; text-decoration:none;'>👉 Start Designing for Free</a><br>
+      <a href='/sample-report.pdf' target='_blank' style='display:inline-block; margin-top:0.5rem; text-decoration:none;'>📄 View Sample PDF Report</a>
+    </div>
 
     <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
       <h3>What You'll Save</h3>
@@ -109,7 +124,7 @@ def show_pro_landing():
     </div>
 
     </div>
-    <footer style='text-align:center;padding:1rem;font-size:0.9rem;color:#777;'>
+    <footer style='text-align:center;padding:1rem;font-size:0.9rem;color:#777;margin-top:2rem;'>
       🧱 ACI Concrete Mix Optimizer | Built by a Civil Engineer, for Civil Engineers
     </footer>
     """, unsafe_allow_html=True)
