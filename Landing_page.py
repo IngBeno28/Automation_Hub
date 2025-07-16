@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image
+from aci_mix_landing_view import show_pro_landing
 
 # Page config
 st.set_page_config(
@@ -98,11 +99,13 @@ st.markdown("---")
 
 # Pro CTA
 st.subheader("🔐 Want Pro Access?")
-st.markdown("""
+with st.expander('🔐 Explore Pro Version Features', expanded=False):
+    show_pro_landing()
+'''st.markdown("""
 Pro versions include:
 - Downloadable PDF reports
 - Offline/mobile versions
-- Extra customization for teams or labs
+- Extra customization for teams or labs'''
 
 **Interested?**
 📩 Email: [wiafe1713@gmail.com](mailto:wiafe1713@gmail.com)  
