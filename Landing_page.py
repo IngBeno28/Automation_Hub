@@ -111,7 +111,7 @@ Pro versions include:
 st.markdown("📩 Email: [wiafe1713@gmail.com](mailto:wiafe1713@gmail.com)")  
 st.markdown("🔗 LinkedIn: [Bernard Wiafe-Akenteng, P.E.](https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-93005124b/)")
 
-Let’s build tools that make real impact in the field.
+#Let’s build tools that make real impact in the field.
 """)
 
 # Footer
