@@ -1,49 +1,49 @@
 import streamlit as st
 
 def show_pro_landing():
-    # st.markdown("""
-    # <h1 style='text-align:center;'>ACI Concrete Mix Optimizer</h1>
-    # <p style='text-align:center;'>Stop Guessing Your Concrete Mix. Start Optimizing It.</p>
+    st.markdown("""
+    <h1 style='text-align:center;'>ACI Concrete Mix Optimizer</h1>
+    <p style='text-align:center;'>Stop Guessing Your Concrete Mix. Start Optimizing It.</p>
 
-    # <div style='max-width:960px;margin:auto;padding:2rem;'>
+    <div style='max-width:960px;margin:auto;padding:2rem;'>
 
-    # <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
-    #   <h2>Design accurate, standards-based concrete mix proportions in minutes — no spreadsheets, no confusion, no wasted materials.</h2>
-    # </div>
+    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+      <h2>Design accurate, standards-based concrete mix proportions in minutes — no spreadsheets, no confusion, no wasted materials.</h2>
+    </div>
 
-    # <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
-    #   <h3>🔍 Built by engineers. Powered by ACI.</h3>
-    #   <ul>
-    #     <li>📐 ACI 211-based mix design</li>
-    #     <li>⚖️ Cement, water, aggregates, admixtures — fully calculated</li>
-    #     <li>🧪 Custom slump, durability, strength class</li>
-    #     <li>📁 PDF exports with branding</li>
-    #     <li>🎯 100% online and instant</li>
-    #   </ul>
-    # </div>
+    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+      <h3>🔍 Built by engineers. Powered by ACI.</h3>
+      <ul>
+        <li>📐 ACI 211-based mix design</li>
+        <li>⚖️ Cement, water, aggregates, admixtures — fully calculated</li>
+        <li>🧪 Custom slump, durability, strength class</li>
+        <li>📁 PDF exports with branding</li>
+        <li>🎯 100% online and instant</li>
+      </ul>
+    </div>
 
-    # <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
-    #   <h3>Use Cases</h3>
-    #   <ul>
-    #     <li>✔️ Field Engineers & QC Labs</li>
-    #     <li>✔️ Construction Site Trials</li>
-    #     <li>✔️ Grad Students / Research Labs</li>
-    #   </ul>
-    # </div>
+    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+      <h3>Use Cases</h3>
+      <ul>
+        <li>✔️ Field Engineers & QC Labs</li>
+        <li>✔️ Construction Site Trials</li>
+        <li>✔️ Grad Students / Research Labs</li>
+      </ul>
+    </div>
 
-    # <div style='background:#fff;padding:2rem;margin:2rem 2;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
-    #   <h3>Pricing</h3>
-    #   <div style='display:flex;gap:2rem;flex-wrap:wrap;'>
-    #     <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
-    #       <h4>Free</h4>
-    #       <p>1 design at a time<br>CSV Download</p>
-    #       <strong>Ghs 0</strong>
-    #     </div>
-    #     <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
-    #       <h4>Pro</h4>
-    #       <p>Unlimited designs<br>PDF Download<br>Custom branding</p>
-    #       <strong>GHS 100 (One-time)</strong><br>
-    # """, unsafe_allow_html=True) # End of the first static markdown block
+    <div style='background:#fff;padding:2rem;margin:2rem 2;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+      <h3>Pricing</h3>
+      <div style='display:flex;gap:2rem;flex-wrap:wrap;'>
+        <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
+          <h4>Free</h4>
+          <p>1 design at a time<br>CSV Download</p>
+          <strong>Ghs 0</strong>
+        </div>
+        <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
+          <h4>Pro</h4>
+          <p>Unlimited designs<br>PDF Download<br>Custom branding</p>
+          <strong>GHS 100 (One-time)</strong><br>
+    """, unsafe_allow_html=True) # End of the first static markdown block
 
     # Initialize session state for email if not already present
     if 'pro_email' not in st.session_state:
