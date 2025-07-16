@@ -1,10 +1,7 @@
-streamlit_py_path = "aci_mix_landing_view.py"
-
-streamlit_function = """
 import streamlit as st
 
 def show_pro_landing():
-    st.markdown(\"\"\"
+    st.markdown("""
     <h1 style='text-align:center;'>ACI Concrete Mix Optimizer</h1>
     <p style='text-align:center;'>Stop Guessing Your Concrete Mix. Start Optimizing It.</p>
 
@@ -40,14 +37,42 @@ def show_pro_landing():
         <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
           <h4>Free</h4>
           <p>1 design at a time<br>CSV Download</p>
-          <strong>Ghs0</strong>
+          <strong>$0</strong>
         </div>
         <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
           <h4>Pro</h4>
           <p>Unlimited designs<br>PDF Download<br>Custom branding</p>
-          <strong>Ghs99.99/month</strong><br>
-          <a href='https://flutterwave.com/pay/concretepro' target='_blank'>🔓 Upgrade to Pro</a><br>
-          <a href='https://enhancedconcretemixdesign.streamlit.app/?access_key=your_super_secret_key' target='_blank'>🚀 Go to Pro Version</a>
+          <strong>GHS 100 (One-time)</strong><br>
+    """, unsafe_allow_html=True)
+
+    email = st.text_input("Enter your email to unlock Pro features (via Paystack):")
+    if email:
+        st.markdown(f"""
+        <script src="https://js.paystack.co/v1/inline.js"></script>
+        <button type="button" onclick="payWithPaystack()" style="padding: 12px 25px; background-color: #0aa83f; color: white; font-size: 16px; border: none; border-radius: 8px; cursor: pointer;">Pay GHS 100</button>
+        <script>
+        function payWithPaystack() {{
+            var handler = PaystackPop.setup({{
+                key: 'pk_live_2729231e26ba51d2cfa2735e68593252effe2957',
+                email: '{email}',
+                amount: 1000000,
+                currency: 'GHS',
+                ref: '' + Math.floor((Math.random() * 1000000000) + 1),
+                callback: function(response) {{
+                    alert('Payment successful! Reference: ' + response.reference);
+                    // Here you could call a backend or reload the app
+                }},
+                onClose: function() {{
+                    alert('Transaction was cancelled');
+                }}
+            }});
+            handler.openIframe();
+        }}
+        </script>
+        """, unsafe_allow_html=True)
+
+    st.markdown("""
+        <a href='https://enhancedconcretemixdesign.streamlit.app/?access_key=your_super_secret_key' target='_blank'>🚀 Already paid? Go to Pro Version</a>
         </div>
         <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
           <h4>Institution</h4>
@@ -58,7 +83,7 @@ def show_pro_landing():
       </div>
     </div>
 
-    <a href='https://acemix.streamlit.app' target='_blank'>👉 Start Designing for Free</a><br>
+    <a href='https://Concreteoptimizationtool.streamlit.app' target='_blank'>👉 Start Designing for Free</a><br>
     <a href='/sample-report.pdf' target='_blank'>📄 View Sample PDF Report</a>
 
     <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
@@ -73,13 +98,6 @@ def show_pro_landing():
 
     </div>
     <footer style='text-align:center;padding:1rem;font-size:0.9rem;color:#777;'>
-      🧱 ACI Concrete Mix Optimizer | Built by a Civil Engineer, for Civil Engineers | 
-      <a href='https://flutterwave.com/pay/concretepro' style='color: #007acc'>🔐 Unlock Pro Access</a>
+      🧱 ACI Concrete Mix Optimizer | Built by a Civil Engineer, for Civil Engineers
     </footer>
-    \"\"\", unsafe_allow_html=True)
-"""
-
-with open(streamlit_py_path, "w") as f:
-    f.write(streamlit_function)
-
-streamlit_py_path
+    """, unsafe_allow_html=True)
