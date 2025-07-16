@@ -21,7 +21,7 @@ def show_pro_landing():
         <li>📐 ACI 211-based mix design</li>
         <li>⚖️ Cement, water, aggregates, admixtures — fully calculated</li>
         <li>🧪 Custom slump, durability, strength class</li>
-        <li>📁 PDF & Excel exports with branding</li>
+        <li>📁 PDF exports with branding</li>
         <li>🎯 100% online and instant</li>
       </ul>
     </div>
