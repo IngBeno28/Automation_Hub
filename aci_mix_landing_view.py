@@ -11,7 +11,7 @@ def show_pro_landing():
       <h2>Design accurate, standards-based concrete mix proportions in minutes — no spreadsheets, no confusion, no wasted materials.</h2>
     </div>
 
-    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba://cdn.example.com/0,0,0,0.1);'>
       <h3>🔍 Built by engineers. Powered by ACI.</h3>
       <ul>
         <li>📐 ACI 211-based mix design</li>
@@ -45,54 +45,75 @@ def show_pro_landing():
           <strong>GHS 100 (One-time)</strong><br>
     """, unsafe_allow_html=True)
 
+    # Initialize session state for email if not already present
+    if 'pro_email' not in st.session_state:
+        st.session_state.pro_email = ""
+
     # Email input with validation
-    email = st.text_input("Enter your email to unlock Pro features (via Paystack):", 
-                         placeholder="your.email@example.com")
-    
-    if email:
-        if "@" in email and "." in email.split("@")[-1]:  # Basic email validation
-            st.markdown(f"""
+    # Use key to make sure the widget's state is correctly managed by Streamlit
+    email = st.text_input("Enter your email to unlock Pro features (via Paystack):",
+                         placeholder="your.email@example.com",
+                         key="pro_email_input",
+                         value=st.session_state.pro_email) # Set initial value from session state
+
+    # Update session state when email input changes
+    st.session_state.pro_email = email
+
+    if st.session_state.pro_email: # Use session state for logic
+        if "@" in st.session_state.pro_email and "." in st.session_state.pro_email.split("@")[-1]:  # Basic email validation
+            # Only render the JS if it hasn't been rendered yet or if conditions change
+            # We'll use a unique key for the markdown to prevent re-execution conflicts
+            # Or, more robustly, ensure the container div is uniquely identified and reliably present
+            paystack_html = f"""
             <script src="https://js.paystack.co/v1/inline.js"></script>
             <div id="paystack-button-container" style="margin-top:1rem;"></div>
             <script>
-              function payWithPaystack() {{
-                  var handler = PaystackPop.setup({{
-                      key: 'pk_live_2729231e26ba51d2cfa2735e68593252effe2957',
-                      email: '{email}',
-                      amount: 1000000,
-                      currency: 'GHS',
-                      ref: 'ACI_' + Math.floor((Math.random() * 1000000000) + 1),
-                      callback: function(response) {{
-                          alert('Payment successful! Reference: ' + response.reference);
-                          // Redirect to pro version after payment
-                          window.location.href = 'https://enhancedconcretemixdesign.streamlit.app/?access_key=' + response.reference;
-                      }},
-                      onClose: function() {{
-                          alert('You can complete this payment later. Window closed.');
-                      }}
-                  }});
-                  handler.openIframe();
+              // Check if the button already exists to prevent re-appending on reruns
+              if (!document.getElementById('paystack-pay-button')) {{
+                  function payWithPaystack() {{
+                      var handler = PaystackPop.setup({{
+                          key: 'pk_live_2729231e26ba51d2cfa2735e68593252effe2957',
+                          email: '{st.session_state.pro_email}', // Use session state email
+                          amount: 1000000,
+                          currency: 'GHS',
+                          ref: 'ACI_' + Math.floor((Math.random() * 1000000000) + 1),
+                          callback: function(response) {{
+                              alert('Payment successful! Reference: ' + response.reference);
+                              // Redirect to pro version after payment
+                              window.location.href = 'https://enhancedconcretemixdesign.streamlit.app/?access_key=' + response.reference;
+                          }},
+                          onClose: function() {{
+                              alert('You can complete this payment later. Window closed.');
+                          }}
+                      }});
+                      handler.openIframe();
+                  }}
+
+                  // Create and style the button
+                  var btn = document.createElement("button");
+                  btn.innerHTML = "Pay GHS 100";
+                  btn.id = "paystack-pay-button"; // Add an ID to the button for checking its existence
+                  btn.style.padding = "12px 25px";
+                  btn.style.backgroundColor = "#0aa83f";
+                  btn.style.color = "white";
+                  btn.style.fontSize = "16px";
+                  btn.style.border = "none";
+                  btn.style.borderRadius = "8px";
+                  btn.style.cursor = "pointer";
+                  btn.style.transition = "all 0.3s ease";
+                  btn.onmouseenter = function() {{ this.style.opacity = "0.8"; }};
+                  btn.onmouseleave = function() {{ this.style.opacity = "1"; }};
+                  btn.onclick = payWithPaystack;
+
+                  // Add the button to the container
+                  var container = document.getElementById("paystack-button-container");
+                  if (container) {{ // Check if container exists before appending
+                      container.appendChild(btn);
+                  }}
               }}
-
-              // Create and style the button
-              var btn = document.createElement("button");
-              btn.innerHTML = "Pay GHS 100";
-              btn.style.padding = "12px 25px";
-              btn.style.backgroundColor = "#0aa83f";
-              btn.style.color = "white";
-              btn.style.fontSize = "16px";
-              btn.style.border = "none";
-              btn.style.borderRadius = "8px";
-              btn.style.cursor = "pointer";
-              btn.style.transition = "all 0.3s ease";
-              btn.onmouseenter = function() {{ this.style.opacity = "0.8"; }};
-              btn.onmouseleave = function() {{ this.style.opacity = "1"; }};
-              btn.onclick = payWithPaystack;
-
-              // Add the button to the container
-              document.getElementById("paystack-button-container").appendChild(btn);
             </script>
-            """, unsafe_allow_html=True)
+            """
+            st.markdown(paystack_html, unsafe_allow_html=True)
         else:
             st.warning("Please enter a valid email address")
 
