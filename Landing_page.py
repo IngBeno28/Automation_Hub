@@ -99,15 +99,12 @@ st.markdown("---")
 
 # Pro CTA
 st.subheader("🔐 Want Pro Access?")
-with st.expander('🔐 Explore Pro Version Features', expanded=False):
+with st.expander('🔐 Explore Pro Version Features For Concrete Optimizer', expanded=False):
     show_pro_landing()
 
-**Interested?**
+st.markdown("**Interested?**")
 st.markdown("📩 Email: [wiafe1713@gmail.com](mailto:wiafe1713@gmail.com)")  
 st.markdown("🔗 LinkedIn: [Bernard Wiafe-Akenteng, P.E.](https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-93005124b/)")
-
-Let’s build tools that make real impact in the field.
-""")
 
 # Footer
 st.markdown("""
@@ -119,4 +116,3 @@ st.markdown("""
     <em>Built for engineers. Powered by code.</em>
 </p>
 """, unsafe_allow_html=True)
-
