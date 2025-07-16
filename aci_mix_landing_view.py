@@ -131,35 +131,35 @@ def show_pro_landing():
             st.warning("Please enter a valid email address")
 
     # Final static markdown block (check for any remaining unescaped braces if issues persist)
-    st.markdown("""
-        <a href='https://enhancedconcretemixdesign.streamlit.app/?access_key=your_super_secret_key' target='_blank' style='display:inline-block; margin-top:1rem;'>🚀 Already paid? Go to Pro Version</a>
-        </div>
-        <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
-          <h4>Institution</h4>
-          <p>LMS-ready version<br>Multi-user access<br>Training documents</p>
-          <strong>Contact Us</strong><br>
-          <a href='mailto:wiafe1713@gmail.com?subject=Institution%20Plan%20Request' style='text-decoration:none;'>📩 Request Quote</a>
-        </div>
-      </div>
-    </div>
+    # st.markdown("""
+    #     <a href='https://enhancedconcretemixdesign.streamlit.app/?access_key=your_super_secret_key' target='_blank' style='display:inline-block; margin-top:1rem;'>🚀 Already paid? Go to Pro Version</a>
+    #     </div>
+    #     <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
+    #       <h4>Institution</h4>
+    #       <p>LMS-ready version<br>Multi-user access<br>Training documents</p>
+    #       <strong>Contact Us</strong><br>
+    #       <a href='mailto:wiafe1713@gmail.com?subject=Institution%20Plan%20Request' style='text-decoration:none;'>📩 Request Quote</a>
+    #     </div>
+    #   </div>
+    # </div>
 
-    <div style='margin-top:2rem;'>
-      <a href='https://Concreteoptimizationtool.streamlit.app' target='_blank' style='display:inline-block; padding:0.5rem 1rem; background:#f0f0f0; border-radius:4px; text-decoration:none;'>👉 Start Designing for Free</a><br>
-      <a href='/sample-report.pdf' target='_blank' style='display:inline-block; margin-top:0.5rem; text-decoration:none;'>📄 View Sample PDF Report</a>
-    </div>
+    # <div style='margin-top:2rem;'>
+    #   <a href='https://Concreteoptimizationtool.streamlit.app' target='_blank' style='display:inline-block; padding:0.5rem 1rem; background:#f0f0f0; border-radius:4px; text-decoration:none;'>👉 Start Designing for Free</a><br>
+    #   <a href='/sample-report.pdf' target='_blank' style='display:inline-block; margin-top:0.5rem; text-decoration:none;'>📄 View Sample PDF Report</a>
+    # </div>
 
-    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
-      <h3>What You'll Save</h3>
-      <ul>
-        <li>⏱️ Hours of Excel formula headaches</li>
-        <li>💸 Unnecessary cement & aggregate waste</li>
-        <li>🤦‍♂️ Errors in hand-calculated mixes</li>
-        <li>😤 Time lost to manual recalculations</li>
-      </ul>
-    </div>
+    # <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+    #   <h3>What You'll Save</h3>
+    #   <ul>
+    #     <li>⏱️ Hours of Excel formula headaches</li>
+    #     <li>💸 Unnecessary cement & aggregate waste</li>
+    #     <li>🤦‍♂️ Errors in hand-calculated mixes</li>
+    #     <li>😤 Time lost to manual recalculations</li>
+    #   </ul>
+    # </div>
 
-    </div>
-    <footer style='text-align:center;padding:1rem;font-size:0.9rem;color:#777;margin-top:2rem;'>
-      🧱 ACI Concrete Mix Optimizer | Built by a Civil Engineer, for Civil Engineers
-    </footer>
-    """, unsafe_allow_html=True)
+    # </div>
+    # <footer style='text-align:center;padding:1rem;font-size:0.9rem;color:#777;margin-top:2rem;'>
+    #   🧱 ACI Concrete Mix Optimizer | Built by a Civil Engineer, for Civil Engineers
+    # </footer>
+    # """, unsafe_allow_html=True)
