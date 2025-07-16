@@ -1,4 +1,3 @@
-# Convert the HTML landing content into a Python function compatible with Streamlit
 streamlit_py_path = "aci_mix_landing_view.py"
 
 streamlit_function = """
@@ -54,7 +53,7 @@ def show_pro_landing():
           <h4>Institution</h4>
           <p>LMS-ready version<br>Multi-user access<br>Training documents</p>
           <strong>Contact Us</strong><br>
-          <a href='mailto:support@acemixtools.com?subject=Institution%20Plan%20Request'>📩 Request Quote</a>
+          <a href='mailto:wiafe1713@gmail.com?subject=Institution%20Plan%20Request'>📩 Request Quote</a>
         </div>
       </div>
     </div>
@@ -74,7 +73,7 @@ def show_pro_landing():
 
     </div>
     <footer style='text-align:center;padding:1rem;font-size:0.9rem;color:#777;'>
-      🧱 GHA Mix Optimizer | Built by a Civil Engineer, for Civil Engineers | 
+      🧱 ACI Concrete Mix Optimizer | Built by a Civil Engineer, for Civil Engineers | 
       <a href='https://flutterwave.com/pay/concretepro' style='color: #007acc'>🔐 Unlock Pro Access</a>
     </footer>
     \"\"\", unsafe_allow_html=True)
