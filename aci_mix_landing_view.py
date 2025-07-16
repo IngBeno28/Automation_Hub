@@ -31,7 +31,7 @@ def show_pro_landing():
       </ul>
     </div>
 
-    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+    <div style='background:#fff;padding:2rem;margin:2rem 2;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
       <h3>Pricing</h3>
       <div style='display:flex;gap:2rem;flex-wrap:wrap;'>
         <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
@@ -43,11 +43,14 @@ def show_pro_landing():
           <h4>Pro</h4>
           <p>Unlimited designs<br>PDF Download<br>Custom branding</p>
           <strong>GHS 100 (One-time)</strong><br>
-    """, unsafe_allow_html=True)
+    """, unsafe_allow_html=True) # End of the first static markdown block
 
     # Initialize session state for email if not already present
     if 'pro_email' not in st.session_state:
         st.session_state.pro_email = ""
+    # Initialize session state for paystack_ref_counter
+    if 'paystack_ref_counter' not in st.session_state:
+        st.session_state.paystack_ref_counter = 0
 
     # Email input with validation
     email = st.text_input("Enter your email to unlock Pro features (via Paystack):",
@@ -55,27 +58,28 @@ def show_pro_landing():
                          key="pro_email_input",
                          value=st.session_state.pro_email)
 
-    st.session_state.pro_email = email # Update session state when email input changes
+    # Update session state when email input changes
+    st.session_state.pro_email = email
 
+    # Paystack Button Logic
     if st.session_state.pro_email: # Only show Paystack if email is provided
         if "@" in st.session_state.pro_email and "." in st.session_state.pro_email.split("@")[-1]:  # Basic email validation
-            # Use a div to place the button. Give it a unique Streamlit key to ensure it's re-rendered correctly.
-            paystack_button_placeholder = st.empty() # Create a placeholder for the button HTML
+            # Create a placeholder for the button HTML, Streamlit manages its rerendering
+            paystack_button_placeholder = st.empty()
 
             # Construct the JavaScript dynamically
             # Ensure email is properly escaped for JavaScript string
             js_email = st.session_state.pro_email.replace("'", "\\'").replace('"', '\\"')
-            # Use a slightly different ref generation or ensure it's random enough
-            js_ref = f"ACI_{st.session_state.pro_email.replace('@', '_').replace('.', '_')}_{st.session_state.get('paystack_ref_counter', 0)}"
-            st.session_state.paystack_ref_counter = st.session_state.get('paystack_ref_counter', 0) + 1
-
+            # Increment counter for unique reference on each attempt/rerun
+            st.session_state.paystack_ref_counter += 1
+            js_ref = f"ACI_{st.session_state.pro_email.replace('@', '_').replace('.', '_')}_{st.session_state.paystack_ref_counter}"
 
             paystack_html = f"""
             <script src="https://js.paystack.co/v1/inline.js"></script>
             <div id="paystack-button-container" style="margin-top:1rem;"></div>
             <script>
               // Check if the button already exists to prevent re-appending on reruns
-              // We'll use a specific ID for the button itself: 'paystack-pay-button'
+              // We use a specific ID for the button itself: 'paystack-pay-button'
               if (!document.getElementById('paystack-pay-button')) {{
                   function payWithPaystack() {{
                       var handler = PaystackPop.setup({{
@@ -126,6 +130,7 @@ def show_pro_landing():
         else:
             st.warning("Please enter a valid email address")
 
+    # Final static markdown block (check for any remaining unescaped braces if issues persist)
     st.markdown("""
         <a href='https://enhancedconcretemixdesign.streamlit.app/?access_key=your_super_secret_key' target='_blank' style='display:inline-block; margin-top:1rem;'>🚀 Already paid? Go to Pro Version</a>
         </div>
