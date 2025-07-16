@@ -49,27 +49,41 @@ def show_pro_landing():
     if email:
         st.markdown(f"""
         <script src="https://js.paystack.co/v1/inline.js"></script>
-        <button type="button" onclick="payWithPaystack()" style="padding: 12px 25px; background-color: #0aa83f; color: white; font-size: 16px; border: none; border-radius: 8px; cursor: pointer;">Pay GHS 100</button>
-        <script>
-        function payWithPaystack() {{
-            var handler = PaystackPop.setup({{
-                key: 'pk_live_2729231e26ba51d2cfa2735e68593252effe2957',
-                email: '{email}',
-                amount: 1000000,
-                currency: 'GHS',
-                ref: '' + Math.floor((Math.random() * 1000000000) + 1),
-                callback: function(response) {{
-                    alert('Payment successful! Reference: ' + response.reference);
-                    // Here you could call a backend or reload the app
-                }},
-                onClose: function() {{
-                    alert('Transaction was cancelled');
-                }}
-            }});
-            handler.openIframe();
-        }}
-        </script>
-        """, unsafe_allow_html=True)
+       st.markdown(f"""
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<div id="paystack-button-container"></div>
+<script>
+  function payWithPaystack() {{
+      var handler = PaystackPop.setup({{
+          key: 'pk_live_2729231e26ba51d2cfa2735e68593252effe2957',
+          email: '{email}',
+          amount: 1000000,
+          currency: 'GHS',
+          ref: '' + Math.floor((Math.random() * 1000000000) + 1),
+          callback: function(response) {{
+              alert('Payment successful! Reference: ' + response.reference);
+          }},
+          onClose: function() {{
+              alert('Payment was cancelled');
+          }}
+      }});
+      handler.openIframe();
+  }}
+
+  var btn = document.createElement("button");
+  btn.innerHTML = "Pay GHS 100";
+  btn.style.padding = "12px 25px";
+  btn.style.backgroundColor = "#0aa83f";
+  btn.style.color = "white";
+  btn.style.fontSize = "16px";
+  btn.style.border = "none";
+  btn.style.borderRadius = "8px";
+  btn.style.cursor = "pointer";
+  btn.onclick = payWithPaystack;
+
+  document.getElementById("paystack-button-container").appendChild(btn);
+</script>
+""", unsafe_allow_html=True)
 
     st.markdown("""
         <a href='https://enhancedconcretemixdesign.streamlit.app/?access_key=your_super_secret_key' target='_blank'>🚀 Already paid? Go to Pro Version</a>
