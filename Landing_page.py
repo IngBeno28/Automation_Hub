@@ -107,8 +107,8 @@ logo = load_logo()
 st.markdown('<div class="center-content">', unsafe_allow_html=True)
 
 if logo:
-    # Display larger centered logo
-    st.image(logo, width=130, use_column_width=False)
+    # Display larger centered logo - FIXED: use_container_width instead of use_column_width
+    st.image(logo, width=180, use_container_width=False)
     st.markdown("""
         <h1 style='color: #0d47a1; margin-top: 10px; margin-bottom: 5px;'>Automation_Hub</h1>
         <h3 style='color: #1565c0; margin-top: 5px;'>Smart, practical tools for Geotechnical and Materials Engineers</h3>
