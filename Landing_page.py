@@ -16,9 +16,6 @@ st.markdown("""
     body {
         background-color: #f4f9ff;
     }
-    .centered-header {
-        text-align: center;
-    }
     .header-title {
         color: #0d47a1;
         margin-top: 10px;
@@ -73,11 +70,12 @@ def load_logo():
     # Return None if no logo found
     return None
 
-# Logo + Header - Centered section only
+# Logo + Header - Centered section with slight right shift
 logo = load_logo()
 
-# Use Streamlit columns to center content
-col1, col2, col3 = st.columns([1, 3, 1])
+# Use Streamlit columns with adjusted ratios to shift logo slightly right
+# Changed from [1, 3, 1] to [1, 4, 2] - this will shift content slightly right
+col1, col2, col3 = st.columns([1, 4, 2])
 
 with col2:
     # Display centered logo (larger size - 220px)
@@ -117,7 +115,7 @@ with col2:
             </div>
         """, unsafe_allow_html=True)
 
-    # Header text - using markdown with center alignment
+    # Header text
     st.markdown("<h1 class='header-title'>Automation_Hub</h1>", unsafe_allow_html=True)
     st.markdown("<h3 class='header-subtitle'>Smart, practical tools for Geotechnical and Materials Engineers</h3>", unsafe_allow_html=True)
     st.markdown("<p class='header-tagline'>Built for engineers. Powered by code.</p>", unsafe_allow_html=True)
