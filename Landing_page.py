@@ -73,7 +73,7 @@ def load_logo():
 # Logo + Header - Centered section with slight right shift
 logo = load_logo()
 
-col1, col2, col3 = st.columns([1, 2, 4])
+col1, col2, col3 = st.columns([1, 4, 2])
 
 with col2:
     # Display centered logo (larger size - 220px)
