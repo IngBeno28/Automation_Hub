@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image
+import os
 from aci_mix_landing_view import show_pro_landing
 
 # Page config
@@ -37,33 +38,107 @@ st.markdown("""
         background-color: #0d47a1;
         color: #e3f2fd;
     }
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        gap: 15px;
+    }
+    .logo-text {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #0d47a1;
+    }
+    @media (max-width: 768px) {
+        .logo-container {
+            flex-direction: column;
+            text-align: center;
+        }
+        .logo-text {
+            font-size: 2rem;
+        }
+    }
     </style>
 """, unsafe_allow_html=True)
 
+# Function to load logo from assets folder
+def load_logo():
+    logo_paths = [
+        "assets/automation_hub_logo.png",
+        "assets/logo.png",
+        "assets/automation_hub_logo.jpg",
+        "assets/logo.jpg",
+        "assets/automation_hub_logo.svg",
+        "assets/logo.svg"
+    ]
+    
+    for path in logo_paths:
+        if os.path.exists(path):
+            try:
+                logo = Image.open(path)
+                return logo
+            except Exception as e:
+                st.warning(f"Could not load logo from {path}: {str(e)}")
+    
+    # Return None if no logo found
+    return None
+
 # Logo + Header 
-st.markdown("""
-    <div style='text-align: center;'>
-        <svg width="120" height="120" viewBox="0 0 100 100" style="margin-bottom: -20px;">
-            <!-- Outer Gear (Blue) -->
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#0d47a1" stroke-width="6"/>
-            <!-- Gear Teeth (Red) -->
-            <path d="M50,10 L50,30 M70,50 L90,50 M50,70 L50,90 M30,50 L10,50" 
-                  stroke="#e53935" stroke-width="4" stroke-linecap="round"/>
-            <!-- Bridge (Green) -->
-            <path d="M20,60 L35,45 L50,60 L65,45 L80,60" 
-                  stroke="#43a047" stroke-width="3" fill="none"/>
-            <path d="M35,45 L35,30 L65,30 L65,45" 
-                  stroke="#43a047" stroke-width="3" fill="none"/>
-            <!-- Support Pillars (Blue) -->
-            <line x1="35" y1="60" x2="35" y2="75" stroke="#0d47a1" stroke-width="2"/>
-            <line x1="65" y1="60" x2="65" y2="75" stroke="#0d47a1" stroke-width="2"/>
-        </svg>
-        <h1 style='color: #0d47a1; margin-top: 0;'>Automation_Hub</h1>
-        <h3 style='color: #1565c0;'>Smart, practical tools for Geotechnical and Materials Engineers</h3>
-        <p style='font-style: italic;'>Built for engineers. Powered by code.</p>
-    </div>
-    <hr style='border:1px solid #90caf9'/>
-""", unsafe_allow_html=True)
+logo = load_logo()
+
+if logo:
+    # Resize logo if needed
+    logo = logo.resize((120, 120)) if logo.width > 200 or logo.height > 200 else logo
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.image(logo, width=120)
+        st.markdown("""
+            <div style='text-align: center;'>
+                <h1 style='color: #0d47a1; margin-top: 10px;'>Automation_Hub</h1>
+                <h3 style='color: #1565c0;'>Smart, practical tools for Geotechnical and Materials Engineers</h3>
+                <p style='font-style: italic;'>Built for engineers. Powered by code.</p>
+            </div>
+        """, unsafe_allow_html=True)
+else:
+    # Fallback to SVG if no image logo found
+    st.markdown("""
+        <div style='text-align: center;'>
+            <svg width="100" height="100" viewBox="0 0 100 100" style="margin-bottom: 10px;">
+                <!-- Outer Gear (Blue) -->
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#0d47a1" stroke-width="6"/>
+                
+                <!-- Gear Teeth (Red) -->
+                <path d="M50,10 L50,30 M70,50 L90,50 M50,70 L50,90 M30,50 L10,50" 
+                      stroke="#e53935" stroke-width="4" stroke-linecap="round"/>
+                
+                <!-- Inner Gear (Lighter Blue) -->
+                <circle cx="50" cy="50" r="30" fill="none" stroke="#42a5f5" stroke-width="4"/>
+                
+                <!-- Bridge Structure (Green) -->
+                <path d="M25,60 L40,45 L60,45 L75,60" 
+                      stroke="#43a047" stroke-width="3" fill="none"/>
+                <path d="M40,45 L40,30 L60,30 L60,45" 
+                      stroke="#43a047" stroke-width="3" fill="none"/>
+                
+                <!-- Support Pillars (Blue) -->
+                <line x1="40" y1="60" x2="40" y2="75" stroke="#0d47a1" stroke-width="2"/>
+                <line x1="60" y1="60" x2="60" y2="75" stroke="#0d47a1" stroke-width="2"/>
+                
+                <!-- Hub Center (Gold) -->
+                <circle cx="50" cy="50" r="8" fill="#ffd700" stroke="#ff9800" stroke-width="2"/>
+                
+                <!-- Automation Symbol (Inside Hub) -->
+                <path d="M45,50 L55,50 M50,45 L50,55" stroke="#0d47a1" stroke-width="2"/>
+            </svg>
+            <h1 style='color: #0d47a1; margin-top: 0;'>Automation_Hub</h1>
+            <h3 style='color: #1565c0;'>Smart, practical tools for Geotechnical and Materials Engineers</h3>
+            <p style='font-style: italic;'>Built for engineers. Powered by code.</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("<hr style='border:1px solid #90caf9'/>", unsafe_allow_html=True)
 
 # AASHTO Tool Section
 st.subheader("📊 AASHTO Soil Classification Tool")
