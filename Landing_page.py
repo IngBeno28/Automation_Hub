@@ -22,6 +22,7 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         text-align: center;
+        width: 100%;
     }
     .header-title {
         color: #0d47a1;
@@ -74,53 +75,57 @@ def load_logo():
     # Return None if no logo found
     return None
 
-# Logo + Header - Both in the same centered container
+# Logo + Header - Perfectly centered
 logo = load_logo()
 
-# Create a single centered container for both logo and text
-st.markdown('<div class="centered-container">', unsafe_allow_html=True)
+# Use empty columns to force centering
+col1, col2, col3 = st.columns([1, 2, 1])
 
-if logo:
-    # Display centered logo
-    st.image(logo, width=220, use_container_width=False)
-else:
-    # Fallback to SVG if no image logo found
-    st.markdown("""
-        <svg width="220" height="220" viewBox="0 0 100 100">
-            <!-- Outer Gear (Blue) -->
-            <circle cx="50" cy="50" r="45" fill="none" stroke="#0d47a1" stroke-width="6"/>
-            
-            <!-- Gear Teeth (Red) -->
-            <path d="M50,10 L50,30 M70,50 L90,50 M50,70 L50,90 M30,50 L10,50" 
-                  stroke="#e53935" stroke-width="4" stroke-linecap="round"/>
-            
-            <!-- Inner Gear (Lighter Blue) -->
-            <circle cx="50" cy="50" r="30" fill="none" stroke="#42a5f5" stroke-width="4"/>
-            
-            <!-- Bridge Structure (Green) -->
-            <path d="M25,60 L40,45 L60,45 L75,60" 
-                  stroke="#43a047" stroke-width="3" fill="none"/>
-            <path d="M40,45 L40,30 L60,30 L60,45" 
-                  stroke="#43a047" stroke-width="3" fill="none"/>
-            
-            <!-- Support Pillars (Blue) -->
-            <line x1="40" y1="60" x2="40" y2="75" stroke="#0d47a1" stroke-width="2"/>
-            <line x1="60" y1="60" x2="60" y2="75" stroke="#0d47a1" stroke-width="2"/>
-            
-            <!-- Hub Center (Gold) -->
-            <circle cx="50" cy="50" r="8" fill="#ffd700" stroke="#ff9800" stroke-width="2"/>
-            
-            <!-- Automation Symbol (Inside Hub) -->
-            <path d="M45,50 L55,50 M50,45 L50,55" stroke="#0d47a1" stroke-width="2"/>
-        </svg>
-    """, unsafe_allow_html=True)
+with col2:
+    st.markdown('<div class="centered-container">', unsafe_allow_html=True)
+    
+    if logo:
+        # Display centered logo
+        st.image(logo, width=220, use_container_width=False)
+    else:
+        # Fallback to SVG if no image logo found
+        st.markdown("""
+            <svg width="220" height="220" viewBox="0 0 100 100">
+                <!-- Outer Gear (Blue) -->
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#0d47a1" stroke-width="6"/>
+                
+                <!-- Gear Teeth (Red) -->
+                <path d="M50,10 L50,30 M70,50 L90,50 M50,70 L50,90 M30,50 L10,50" 
+                      stroke="#e53935" stroke-width="4" stroke-linecap="round"/>
+                
+                <!-- Inner Gear (Lighter Blue) -->
+                <circle cx="50" cy="50" r="30" fill="none" stroke="#42a5f5" stroke-width="4"/>
+                
+                <!-- Bridge Structure (Green) -->
+                <path d="M25,60 L40,45 L60,45 L75,60" 
+                      stroke="#43a047" stroke-width="3" fill="none"/>
+                <path d="M40,45 L40,30 L60,30 L60,45" 
+                      stroke="#43a047" stroke-width="3" fill="none"/>
+                
+                <!-- Support Pillars (Blue) -->
+                <line x1="40" y1="60" x2="40" y2="75" stroke="#0d47a1" stroke-width="2"/>
+                <line x1="60" y1="60" x2="60" y2="75" stroke="#0d47a1" stroke-width="2"/>
+                
+                <!-- Hub Center (Gold) -->
+                <circle cx="50" cy="50" r="8" fill="#ffd700" stroke="#ff9800" stroke-width="2"/>
+                
+                <!-- Automation Symbol (Inside Hub) -->
+                <path d="M45,50 L55,50 M50,45 L50,55" stroke="#0d47a1" stroke-width="2"/>
+            </svg>
+        """, unsafe_allow_html=True)
 
-# Header text - now properly aligned with the logo
-st.markdown("<h1 class='header-title'>Automation_Hub</h1>", unsafe_allow_html=True)
-st.markdown("<h3 class='header-subtitle'>Smart, practical tools for Geotechnical and Materials Engineers</h3>", unsafe_allow_html=True)
-st.markdown("<p class='header-tagline'>Built for engineers. Powered by code.</p>", unsafe_allow_html=True)
+    # Header text
+    st.markdown("<h1 class='header-title'>Automation_Hub</h1>", unsafe_allow_html=True)
+    st.markdown("<h3 class='header-subtitle'>Smart, practical tools for Geotechnical and Materials Engineers</h3>", unsafe_allow_html=True)
+    st.markdown("<p class='header-tagline'>Built for engineers. Powered by code.</p>", unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)
 st.markdown("<hr style='border:1px solid #90caf9'/>", unsafe_allow_html=True)
 
 # Rest of the content (not centered)
