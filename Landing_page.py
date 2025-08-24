@@ -73,9 +73,7 @@ def load_logo():
 # Logo + Header - Centered section with slight right shift
 logo = load_logo()
 
-# Use Streamlit columns with adjusted ratios to shift logo slightly right
-# Changed from [1, 3, 1] to [1, 4, 2] - this will shift content slightly right
-col1, col2, col3 = st.columns([1, 4, 2])
+col1, col2, col3 = st.columns([1, 5, 2])
 
 with col2:
     # Display centered logo (larger size - 220px)
