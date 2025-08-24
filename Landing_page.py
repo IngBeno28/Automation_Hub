@@ -79,7 +79,7 @@ def load_logo():
 logo = load_logo()
 
 # Use empty columns to force centering
-col1, col2, col3 = st.columns([1, 2, 1])
+col1, col2, col3 = st.columns([1, 3, 1])
 
 with col2:
     st.markdown('<div class="centered-container">', unsafe_allow_html=True)
