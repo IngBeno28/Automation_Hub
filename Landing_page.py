@@ -55,8 +55,8 @@ st.markdown("""
     }
     @media (max-width: 768px) {
         .logo-image {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
         }
     }
     </style>
