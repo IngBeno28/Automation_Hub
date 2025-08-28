@@ -10,7 +10,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Styling (updated CSS)
+# Styling (updated CSS with hover + responsive logo + centered divider)
 st.markdown("""
     <style>
     /* --- Page Background --- */
@@ -32,7 +32,8 @@ st.markdown("""
     .logo {
         max-width: 200px;   /* laptop/desktop size */
         width: 50%;         /* relative scaling */
-        height: auto;       /* keep proportions */
+        height: auto;
+        transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
     }
     @media (max-width: 768px) {  /* phones & tablets */
         .logo {
@@ -40,10 +41,19 @@ st.markdown("""
         }
     }
 
-    /* --- Future-Proof: Dark Mode Auto-Adjust --- */
+    /* --- Hover Animation (subtle scale + glow) --- */
+    .logo:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0px 0px 8px rgba(13,71,161,0.3));
+    }
+
+    /* --- Dark Mode Auto-Adjust --- */
     @media (prefers-color-scheme: dark) {
         .logo {
-            filter: brightness(0) invert(1); /* makes logo white/light */
+            filter: brightness(0) invert(1);
+        }
+        .logo:hover {
+            filter: brightness(0) invert(1) drop-shadow(0px 0px 10px rgba(255,215,0,0.4));
         }
     }
 
@@ -65,9 +75,9 @@ st.markdown("""
     /* --- Divider Line (short + centered) --- */
     hr {
         border: 1px solid #90caf9;
-        width: 40%;          /* shorter line */
-        margin: 20px auto;   /* center it */
-        border-radius: 2px;  /* subtle rounding */
+        width: 40%;
+        margin: 20px auto;
+        border-radius: 2px;
     }
 
     /* --- Buttons --- */
@@ -88,20 +98,11 @@ st.markdown("""
 def load_logo():
     logo_paths = [
         "assets/automation_hub_logo.png",
-        "assets/logo.png",
-        "assets/automation_hub_logo.jpg",
-        "assets/logo.jpg",
-        "assets/automation_hub_logo.svg",
-        "assets/logo.svg"
+        "assets/logo.png"
     ]
-    
     for path in logo_paths:
         if os.path.exists(path):
-            try:
-                return path  # return file path for <img>
-            except Exception as e:
-                st.warning(f"Could not load logo from {path}: {str(e)}")
-    
+            return path
     return None  # No logo found
 
 # Logo + Header - Perfectly centered
@@ -110,10 +111,17 @@ logo_path = load_logo()
 st.markdown('<div class="centered-container">', unsafe_allow_html=True)
 
 if logo_path:
-    # Use <img> tag with responsive CSS
-    st.markdown(f"<img src='{logo_path}' class='logo'>", unsafe_allow_html=True)
+    # Use HTML <img> with relative assets path (so CSS applies)
+    st.markdown(
+        f"""
+        <div>
+            <img src="{logo_path}" class="logo">
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 else:
-    # Fallback to inline SVG
+    # Fallback SVG
     st.markdown("""
         <svg class="logo" viewBox="0 0 100 100">
             <circle cx="50" cy="50" r="45" fill="none" stroke="#0d47a1" stroke-width="6"/>
