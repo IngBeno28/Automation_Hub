@@ -10,7 +10,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Styling (updated CSS with hover + responsive logo + centered divider)
+# Styling (global CSS)
 st.markdown("""
     <style>
     /* --- Page Background --- */
@@ -28,31 +28,29 @@ st.markdown("""
         width: 100%;
     }
 
-    /* --- Responsive Logo --- */
-    .logo {
+    /* --- Responsive Logo (target stImage class) --- */
+    .stImage img {
         max-width: 200px;   /* laptop/desktop size */
-        width: 50%;         /* relative scaling */
+        width: 50%;
         height: auto;
         transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
     }
-    @media (max-width: 768px) {  /* phones & tablets */
-        .logo {
+    @media (max-width: 768px) {
+        .stImage img {
             max-width: 150px;   /* smaller on mobile */
         }
     }
-
-    /* --- Hover Animation (subtle scale + glow) --- */
-    .logo:hover {
+    .stImage img:hover {
         transform: scale(1.05);
         filter: drop-shadow(0px 0px 8px rgba(13,71,161,0.3));
     }
 
     /* --- Dark Mode Auto-Adjust --- */
     @media (prefers-color-scheme: dark) {
-        .logo {
+        .stImage img {
             filter: brightness(0) invert(1);
         }
-        .logo:hover {
+        .stImage img:hover {
             filter: brightness(0) invert(1) drop-shadow(0px 0px 10px rgba(255,215,0,0.4));
         }
     }
@@ -111,15 +109,8 @@ logo_path = load_logo()
 st.markdown('<div class="centered-container">', unsafe_allow_html=True)
 
 if logo_path:
-    # Use HTML <img> with relative assets path (so CSS applies)
-    st.markdown(
-        f"""
-        <div>
-            <img src="{logo_path}" class="logo">
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    # Use st.image (Streamlit handles file path safely)
+    st.image(logo_path, output_format="PNG")
 else:
     # Fallback SVG
     st.markdown("""
