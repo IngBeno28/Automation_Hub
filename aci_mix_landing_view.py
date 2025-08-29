@@ -1,17 +1,44 @@
 import streamlit as st
 
 def show_pro_landing():
+    # Add viewport meta tag for proper mobile rendering
+    st.markdown("""
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @media (max-width: 768px) {
+            .container { padding: 1rem !important; }
+            .feature-card { padding: 1.5rem !important; margin: 1rem 0 !important; }
+            .pricing-container { flex-direction: column !important; gap: 1rem !important; }
+            .pricing-card { min-width: 100% !important; margin-bottom: 1rem; }
+            h1 { font-size: 1.8rem !important; }
+            h2 { font-size: 1.5rem !important; }
+            h3 { font-size: 1.3rem !important; }
+        }
+        body {
+            color: #31333F;
+            background-color: #FFFFFF;
+        }
+        @media (prefers-color-scheme: dark) {
+            .feature-card, .pricing-card {
+                background-color: #1E1E1E !important;
+                color: #FFFFFF !important;
+                border: 1px solid #333 !important;
+            }
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
     st.markdown("""
     <h1 style='text-align:center;'>ACI Concrete Mix Optimizer</h1>
     <p style='text-align:center;'>Stop Guessing Your Concrete Mix. Start Optimizing It.</p>
 
-    <div style='max-width:960px;margin:auto;padding:2rem;'>
+    <div class='container' style='max-width:960px;margin:auto;padding:2rem;'>
 
-    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+    <div class='feature-card' style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
       <h2>Design accurate, standards-based concrete mix proportions in minutes — no spreadsheets, no confusion, no wasted materials.</h2>
     </div>
 
-    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+    <div class='feature-card' style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
       <h3>🔍 Built by engineers. Powered by ACI.</h3>
       <ul>
         <li>📐 ACI 211-based mix design</li>
@@ -22,7 +49,7 @@ def show_pro_landing():
       </ul>
     </div>
 
-    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+    <div class='feature-card' style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
       <h3>Use Cases</h3>
       <ul>
         <li>✔️ Field Engineers & QC Labs</li>
@@ -31,15 +58,15 @@ def show_pro_landing():
       </ul>
     </div>
 
-    <div style='background:#fff;padding:2rem;margin:2rem 2;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+    <div class='feature-card' style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
       <h3>Pricing</h3>
-      <div style='display:flex;gap:2rem;flex-wrap:wrap;'>
-        <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
+      <div class='pricing-container' style='display:flex;gap:2rem;flex-wrap:wrap;'>
+        <div class='pricing-card' style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
           <h4>Free</h4>
           <p>1 design at a time<br>CSV Download</p>
           <strong>Ghs 0</strong>
         </div>
-        <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
+        <div class='pricing-card' style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
           <h4>Pro</h4>
           <p>Unlimited designs<br>PDF Download<br>Custom branding</p>
           <strong>GHS 100 (One-time)</strong><br>
@@ -130,11 +157,11 @@ def show_pro_landing():
         else:
             st.warning("Please enter a valid email address")
 
-    # Final static markdown block (check for any remaining unescaped braces if issues persist)
+    # Final static markdown block
     st.markdown("""
         <a href='https://enhancedconcretemixdesign.streamlit.app/?access_key=your_super_secret_key' target='_blank' style='display:inline-block; margin-top:1rem;'>🚀 Already paid? Go to Pro Version</a>
         </div>
-        <div style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
+        <div class='pricing-card' style='background:#e0e0e0;border-radius:6px;padding:1rem;flex:1;min-width:200px;'>
           <h4>Institution</h4>
           <p>LMS-ready version<br>Multi-user access<br>Training documents</p>
           <strong>Contact Us</strong><br>
@@ -148,7 +175,7 @@ def show_pro_landing():
       <a href='/sample-report.pdf' target='_blank' style='display:inline-block; margin-top:0.5rem; text-decoration:none;'>📄 View Sample PDF Report</a>
     </div>
 
-    <div style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+    <div class='feature-card' style='background:#fff;padding:2rem;margin:2rem 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
       <h3>What You'll Save</h3>
       <ul>
         <li>⏱️ Hours of Excel formula headaches</li>
