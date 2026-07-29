@@ -148,6 +148,8 @@ using the AASHTO M 145 standard. Enter sieve results, LL, and PI — and get you
 including group index and detailed logic used for classification.
 """)
 
+st.markdown("---")
+
 # USCS Soil Classification Tool Section
 st.subheader("🧱 USCS Soil Classification System")
 st.markdown("""
