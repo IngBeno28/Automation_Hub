@@ -148,6 +148,22 @@ using the AASHTO M 145 standard. Enter sieve results, LL, and PI — and get you
 including group index and detailed logic used for classification.
 """)
 
+# USCS Soil Classification Tool Section
+st.subheader("🧱 USCS Soil Classification System")
+st.markdown("""
+The USCS Soil Classification System automates soil classification based on the ASTM D2487 standard.
+Engineers can enter particle size distribution data, Atterberg limits, and soil characteristics to 
+obtain USCS symbols, engineering interpretations, gradation curves, plasticity charts, and professional PDF reports.
+""")
+
+col1, col2 = st.columns([1,1])
+with col1:
+    st.link_button("Try Free Version", "uscs-classification-tool.streamlit.app")
+with col2:
+    st.link_button("View Source Code", "uscs-classification-tool.streamlit.app")
+
+st.markdown("---")
+
 col1, col2 = st.columns([1,1])
 with col1:
     st.link_button("Try Free Version", "https://aashtoclassificationtool.streamlit.app")
