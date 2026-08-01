@@ -145,7 +145,7 @@ st.subheader("📊 AASHTO Soil Classification Tool")
 st.markdown("""
 The AASHTO Classification Tool helps engineers quickly classify natural gravel materials 
 using the AASHTO M 145 standard. Enter sieve results, LL, and PI — and get your classification, 
-including group index and detailed logic used for classification.
+including group index and detailed logic used for classification and professional PDF reports.
 """)
 
 col1, col2 = st.columns([1,1])
