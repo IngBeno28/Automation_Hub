@@ -195,7 +195,7 @@ with st.expander('🔐 Explore Pro Version Features For Concrete Optimizer', exp
 
 st.markdown("**Interested?**")
 st.markdown("📩 Email: [wiafe1713@gmail.com](mailto:wiafe1713@gmail.com)")  
-st.markdown("🔗 LinkedIn: [Bernard Wiafe Akenteng (P.E - GhIE)](www.linkedin.com/in/bernard-wiafe-akenteng-p-e-ghie-93005124b)")
+st.markdown("🔗 LinkedIn: [Bernard Wiafe Akenteng (P.E - GhIE)](https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-ghie-93005124b)")
 
 # Footer
 st.markdown("""
