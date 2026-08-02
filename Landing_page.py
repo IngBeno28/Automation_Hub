@@ -148,11 +148,7 @@ using the AASHTO M 145 standard. Enter sieve results, LL, and PI — and get you
 including group index and detailed logic used for classification and professional PDF reports.
 """)
 
-col1, col2 = st.columns([1,1])
-with col1:
-    st.link_button("Try Free Version", "https://aashtoclassificationtool.streamlit.app")
-with col2:
-    st.link_button("View Source Code", "https://github.com/IngBeno28/AASHTO_Classification_tool")
+st.link_button("Try Free Version", "https://aashtoclassificationtool.streamlit.app")
     
 st.markdown("---")
 
@@ -164,11 +160,7 @@ Engineers can enter particle size distribution data, Atterberg limits, and soil 
 obtain USCS symbols, engineering interpretations, gradation curves, plasticity charts, and professional PDF reports.
 """)
 
-col1, col2 = st.columns([1,1])
-with col1:
-    st.link_button("Try Free Version", "https://uscs-classification-tool.streamlit.app")
-with col2:
-    st.link_button("View Source Code", "https://github.com/IngBeno28/USCS-Classification-Tool")
+st.link_button("Try Free Version", "https://uscs-classification-tool.streamlit.app")
 
 st.markdown("---")
 
@@ -180,11 +172,7 @@ Enter design strength, exposure class, workability, and aggregate properties —
 the required mix ratios with intelligent suggestions based on ACI tables.
 """)
 
-col3, col4 = st.columns([1,1])
-with col3:
-    st.link_button("Try Free Version", "https://Concreteoptimizationtool.streamlit.app")
-with col4:
-    st.link_button("View Source Code", "https://github.com/IngBeno28/concrete-optimizer1")
+st.link_button("Try Free Version", "https://Concreteoptimizationtool.streamlit.app")
 
 st.markdown("---")
 
