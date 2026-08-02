@@ -1409,7 +1409,7 @@ st.markdown("""
         </a>
     </div>
     <p style="font-size:0.8rem; opacity:0.7; margin-top:1.5rem;">
-        📩 wiafe1713@gmail.com · 📱 +233 (0) 24 000 0000
+        📩 wiafe1713@gmail.com · 📱 +233 (0) 50 136 5878
     </p>
 </div>
 """, unsafe_allow_html=True)
