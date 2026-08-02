@@ -10,7 +10,7 @@ from branding import (
     get_bg_pattern, 
     get_card_data,
     get_card_svg,
-    CARD_CSS
+    # CARD_CSS  # Uncomment if you want to use it in your main file
 )
 
 # --- Page Configuration ---
