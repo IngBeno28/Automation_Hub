@@ -1,99 +1,766 @@
 import streamlit as st
 from PIL import Image
 import os
-from aci_mix_landing_view import show_pro_landing
+from datetime import datetime
 
-# Page config
+# --- Page Configuration ---
 st.set_page_config(
-    page_title="Automation_Hub | Civil Engineering Tools",
+    page_title="Automation_Hub | Engineering Solutions",
     page_icon="🛠️",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
-# Styling (global CSS)
+# --- Custom CSS (Premium SaaS Design) ---
 st.markdown("""
-    <style>
-    /* --- Page Background --- */
-    body {
-        background-color: #f4f9ff;
+<style>
+    /* ===== GLOBAL RESET & BASE ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
-    /* --- Centered Container for Logo + Header --- */
-    .centered-container {
+    /* Hide default Streamlit elements */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    .stApp {
+        background: linear-gradient(180deg, #f8faff 0%, #ffffff 100%);
+    }
+
+    .main > div {
+        padding: 0rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    html, body, h1, h2, h3, h4, h5, h6, p, div, span, button {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* ===== CONTAINER UTILITIES ===== */
+    .section-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 1rem;
+    }
+
+    .section-label {
+        display: inline-block;
+        background: rgba(13, 71, 161, 0.08);
+        color: #0d47a1;
+        padding: 0.3rem 1rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #0a1e3c;
+        line-height: 1.2;
+        margin-bottom: 0.75rem;
+    }
+
+    .section-title span {
+        background: linear-gradient(135deg, #0d47a1, #42a5f5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .section-subtitle {
+        font-size: 1.2rem;
+        color: #5a6a7e;
+        font-weight: 400;
+        line-height: 1.6;
+        max-width: 600px;
+    }
+
+    .text-center {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero-section {
+        padding: 5rem 1rem 3rem 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(13, 71, 161, 0.05) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        bottom: -30%;
+        left: -10%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(66, 165, 245, 0.05) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        gap: 4rem;
+        flex-wrap: wrap;
+    }
+
+    .hero-text {
+        flex: 1 1 50%;
+        min-width: 300px;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(13, 71, 161, 0.08);
+        padding: 0.3rem 1rem 0.3rem 0.3rem;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #0d47a1;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-badge span {
+        background: #0d47a1;
+        color: white;
+        padding: 0.15rem 0.7rem;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: #0a1e3c;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-title .highlight {
+        background: linear-gradient(135deg, #0d47a1, #1e88e5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-description {
+        font-size: 1.2rem;
+        color: #5a6a7e;
+        line-height: 1.8;
+        max-width: 500px;
+        margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .hero-visual {
+        flex: 1 1 40%;
+        min-width: 280px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .hero-visual .floating-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 20px 60px rgba(13, 71, 161, 0.12);
+        border: 1px solid rgba(13, 71, 161, 0.06);
+        width: 100%;
+        max-width: 400px;
+        position: relative;
+        transition: transform 0.3s ease;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.85);
+    }
+
+    .hero-visual .floating-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .floating-card .stat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .floating-card .stat-item {
+        text-align: center;
+    }
+
+    .floating-card .stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #0d47a1;
+        line-height: 1;
+    }
+
+    .floating-card .stat-label {
+        font-size: 0.8rem;
+        color: #5a6a7e;
+        margin-top: 0.3rem;
+    }
+
+    .floating-card .tool-preview {
+        display: flex;
+        gap: 0.8rem;
+        align-items: center;
+        padding: 0.8rem 1rem;
+        background: #f8faff;
+        border-radius: 12px;
+        margin-top: 1rem;
+        border-left: 4px solid #0d47a1;
+    }
+
+    .floating-card .tool-preview .icon {
+        font-size: 1.5rem;
+    }
+
+    .floating-card .tool-preview .info {
+        flex: 1;
+    }
+
+    .floating-card .tool-preview .info .name {
+        font-weight: 600;
+        color: #0a1e3c;
+        font-size: 0.9rem;
+    }
+
+    .floating-card .tool-preview .info .desc {
+        font-size: 0.75rem;
+        color: #5a6a7e;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #0d47a1;
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(13, 71, 161, 0.25);
+        font-family: 'Inter', sans-serif;
+    }
+
+    .btn-primary:hover {
+        background: #0a3578;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(13, 71, 161, 0.35);
+        color: white;
+    }
+
+    .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: transparent;
+        color: #0d47a1;
+        padding: 0.8rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        border: 2px solid rgba(13, 71, 161, 0.2);
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .btn-secondary:hover {
+        background: rgba(13, 71, 161, 0.05);
+        border-color: #0d47a1;
+        transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #0d47a1;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .btn-ghost:hover {
+        gap: 0.8rem;
+        color: #0a3578;
+    }
+
+    /* ===== PRODUCT CARDS ===== */
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 24px;
+        padding: 2rem 1.5rem;
+        border: 1px solid rgba(13, 71, 161, 0.06);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(13, 71, 161, 0.04);
+    }
+
+    .product-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #0d47a1, #42a5f5);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .product-card:hover::before {
+        opacity: 1;
+    }
+
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 60px rgba(13, 71, 161, 0.10);
+        border-color: rgba(13, 71, 161, 0.12);
+    }
+
+    .product-card .icon-circle {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        display: flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
-        width: 100%;
+        font-size: 1.8rem;
+        margin-bottom: 1.2rem;
+        background: rgba(13, 71, 161, 0.06);
+        transition: all 0.3s ease;
     }
 
-    /* --- Responsive Logo (target stImage class) --- */
-    .stImage img {
-        max-width: 200px;   /* laptop/desktop size */
-        width: 50%;
-        height: auto;
-        transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
-    }
-    @media (max-width: 768px) {
-        .stImage img {
-            max-width: 150px;   /* smaller on mobile */
-        }
-    }
-    .stImage img:hover {
+    .product-card:hover .icon-circle {
+        background: rgba(13, 71, 161, 0.12);
         transform: scale(1.05);
-        filter: drop-shadow(0px 0px 8px rgba(13,71,161,0.3));
     }
 
-    /* --- Dark Mode Auto-Adjust --- */
-    @media (prefers-color-scheme: dark) {
-        .stImage img {
-            filter: brightness(0) invert(1);
-        }
-        .stImage img:hover {
-            filter: brightness(0) invert(1) drop-shadow(0px 0px 10px rgba(255,215,0,0.4));
-        }
-    }
-
-    /* --- Header Styles --- */
-    .header-title {
+    .product-card .badge {
+        display: inline-block;
+        background: rgba(13, 71, 161, 0.08);
         color: #0d47a1;
-        margin-top: 10px;
-        margin-bottom: 5px;
-    }
-    .header-subtitle {
-        color: #1565c0;
-        margin-top: 5px;
-    }
-    .header-tagline {
-        color: #37474f;
-        font-style: italic;
+        padding: 0.15rem 0.7rem;
+        border-radius: 12px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        margin-bottom: 0.8rem;
     }
 
-    /* --- Divider Line (short + centered) --- */
-    hr {
-        border: 1px solid #90caf9;
-        width: 40%;
-        margin: 20px auto;
-        border-radius: 2px;
+    .product-card h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #0a1e3c;
+        margin-bottom: 0.5rem;
     }
 
-    /* --- Buttons --- */
-    .stButton>button {
-        background-color: #1565c0;
-        color: white;
-        border-radius: 8px;
-        padding: 0.5em 1em;
+    .product-card p {
+        color: #5a6a7e;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        flex: 1;
     }
-    .stButton>button:hover {
-        background-color: #0d47a1;
-        color: #e3f2fd;
+
+    .product-card .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid #f0f4fa;
     }
-    </style>
+
+    .product-card .card-footer .status {
+        font-size: 0.75rem;
+        color: #5a6a7e;
+        font-weight: 500;
+    }
+
+    .product-card .card-footer .status .dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        margin-right: 6px;
+        background: #4caf50;
+    }
+
+    /* ===== FEATURE BADGES ===== */
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .feature-badge {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.2rem 1.5rem;
+        background: white;
+        border-radius: 16px;
+        border: 1px solid rgba(13, 71, 161, 0.06);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(13, 71, 161, 0.02);
+    }
+
+    .feature-badge:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(13, 71, 161, 0.08);
+        border-color: rgba(13, 71, 161, 0.12);
+    }
+
+    .feature-badge .emoji {
+        font-size: 1.8rem;
+        flex-shrink: 0;
+    }
+
+    .feature-badge .content h4 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #0a1e3c;
+        margin-bottom: 0.1rem;
+    }
+
+    .feature-badge .content p {
+        font-size: 0.8rem;
+        color: #5a6a7e;
+        margin: 0;
+    }
+
+    /* ===== STATISTICS ===== */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+        background: white;
+        border-radius: 24px;
+        padding: 3rem 2rem;
+        border: 1px solid rgba(13, 71, 161, 0.06);
+        box-shadow: 0 2px 10px rgba(13, 71, 161, 0.03);
+    }
+
+    .stat-item-large {
+        text-align: center;
+    }
+
+    .stat-item-large .number {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: #0d47a1;
+        line-height: 1;
+    }
+
+    .stat-item-large .label {
+        font-size: 0.9rem;
+        color: #5a6a7e;
+        margin-top: 0.3rem;
+        font-weight: 500;
+    }
+
+    .stat-divider {
+        width: 1px;
+        background: #e8edf4;
+        margin: 0 auto;
+    }
+
+    /* ===== ROADMAP ===== */
+    .roadmap-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .roadmap-item {
+        background: white;
+        border-radius: 20px;
+        padding: 1.8rem 1.5rem;
+        border: 1px solid rgba(13, 71, 161, 0.06);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .roadmap-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(13, 71, 161, 0.06);
+    }
+
+    .roadmap-item .phase {
+        display: inline-block;
+        background: rgba(13, 71, 161, 0.06);
+        color: #0d47a1;
+        padding: 0.15rem 0.7rem;
+        border-radius: 12px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.8rem;
+    }
+
+    .roadmap-item h4 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #0a1e3c;
+        margin-bottom: 0.3rem;
+    }
+
+    .roadmap-item p {
+        font-size: 0.85rem;
+        color: #5a6a7e;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .roadmap-item .coming-soon {
+        display: inline-block;
+        background: #fff3e0;
+        color: #e65100;
+        padding: 0.15rem 0.7rem;
+        border-radius: 12px;
+        font-size: 0.6rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 0.8rem;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+        margin-top: 4rem;
+        padding: 3rem 0 1.5rem 0;
+        border-top: 1px solid rgba(13, 71, 161, 0.06);
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .footer-brand p {
+        color: #5a6a7e;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        max-width: 300px;
+        margin-top: 0.5rem;
+    }
+
+    .footer-col h5 {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #0a1e3c;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+    }
+
+    .footer-col a {
+        display: block;
+        color: #5a6a7e;
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.3rem 0;
+        transition: color 0.3s ease;
+    }
+
+    .footer-col a:hover {
+        color: #0d47a1;
+    }
+
+    .footer-bottom {
+        border-top: 1px solid rgba(13, 71, 161, 0.06);
+        padding-top: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .footer-bottom p {
+        font-size: 0.8rem;
+        color: #5a6a7e;
+        margin: 0;
+    }
+
+    .footer-bottom .social-links {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .footer-bottom .social-links a {
+        color: #5a6a7e;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+
+    .footer-bottom .social-links a:hover {
+        color: #0d47a1;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 3rem 0 2rem 0;
+        }
+        .hero-title {
+            font-size: 2.2rem;
+        }
+        .hero-description {
+            font-size: 1rem;
+        }
+        .section-title {
+            font-size: 1.8rem;
+        }
+        .section-subtitle {
+            font-size: 1rem;
+        }
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+            padding: 2rem 1rem;
+        }
+        .stat-item-large .number {
+            font-size: 2rem;
+        }
+        .stat-divider {
+            display: none;
+        }
+        .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+        .main > div {
+            padding: 0rem 1rem;
+        }
+        .hero-visual .floating-card {
+            padding: 1.5rem;
+        }
+        .floating-card .stat-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .floating-card .stat-number {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-title {
+            font-size: 1.8rem;
+        }
+        .hero-actions {
+            flex-direction: column;
+            width: 100%;
+        }
+        .hero-actions .btn-primary,
+        .hero-actions .btn-secondary {
+            width: 100%;
+            justify-content: center;
+        }
+        .products-grid {
+            grid-template-columns: 1fr;
+        }
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+        .roadmap-grid {
+            grid-template-columns: 1fr;
+        }
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+    }
+
+    /* ===== UTILITY ===== */
+    .mt-1 { margin-top: 1rem; }
+    .mt-2 { margin-top: 2rem; }
+    .mt-3 { margin-top: 3rem; }
+    .mb-1 { margin-bottom: 1rem; }
+    .mb-2 { margin-bottom: 2rem; }
+    .gap-1 { gap: 1rem; }
+    .gap-2 { gap: 2rem; }
+    .flex { display: flex; }
+    .flex-center { display: flex; align-items: center; justify-content: center; }
+    .flex-between { display: flex; justify-content: space-between; align-items: center; }
+    .flex-wrap { flex-wrap: wrap; }
+</style>
 """, unsafe_allow_html=True)
 
-# Function to load logo from assets folder
+# --- LOAD LOGO ---
 def load_logo():
+    """Load logo from assets folder with fallback."""
     logo_paths = [
         "assets/automation_hub_logo.png",
         "assets/logo.png"
@@ -101,97 +768,325 @@ def load_logo():
     for path in logo_paths:
         if os.path.exists(path):
             return path
-    return None  # No logo found
+    return None
 
-# Logo + Header - Perfectly centered
 logo_path = load_logo()
 
-st.markdown('<div class="centered-container">', unsafe_allow_html=True)
+# ============================================================================
+# HERO SECTION
+# ============================================================================
+st.markdown('<div class="hero-section">', unsafe_allow_html=True)
+st.markdown('<div class="hero-content">', unsafe_allow_html=True)
 
-if logo_path:
-    # Use st.image (Streamlit handles file path safely)
-    st.image(logo_path, output_format="PNG")
-else:
-    # Fallback SVG
-    st.markdown("""
-        <svg class="logo" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="#0d47a1" stroke-width="6"/>
-            <path d="M50,10 L50,30 M70,50 L90,50 M50,70 L50,90 M30,50 L10,50" 
-                  stroke="#e53935" stroke-width="4" stroke-linecap="round"/>
-            <circle cx="50" cy="50" r="30" fill="none" stroke="#42a5f5" stroke-width="4"/>
-            <path d="M25,60 L40,45 L60,45 L75,60" 
-                  stroke="#43a047" stroke-width="3" fill="none"/>
-            <path d="M40,45 L40,30 L60,30 L60,45" 
-                  stroke="#43a047" stroke-width="3" fill="none"/>
-            <line x1="40" y1="60" x2="40" y2="75" stroke="#0d47a1" stroke-width="2"/>
-            <line x1="60" y1="60" x2="60" y2="75" stroke="#0d47a1" stroke-width="2"/>
-            <circle cx="50" cy="50" r="8" fill="#ffd700" stroke="#ff9800" stroke-width="2"/>
-            <path d="M45,50 L55,50 M50,45 L50,55" stroke="#0d47a1" stroke-width="2"/>
-        </svg>
-    """, unsafe_allow_html=True)
-
-# Header text
-st.markdown("<h1 class='header-title'>Automation_Hub</h1>", unsafe_allow_html=True)
-st.markdown("<h3 class='header-subtitle'>Smart, practical tools for Geotechnical and Materials Engineers</h3>", unsafe_allow_html=True)
-st.markdown("<p class='header-tagline'>Built for engineers. Powered by code.</p>", unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
-
-st.markdown("<hr/>", unsafe_allow_html=True)
-
-# --- Rest of the content ---
-# AASHTO Tool Section
-st.subheader("📊 AASHTO Soil Classification Tool")
+# Hero Text
 st.markdown("""
-The AASHTO Classification Tool helps engineers quickly classify natural gravel materials 
-using the AASHTO M 145 standard. Enter sieve results, LL, and PI — and get your classification, 
-including group index and detailed logic used for classification and professional PDF reports.
-""")
+<div class="hero-text">
+    <div class="hero-badge">
+        <span>🚀</span> Engineering Automation · v2.0
+    </div>
+    <h1 class="hero-title">
+        Smart Tools for<br><span class="highlight">Geotechnical & Materials</span> Engineers
+    </h1>
+    <p class="hero-description">
+        Automation_Hub delivers professional-grade engineering tools 
+        that streamline soil classification, concrete mix design, and 
+        materials testing — all in one place.
+    </p>
+    <div class="hero-actions">
+        <a href="#tools" class="btn-primary">Explore Tools →</a>
+        <a href="#contact" class="btn-secondary">Contact Us</a>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-st.link_button("Try Free Version", "https://aashtoclassificationtool.streamlit.app")
-    
-st.markdown("---")
-
-# USCS Soil Classification Tool Section
-st.subheader("🧱 USCS Soil Classification System")
+# Hero Visual
 st.markdown("""
-The USCS Soil Classification System automates soil classification based on the ASTM D2487 standard.
-Engineers can enter particle size distribution data, Atterberg limits, and soil characteristics to 
-obtain USCS symbols, engineering interpretations, gradation curves, plasticity charts, and professional PDF reports.
-""")
+<div class="hero-visual">
+    <div class="floating-card">
+        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
+            <span style="font-size:2rem;">🛠️</span>
+            <div>
+                <div style="font-weight:700; color:#0a1e3c; font-size:1.1rem;">Engineering Suite</div>
+                <div style="font-size:0.8rem; color:#5a6a7e;">3 powerful tools available</div>
+            </div>
+        </div>
+        <div class="stat-grid">
+            <div class="stat-item">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Engineering Tools</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Compliant</div>
+            </div>
+        </div>
+        <div class="tool-preview">
+            <span class="icon">📊</span>
+            <div class="info">
+                <div class="name">AASHTO & USCS Classification</div>
+                <div class="desc">ASTM D2487 · AASHTO M 145</div>
+            </div>
+            <span style="color:#4caf50; font-size:0.8rem; font-weight:600;">Active</span>
+        </div>
+        <div class="tool-preview" style="border-left-color:#42a5f5;">
+            <span class="icon">🧪</span>
+            <div class="info">
+                <div class="name">Concrete Mix Optimizer</div>
+                <div class="desc">ACI 211.1 · Mix Design</div>
+            </div>
+            <span style="color:#4caf50; font-size:0.8rem; font-weight:600;">Active</span>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-st.link_button("Try Free Version", "https://uscs-classification-tool.streamlit.app")
+st.markdown('</div></div>', unsafe_allow_html=True)
 
-st.markdown("---")
+# ============================================================================
+# ENGINEERING SOLUTIONS SECTION
+# ============================================================================
+st.markdown(f"""
+<div class="section-container" id="tools">
+    <div style="text-align:center; margin-bottom:2rem;">
+        <div class="section-label">Engineering Solutions</div>
+        <h2 class="section-title">Professional Tools for <span>Every Project</span></h2>
+        <p class="section-subtitle" style="margin:0 auto;">
+            Industry-standard tools designed for geotechnical and materials engineers.
+        </p>
+    </div>
+    <div class="products-grid">
+        <!-- Card 1: AASHTO -->
+        <div class="product-card">
+            <div class="icon-circle">📊</div>
+            <div class="badge">AASHTO M 145</div>
+            <h3>AASHTO Soil Classification</h3>
+            <p>Classify natural gravel materials using the AASHTO M 145 standard. Get Group Index, detailed logic, and professional PDF reports.</p>
+            <div class="card-footer">
+                <span class="status"><span class="dot"></span>Free Version</span>
+                <a href="https://aashtoclassificationtool.streamlit.app" target="_blank" class="btn-ghost" style="font-size:0.85rem;">Try Now →</a>
+            </div>
+        </div>
+        
+        <!-- Card 2: USCS -->
+        <div class="product-card">
+            <div class="icon-circle">🧱</div>
+            <div class="badge">ASTM D2487</div>
+            <h3>USCS Soil Classification</h3>
+            <p>Automated soil classification based on ASTM D2487. Includes gradation curves, plasticity charts, and comprehensive PDF reports.</p>
+            <div class="card-footer">
+                <span class="status"><span class="dot"></span>Free Version</span>
+                <a href="https://uscs-classification-tool.streamlit.app" target="_blank" class="btn-ghost" style="font-size:0.85rem;">Try Now →</a>
+            </div>
+        </div>
+        
+        <!-- Card 3: Concrete Optimizer -->
+        <div class="product-card">
+            <div class="icon-circle">🧪</div>
+            <div class="badge">ACI 211.1</div>
+            <h3>Concrete Mix Optimizer</h3>
+            <p>Automate your ACI 211.1 mix proportion calculations. Input design strength, exposure class, and aggregate properties for optimized mix ratios.</p>
+            <div class="card-footer">
+                <span class="status"><span class="dot"></span>Free Version</span>
+                <a href="https://Concreteoptimizationtool.streamlit.app" target="_blank" class="btn-ghost" style="font-size:0.85rem;">Try Now →</a>
+            </div>
+        </div>
+    </div>
+    <div style="text-align:center; margin-top:2.5rem;">
+        <a href="#pro" class="btn-secondary" style="font-size:0.95rem;">🔐 Upgrade to Pro →</a>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-# Concrete Optimizer Section
-st.subheader("🧪 Concrete Mix Design Optimizer")
-st.markdown("""
-The Concrete Mix Design Optimizer automates your ACI 211.1 mix proportion calculations. 
-Enter design strength, exposure class, workability, and aggregate properties — the tool computes 
-the required mix ratios with intelligent suggestions based on ACI tables.
-""")
+# ============================================================================
+# WHY AUTOMATION_HUB
+# ============================================================================
+st.markdown(f"""
+<div class="section-container" style="padding-top:1rem;">
+    <div style="text-align:center; margin-bottom:2rem;">
+        <div class="section-label">Why Automation_Hub</div>
+        <h2 class="section-title">Built for <span>Engineers</span>, Powered by Code</h2>
+        <p class="section-subtitle" style="margin:0 auto;">
+            We understand the challenges of engineering workflows. That's why we built tools that actually help.
+        </p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-badge">
+            <span class="emoji">⚡</span>
+            <div class="content">
+                <h4>Fast & Accurate</h4>
+                <p>Get results instantly with zero calculation errors</p>
+            </div>
+        </div>
+        <div class="feature-badge">
+            <span class="emoji">📋</span>
+            <div class="content">
+                <h4>Standard Compliant</h4>
+                <p>Follows ASTM, AASHTO, and ACI standards</p>
+            </div>
+        </div>
+        <div class="feature-badge">
+            <span class="emoji">📄</span>
+            <div class="content">
+                <h4>Professional Reports</h4>
+                <p>Generate PDF reports ready for project documentation</p>
+            </div>
+        </div>
+        <div class="feature-badge">
+            <span class="emoji">🔧</span>
+            <div class="content">
+                <h4>Practical Design</h4>
+                <p>Built by engineers who understand real project needs</p>
+            </div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-st.link_button("Try Free Version", "https://Concreteoptimizationtool.streamlit.app")
+# ============================================================================
+# STATISTICS
+# ============================================================================
+st.markdown(f"""
+<div class="section-container" style="padding-top:0.5rem;">
+    <div class="stats-grid">
+        <div class="stat-item-large">
+            <div class="number">3</div>
+            <div class="label">Engineering Tools</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item-large">
+            <div class="number">100%</div>
+            <div class="label">Compliant</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item-large">
+            <div class="number">🚀</div>
+            <div class="label">Production Ready</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item-large">
+            <div class="number">📈</div>
+            <div class="label">Continuous Updates</div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-st.markdown("---")
+# ============================================================================
+# COMING SOON ROADMAP
+# ============================================================================
+st.markdown(f"""
+<div class="section-container" style="padding-top:0.5rem;">
+    <div style="text-align:center; margin-bottom:2rem;">
+        <div class="section-label">Roadmap</div>
+        <h2 class="section-title">What's <span>Coming Soon</span></h2>
+        <p class="section-subtitle" style="margin:0 auto;">
+            We're constantly expanding our suite of engineering tools.
+        </p>
+    </div>
+    <div class="roadmap-grid">
+        <div class="roadmap-item">
+            <div class="phase">Phase 1</div>
+            <h4>Pro Version Launch</h4>
+            <p>Advanced features, batch processing, and priority support for enterprise users.</p>
+            <div class="coming-soon">Q4 2025</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="phase">Phase 2</div>
+            <h4>API Access</h4>
+            <p>RESTful API for integrating our classification engines into your existing workflows.</p>
+            <div class="coming-soon">Q1 2026</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="phase">Phase 3</div>
+            <h4>Team Collaboration</h4>
+            <p>Shared projects, version control, and team management features.</p>
+            <div class="coming-soon">Q2 2026</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="phase">Phase 4</div>
+            <h4>Mobile App</h4>
+            <p>On-the-go access to all tools with a native mobile experience.</p>
+            <div class="coming-soon">Q3 2026</div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-# Pro CTA
-st.subheader("🔐 Want Pro Access?")
-with st.expander('🔐 Explore Pro Version Features For Concrete Optimizer', expanded=False):
-    show_pro_landing()
+# ============================================================================
+# PRO CTA SECTION
+# ============================================================================
+st.markdown(f"""
+<div class="section-container" id="pro" style="padding-top:0.5rem;">
+    <div style="background: linear-gradient(135deg, #0d47a1 0%, #1a237e 100%); 
+                border-radius: 24px; 
+                padding: 3rem 2.5rem; 
+                text-align: center;
+                color: white;
+                box-shadow: 0 20px 60px rgba(13, 71, 161, 0.25);">
+        <div style="font-size:3rem; margin-bottom:1rem;">🔐</div>
+        <h2 style="font-size:2rem; font-weight:800; margin-bottom:0.5rem; color:white;">Ready for Pro Access?</h2>
+        <p style="font-size:1.1rem; opacity:0.9; max-width:500px; margin:0 auto 1.5rem auto; line-height:1.6;">
+            Unlock advanced features, priority support, and enterprise-grade capabilities for your engineering team.
+        </p>
+        <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+            <a href="mailto:wiafe1713@gmail.com" class="btn-primary" style="background:white; color:#0d47a1; box-shadow:0 4px 20px rgba(255,255,255,0.2);">
+                Contact Sales →
+            </a>
+        </div>
+        <p style="font-size:0.8rem; opacity:0.7; margin-top:1.5rem;">
+            📩 wiafe1713@gmail.com · 📱 +233 (0) 24 000 0000
+        </p>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-st.markdown("**Interested?**")
-st.markdown("📩 Email: [wiafe1713@gmail.com](mailto:wiafe1713@gmail.com)")  
-st.markdown("🔗 LinkedIn: [Bernard Wiafe Akenteng (P.E - GhIE)](https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-ghie-93005124b)")
+# ============================================================================
+# FOOTER
+# ============================================================================
+current_year = datetime.now().year
 
-# Footer
-st.markdown("""
----
-<p style='text-align: center; font-size: 0.9em; color: #78909c;'>
-    © 2025 Automation_Hub | Built by Automation_Hub  
-    | <a href='https://github.com/IngBeno28'>GitHub</a>
-    | MIT Licensed<br>
-    <em>Built for engineers. Powered by code.</em>
-</p>
+st.markdown(f"""
+<div class="footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+                <span style="font-size:1.8rem;">🛠️</span>
+                <span style="font-weight:800; font-size:1.3rem; color:#0a1e3c;">Automation_Hub</span>
+            </div>
+            <p>Smart, practical tools for Geotechnical and Materials Engineers. Built for engineers. Powered by code.</p>
+            <div style="margin-top:1rem;">
+                <span style="display:inline-block; background:rgba(13,71,161,0.06); color:#0d47a1; padding:0.2rem 1rem; border-radius:12px; font-size:0.7rem; font-weight:600;">MIT Licensed</span>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h5>Products</h5>
+            <a href="https://aashtoclassificationtool.streamlit.app" target="_blank">AASHTO Tool</a>
+            <a href="https://uscs-classification-tool.streamlit.app" target="_blank">USCS Tool</a>
+            <a href="https://Concreteoptimizationtool.streamlit.app" target="_blank">Concrete Optimizer</a>
+        </div>
+        <div class="footer-col">
+            <h5>Company</h5>
+            <a href="#tools">Tools</a>
+            <a href="#pro">Pro Access</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-col">
+            <h5>Connect</h5>
+            <a href="mailto:wiafe1713@gmail.com">Email</a>
+            <a href="https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-ghie-93005124b" target="_blank">LinkedIn</a>
+            <a href="https://github.com/IngBeno28" target="_blank">GitHub</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© {current_year} Automation_Hub. All rights reserved.</p>
+        <div class="social-links">
+            <a href="mailto:wiafe1713@gmail.com">✉️ Email</a>
+            <a href="https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-ghie-93005124b" target="_blank">🔗 LinkedIn</a>
+            <a href="https://github.com/IngBeno28" target="_blank">🐙 GitHub</a>
+        </div>
+    </div>
+    <div style="text-align:center; margin-top:1.5rem; font-size:0.7rem; color:#b0bec5;">
+        Built for engineers. Powered by code.
+    </div>
+</div>
 """, unsafe_allow_html=True)
