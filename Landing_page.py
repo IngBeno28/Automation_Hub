@@ -1358,7 +1358,7 @@ st.markdown("""
             </div>
             <div class="contact-item">
                 <div class="icon">📱</div>
-                <div class="text">+233 (0) 24 000 0000</div>
+                <div class="text">+233 (0) 50 136 5878</div>
             </div>
         </div>
         <div class="contact-form">
