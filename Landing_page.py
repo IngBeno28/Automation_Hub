@@ -53,6 +53,77 @@ st.markdown(f"""
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }}
 
+    /* ===== TOP NAVBAR ===== */
+    .navbar {{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(13, 71, 161, 0.06);
+        margin-bottom: 1rem;
+    }}
+
+    .navbar-brand {{
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+    }}
+
+    .navbar-brand img {{
+        height: 40px;
+        width: auto;
+    }}
+
+    .navbar-brand .brand-text {{
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: #0a1e3c;
+        letter-spacing: -0.5px;
+    }}
+
+    .navbar-brand .brand-text span {{
+        color: #0d47a1;
+    }}
+
+    .navbar-actions {{
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }}
+
+    .navbar-actions .nav-link {{
+        color: #5a6a7e;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        padding: 0.4rem 0;
+    }}
+
+    .navbar-actions .nav-link:hover {{
+        color: #0d47a1;
+    }}
+
+    .navbar-actions .nav-cta {{
+        background: #0d47a1;
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(13, 71, 161, 0.2);
+    }}
+
+    .navbar-actions .nav-cta:hover {{
+        background: #0a3578;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(13, 71, 161, 0.3);
+        color: white;
+    }}
+
     /* ===== CONTAINER UTILITIES ===== */
     .section-container {{
         max-width: 1200px;
@@ -104,7 +175,7 @@ st.markdown(f"""
 
     /* ===== HERO SECTION ===== */
     .hero-section {{
-        padding: 5rem 1rem 3rem 1rem;
+        padding: 2rem 1rem 3rem 1rem;
         position: relative;
         overflow: hidden;
     }}
@@ -651,6 +722,130 @@ st.markdown(f"""
         margin-top: 0.8rem;
     }}
 
+    /* ===== CONTACT SECTION ===== */
+    .contact-section {{
+        background: white;
+        border-radius: 24px;
+        padding: 3rem 2.5rem;
+        border: 1px solid rgba(13, 71, 161, 0.06);
+        box-shadow: 0 2px 10px rgba(13, 71, 161, 0.03);
+        margin-top: 2rem;
+    }}
+
+    .contact-grid {{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: start;
+    }}
+
+    .contact-info h3 {{
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #0a1e3c;
+        margin-bottom: 0.5rem;
+    }}
+
+    .contact-info p {{
+        color: #5a6a7e;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+    }}
+
+    .contact-info .contact-item {{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(13, 71, 161, 0.04);
+    }}
+
+    .contact-info .contact-item:last-child {{
+        border-bottom: none;
+    }}
+
+    .contact-info .contact-item .icon {{
+        font-size: 1.3rem;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(13, 71, 161, 0.06);
+        border-radius: 10px;
+        flex-shrink: 0;
+    }}
+
+    .contact-info .contact-item .text {{
+        font-size: 0.95rem;
+        color: #0a1e3c;
+    }}
+
+    .contact-info .contact-item .text a {{
+        color: #0d47a1;
+        text-decoration: none;
+        font-weight: 500;
+    }}
+
+    .contact-info .contact-item .text a:hover {{
+        text-decoration: underline;
+    }}
+
+    .contact-form {{
+        background: #f8faff;
+        border-radius: 16px;
+        padding: 1.5rem;
+    }}
+
+    .contact-form h4 {{
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #0a1e3c;
+        margin-bottom: 0.3rem;
+    }}
+
+    .contact-form p {{
+        font-size: 0.9rem;
+        color: #5a6a7e;
+        margin-bottom: 1.5rem;
+    }}
+
+    .contact-form .form-group {{
+        margin-bottom: 1rem;
+    }}
+
+    .contact-form .form-group label {{
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #0a1e3c;
+        margin-bottom: 0.3rem;
+    }}
+
+    .contact-form .form-group input,
+    .contact-form .form-group textarea {{
+        width: 100%;
+        padding: 0.7rem 1rem;
+        border: 1px solid rgba(13, 71, 161, 0.1);
+        border-radius: 10px;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9rem;
+        transition: border-color 0.3s ease;
+        background: white;
+    }}
+
+    .contact-form .form-group input:focus,
+    .contact-form .form-group textarea:focus {{
+        outline: none;
+        border-color: #0d47a1;
+        box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.08);
+    }}
+
+    .contact-form .form-group textarea {{
+        resize: vertical;
+        min-height: 100px;
+    }}
+
     /* ===== FOOTER ===== */
     .footer {{
         margin-top: 4rem;
@@ -729,8 +924,23 @@ st.markdown(f"""
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {{
+        .navbar {{
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }}
+        .navbar-actions {{
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }}
+        .navbar-actions .nav-link {{
+            font-size: 0.8rem;
+        }}
+        .navbar-actions .nav-cta {{
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+        }}
         .hero-section {{
-            padding: 3rem 0 2rem 0;
+            padding: 1rem 0 2rem 0;
         }}
         .hero-title {{
             font-size: 2.2rem;
@@ -775,6 +985,10 @@ st.markdown(f"""
         .floating-card .stat-number {{
             font-size: 1.5rem;
         }}
+        .contact-grid {{
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }}
     }}
 
     @media (max-width: 480px) {{
@@ -803,6 +1017,14 @@ st.markdown(f"""
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
         }}
+        .navbar {{
+            flex-direction: column;
+            align-items: flex-start;
+        }}
+        .navbar-actions {{
+            width: 100%;
+            justify-content: flex-start;
+        }}
     }}
 
     /* ===== UTILITY ===== */
@@ -825,7 +1047,8 @@ def load_logo():
     """Load logo from assets folder with fallback."""
     logo_paths = [
         "assets/automation_hub_logo.png",
-        "assets/logo.png"
+        "assets/logo.png",
+        "assets/Automation_Hub_Logo.png"  # Added case variation
     ]
     for path in logo_paths:
         if os.path.exists(path):
@@ -833,6 +1056,38 @@ def load_logo():
     return None
 
 logo_path = load_logo()
+
+# ============================================================================
+# TOP NAVBAR
+# ============================================================================
+st.markdown('<div class="navbar">', unsafe_allow_html=True)
+
+# Logo and Brand
+if logo_path:
+    st.markdown(f'''
+    <a href="#" class="navbar-brand">
+        <img src="data:image/png;base64,{__import__('base64').b64encode(open(logo_path, "rb").read()).decode()}" alt="Automation_Hub Logo">
+        <span class="brand-text">Automation_<span>Hub</span></span>
+    </a>
+    ''', unsafe_allow_html=True)
+else:
+    st.markdown('''
+    <a href="#" class="navbar-brand">
+        <span style="font-size:2rem;">🛠️</span>
+        <span class="brand-text">Automation_<span>Hub</span></span>
+    </a>
+    ''', unsafe_allow_html=True)
+
+# Nav Links
+st.markdown('''
+<div class="navbar-actions">
+    <a href="#tools" class="nav-link">Tools</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <a href="#pro" class="nav-cta">Get Pro →</a>
+</div>
+''', unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
 
 # ============================================================================
 # HERO SECTION
@@ -1067,6 +1322,66 @@ st.markdown("""
         <h4>Mobile App</h4>
         <p>On-the-go access to all tools with a native mobile experience.</p>
         <div class="coming-soon">Q3 2026</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ============================================================================
+# CONTACT SECTION (NEW - Fixes the "Contact Us" button)
+# ============================================================================
+st.markdown('<div class="section-container" id="contact" style="padding-top:0.5rem;">', unsafe_allow_html=True)
+st.markdown("""
+<div style="text-align:center; margin-bottom:2rem;">
+    <div class="section-label">Get in Touch</div>
+    <h2 class="section-title">Let's <span>Connect</span></h2>
+    <p class="section-subtitle" style="margin:0 auto;">
+        Have questions about our tools or interested in Pro access? Reach out to us.
+    </p>
+</div>
+<div class="contact-section">
+    <div class="contact-grid">
+        <div class="contact-info">
+            <h3>📬 Contact Information</h3>
+            <p>We're here to help. Reach out through any of these channels and we'll get back to you as soon as possible.</p>
+            <div class="contact-item">
+                <div class="icon">✉️</div>
+                <div class="text"><a href="mailto:wiafe1713@gmail.com">wiafe1713@gmail.com</a></div>
+            </div>
+            <div class="contact-item">
+                <div class="icon">🔗</div>
+                <div class="text"><a href="https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-ghie-93005124b" target="_blank">LinkedIn Profile</a></div>
+            </div>
+            <div class="contact-item">
+                <div class="icon">🐙</div>
+                <div class="text"><a href="https://github.com/IngBeno28" target="_blank">GitHub</a></div>
+            </div>
+            <div class="contact-item">
+                <div class="icon">📱</div>
+                <div class="text">+233 (0) 24 000 0000</div>
+            </div>
+        </div>
+        <div class="contact-form">
+            <h4>📝 Send a Message</h4>
+            <p>Fill out the form below and we'll get back to you within 24 hours.</p>
+            <form action="mailto:wiafe1713@gmail.com" method="post" enctype="text/plain">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Tell us how we can help..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">
+                    Send Message ✉️
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
