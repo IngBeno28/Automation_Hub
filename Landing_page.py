@@ -3,6 +3,16 @@ from PIL import Image
 import os
 from datetime import datetime
 
+# Import branding module
+from branding import (
+    CARD_STYLES, 
+    get_card_style, 
+    get_bg_pattern, 
+    get_card_data,
+    get_card_svg,
+    CARD_CSS
+)
+
 # --- Page Configuration ---
 st.set_page_config(
     page_title="Automation_Hub | Engineering Solutions",
@@ -12,45 +22,45 @@ st.set_page_config(
 )
 
 # --- Custom CSS (Premium SaaS Design) ---
-st.markdown("""
+st.markdown(f"""
 <style>
     /* ===== GLOBAL RESET & BASE ===== */
-    * {
+    * {{
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-    }
+    }}
 
     /* Hide default Streamlit elements */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
+    #MainMenu {{visibility: hidden;}}
+    footer {{visibility: hidden;}}
+    header {{visibility: hidden;}}
     
-    .stApp {
+    .stApp {{
         background: linear-gradient(180deg, #f8faff 0%, #ffffff 100%);
-    }
+    }}
 
-    .main > div {
+    .main > div {{
         padding: 0rem 2rem;
         max-width: 1200px;
         margin: 0 auto;
-    }
+    }}
 
     /* ===== TYPOGRAPHY ===== */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     
-    html, body, h1, h2, h3, h4, h5, h6, p, div, span, button {
+    html, body, h1, h2, h3, h4, h5, h6, p, div, span, button {{
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
+    }}
 
     /* ===== CONTAINER UTILITIES ===== */
-    .section-container {
+    .section-container {{
         max-width: 1200px;
         margin: 0 auto;
         padding: 4rem 1rem;
-    }
+    }}
 
-    .section-label {
+    .section-label {{
         display: inline-block;
         background: rgba(13, 71, 161, 0.08);
         color: #0d47a1;
@@ -61,45 +71,45 @@ st.markdown("""
         letter-spacing: 0.5px;
         text-transform: uppercase;
         margin-bottom: 1rem;
-    }
+    }}
 
-    .section-title {
+    .section-title {{
         font-size: 2.5rem;
         font-weight: 800;
         color: #0a1e3c;
         line-height: 1.2;
         margin-bottom: 0.75rem;
-    }
+    }}
 
-    .section-title span {
+    .section-title span {{
         background: linear-gradient(135deg, #0d47a1, #42a5f5);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-    }
+    }}
 
-    .section-subtitle {
+    .section-subtitle {{
         font-size: 1.2rem;
         color: #5a6a7e;
         font-weight: 400;
         line-height: 1.6;
         max-width: 600px;
-    }
+    }}
 
-    .text-center {
+    .text-center {{
         text-align: center;
         margin-left: auto;
         margin-right: auto;
-    }
+    }}
 
     /* ===== HERO SECTION ===== */
-    .hero-section {
+    .hero-section {{
         padding: 5rem 1rem 3rem 1rem;
         position: relative;
         overflow: hidden;
-    }
+    }}
 
-    .hero-section::before {
+    .hero-section::before {{
         content: '';
         position: absolute;
         top: -50%;
@@ -109,9 +119,9 @@ st.markdown("""
         background: radial-gradient(circle, rgba(13, 71, 161, 0.05) 0%, transparent 70%);
         border-radius: 50%;
         pointer-events: none;
-    }
+    }}
 
-    .hero-section::after {
+    .hero-section::after {{
         content: '';
         position: absolute;
         bottom: -30%;
@@ -121,23 +131,23 @@ st.markdown("""
         background: radial-gradient(circle, rgba(66, 165, 245, 0.05) 0%, transparent 70%);
         border-radius: 50%;
         pointer-events: none;
-    }
+    }}
 
-    .hero-content {
+    .hero-content {{
         position: relative;
         z-index: 1;
         display: flex;
         align-items: center;
         gap: 4rem;
         flex-wrap: wrap;
-    }
+    }}
 
-    .hero-text {
+    .hero-text {{
         flex: 1 1 50%;
         min-width: 300px;
-    }
+    }}
 
-    .hero-badge {
+    .hero-badge {{
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
@@ -148,56 +158,56 @@ st.markdown("""
         font-weight: 500;
         color: #0d47a1;
         margin-bottom: 1.5rem;
-    }
+    }}
 
-    .hero-badge span {
+    .hero-badge span {{
         background: #0d47a1;
         color: white;
         padding: 0.15rem 0.7rem;
         border-radius: 20px;
         font-weight: 600;
-    }
+    }}
 
-    .hero-title {
+    .hero-title {{
         font-size: 3.5rem;
         font-weight: 900;
         color: #0a1e3c;
         line-height: 1.1;
         margin-bottom: 1.5rem;
-    }
+    }}
 
-    .hero-title .highlight {
+    .hero-title .highlight {{
         background: linear-gradient(135deg, #0d47a1, #1e88e5);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-    }
+    }}
 
-    .hero-description {
+    .hero-description {{
         font-size: 1.2rem;
         color: #5a6a7e;
         line-height: 1.8;
         max-width: 500px;
         margin-bottom: 2rem;
-    }
+    }}
 
-    .hero-actions {
+    .hero-actions {{
         display: flex;
         gap: 1rem;
         flex-wrap: wrap;
         align-items: center;
-    }
+    }}
 
-    .hero-visual {
+    .hero-visual {{
         flex: 1 1 40%;
         min-width: 280px;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-    }
+    }}
 
-    .hero-visual .floating-card {
+    .hero-visual .floating-card {{
         background: white;
         border-radius: 20px;
         padding: 2rem;
@@ -209,37 +219,37 @@ st.markdown("""
         transition: transform 0.3s ease;
         backdrop-filter: blur(10px);
         background: rgba(255, 255, 255, 0.85);
-    }
+    }}
 
-    .hero-visual .floating-card:hover {
+    .hero-visual .floating-card:hover {{
         transform: translateY(-5px);
-    }
+    }}
 
-    .floating-card .stat-grid {
+    .floating-card .stat-grid {{
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
         margin-top: 1rem;
-    }
+    }}
 
-    .floating-card .stat-item {
+    .floating-card .stat-item {{
         text-align: center;
-    }
+    }}
 
-    .floating-card .stat-number {
+    .floating-card .stat-number {{
         font-size: 2rem;
         font-weight: 800;
         color: #0d47a1;
         line-height: 1;
-    }
+    }}
 
-    .floating-card .stat-label {
+    .floating-card .stat-label {{
         font-size: 0.8rem;
         color: #5a6a7e;
         margin-top: 0.3rem;
-    }
+    }}
 
-    .floating-card .tool-preview {
+    .floating-card .tool-preview {{
         display: flex;
         gap: 0.8rem;
         align-items: center;
@@ -248,29 +258,29 @@ st.markdown("""
         border-radius: 12px;
         margin-top: 1rem;
         border-left: 4px solid #0d47a1;
-    }
+    }}
 
-    .floating-card .tool-preview .icon {
+    .floating-card .tool-preview .icon {{
         font-size: 1.5rem;
-    }
+    }}
 
-    .floating-card .tool-preview .info {
+    .floating-card .tool-preview .info {{
         flex: 1;
-    }
+    }}
 
-    .floating-card .tool-preview .info .name {
+    .floating-card .tool-preview .info .name {{
         font-weight: 600;
         color: #0a1e3c;
         font-size: 0.9rem;
-    }
+    }}
 
-    .floating-card .tool-preview .info .desc {
+    .floating-card .tool-preview .info .desc {{
         font-size: 0.75rem;
         color: #5a6a7e;
-    }
+    }}
 
     /* ===== BUTTONS ===== */
-    .btn-primary {
+    .btn-primary {{
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
@@ -286,16 +296,16 @@ st.markdown("""
         transition: all 0.3s ease;
         box-shadow: 0 4px 15px rgba(13, 71, 161, 0.25);
         font-family: 'Inter', sans-serif;
-    }
+    }}
 
-    .btn-primary:hover {
+    .btn-primary:hover {{
         background: #0a3578;
         transform: translateY(-2px);
         box-shadow: 0 8px 30px rgba(13, 71, 161, 0.35);
         color: white;
-    }
+    }}
 
-    .btn-secondary {
+    .btn-secondary {{
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
@@ -310,15 +320,15 @@ st.markdown("""
         text-decoration: none;
         transition: all 0.3s ease;
         font-family: 'Inter', sans-serif;
-    }
+    }}
 
-    .btn-secondary:hover {
+    .btn-secondary:hover {{
         background: rgba(13, 71, 161, 0.05);
         border-color: #0d47a1;
         transform: translateY(-2px);
-    }
+    }}
 
-    .btn-ghost {
+    .btn-ghost {{
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
@@ -331,23 +341,22 @@ st.markdown("""
         border: none;
         cursor: pointer;
         font-size: 1rem;
-    }
+    }}
 
-    .btn-ghost:hover {
+    .btn-ghost:hover {{
         gap: 0.8rem;
         color: #0a3578;
-    }
+    }}
 
-    /* ===== PRODUCT CARDS ===== */
-    .products-grid {
+    /* ===== PRODUCT CARDS (Enhanced with branding) ===== */
+    .products-grid {{
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 2rem;
         margin-top: 2rem;
-    }
+    }}
 
-    .product-card {
-        background: white;
+    .product-card {{
         border-radius: 24px;
         padding: 2rem 1.5rem;
         border: 1px solid rgba(13, 71, 161, 0.06);
@@ -355,9 +364,13 @@ st.markdown("""
         position: relative;
         overflow: hidden;
         box-shadow: 0 2px 10px rgba(13, 71, 161, 0.04);
-    }
+        min-height: 320px;
+        display: flex;
+        flex-direction: column;
+    }}
 
-    .product-card::before {
+    /* Gradient top border accent */
+    .product-card::before {{
         content: '';
         position: absolute;
         top: 0;
@@ -367,19 +380,44 @@ st.markdown("""
         background: linear-gradient(90deg, #0d47a1, #42a5f5);
         opacity: 0;
         transition: opacity 0.4s ease;
-    }
+    }}
 
-    .product-card:hover::before {
+    .product-card:hover::before {{
         opacity: 1;
-    }
+    }}
 
-    .product-card:hover {
+    .product-card:hover {{
         transform: translateY(-8px);
         box-shadow: 0 20px 60px rgba(13, 71, 161, 0.10);
         border-color: rgba(13, 71, 161, 0.12);
-    }
+    }}
 
-    .product-card .icon-circle {
+    /* Pattern overlay for visual depth */
+    .product-card .card-pattern {{
+        position: absolute;
+        bottom: -5px;
+        right: -5px;
+        font-size: 5rem;
+        opacity: 0.04;
+        pointer-events: none;
+        user-select: none;
+        line-height: 1;
+        z-index: 0;
+        transition: all 0.6s ease;
+    }}
+
+    .product-card:hover .card-pattern {{
+        transform: scale(1.1) rotate(-5deg);
+        opacity: 0.06;
+    }}
+
+    /* Card content sits above background */
+    .product-card > *:not(.card-pattern) {{
+        position: relative;
+        z-index: 1;
+    }}
+
+    .product-card .icon-circle {{
         width: 56px;
         height: 56px;
         border-radius: 16px;
@@ -390,14 +428,14 @@ st.markdown("""
         margin-bottom: 1.2rem;
         background: rgba(13, 71, 161, 0.06);
         transition: all 0.3s ease;
-    }
+    }}
 
-    .product-card:hover .icon-circle {
+    .product-card:hover .icon-circle {{
         background: rgba(13, 71, 161, 0.12);
         transform: scale(1.05);
-    }
+    }}
 
-    .product-card .badge {
+    .product-card .badge {{
         display: inline-block;
         background: rgba(13, 71, 161, 0.08);
         color: #0d47a1;
@@ -407,55 +445,79 @@ st.markdown("""
         font-weight: 600;
         letter-spacing: 0.3px;
         margin-bottom: 0.8rem;
-    }
+        align-self: flex-start;
+    }}
 
-    .product-card h3 {
+    .product-card h3 {{
         font-size: 1.3rem;
         font-weight: 700;
         color: #0a1e3c;
         margin-bottom: 0.5rem;
-    }
+    }}
 
-    .product-card p {
+    .product-card p {{
         color: #5a6a7e;
         font-size: 0.95rem;
         line-height: 1.6;
         margin-bottom: 1.5rem;
         flex: 1;
-    }
+    }}
 
-    .product-card .card-footer {
+    .product-card .card-footer {{
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding-top: 1rem;
-        border-top: 1px solid #f0f4fa;
-    }
+        border-top: 1px solid rgba(13, 71, 161, 0.06);
+        margin-top: auto;
+    }}
 
-    .product-card .card-footer .status {
+    .product-card .card-footer .status {{
         font-size: 0.75rem;
         color: #5a6a7e;
         font-weight: 500;
-    }
+    }}
 
-    .product-card .card-footer .status .dot {
+    .product-card .card-footer .status .dot {{
         display: inline-block;
         width: 6px;
         height: 6px;
         border-radius: 50%;
         margin-right: 6px;
         background: #4caf50;
-    }
+    }}
+
+    /* Decorative floating badge */
+    .product-card .deco-badge {{
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(13, 71, 161, 0.04);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        z-index: 1;
+    }}
+
+    .product-card:hover .deco-badge {{
+        background: rgba(13, 71, 161, 0.10);
+        transform: rotate(15deg);
+    }}
 
     /* ===== FEATURE BADGES ===== */
-    .features-grid {
+    .features-grid {{
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 1.5rem;
         margin-top: 2rem;
-    }
+    }}
 
-    .feature-badge {
+    .feature-badge {{
         display: flex;
         align-items: center;
         gap: 1rem;
@@ -465,34 +527,34 @@ st.markdown("""
         border: 1px solid rgba(13, 71, 161, 0.06);
         transition: all 0.3s ease;
         box-shadow: 0 2px 8px rgba(13, 71, 161, 0.02);
-    }
+    }}
 
-    .feature-badge:hover {
+    .feature-badge:hover {{
         transform: translateY(-4px);
         box-shadow: 0 12px 40px rgba(13, 71, 161, 0.08);
         border-color: rgba(13, 71, 161, 0.12);
-    }
+    }}
 
-    .feature-badge .emoji {
+    .feature-badge .emoji {{
         font-size: 1.8rem;
         flex-shrink: 0;
-    }
+    }}
 
-    .feature-badge .content h4 {
+    .feature-badge .content h4 {{
         font-size: 0.95rem;
         font-weight: 600;
         color: #0a1e3c;
         margin-bottom: 0.1rem;
-    }
+    }}
 
-    .feature-badge .content p {
+    .feature-badge .content p {{
         font-size: 0.8rem;
         color: #5a6a7e;
         margin: 0;
-    }
+    }}
 
     /* ===== STATISTICS ===== */
-    .stats-grid {
+    .stats-grid {{
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 2rem;
@@ -502,55 +564,55 @@ st.markdown("""
         padding: 3rem 2rem;
         border: 1px solid rgba(13, 71, 161, 0.06);
         box-shadow: 0 2px 10px rgba(13, 71, 161, 0.03);
-    }
+    }}
 
-    .stat-item-large {
+    .stat-item-large {{
         text-align: center;
-    }
+    }}
 
-    .stat-item-large .number {
+    .stat-item-large .number {{
         font-size: 2.8rem;
         font-weight: 900;
         color: #0d47a1;
         line-height: 1;
-    }
+    }}
 
-    .stat-item-large .label {
+    .stat-item-large .label {{
         font-size: 0.9rem;
         color: #5a6a7e;
         margin-top: 0.3rem;
         font-weight: 500;
-    }
+    }}
 
-    .stat-divider {
+    .stat-divider {{
         width: 1px;
         background: #e8edf4;
         margin: 0 auto;
-    }
+    }}
 
     /* ===== ROADMAP ===== */
-    .roadmap-grid {
+    .roadmap-grid {{
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1.5rem;
         margin-top: 2rem;
-    }
+    }}
 
-    .roadmap-item {
+    .roadmap-item {{
         background: white;
         border-radius: 20px;
         padding: 1.8rem 1.5rem;
         border: 1px solid rgba(13, 71, 161, 0.06);
         transition: all 0.3s ease;
         position: relative;
-    }
+    }}
 
-    .roadmap-item:hover {
+    .roadmap-item:hover {{
         transform: translateY(-4px);
         box-shadow: 0 12px 40px rgba(13, 71, 161, 0.06);
-    }
+    }}
 
-    .roadmap-item .phase {
+    .roadmap-item .phase {{
         display: inline-block;
         background: rgba(13, 71, 161, 0.06);
         color: #0d47a1;
@@ -560,23 +622,23 @@ st.markdown("""
         font-weight: 600;
         letter-spacing: 0.5px;
         margin-bottom: 0.8rem;
-    }
+    }}
 
-    .roadmap-item h4 {
+    .roadmap-item h4 {{
         font-size: 1.1rem;
         font-weight: 700;
         color: #0a1e3c;
         margin-bottom: 0.3rem;
-    }
+    }}
 
-    .roadmap-item p {
+    .roadmap-item p {{
         font-size: 0.85rem;
         color: #5a6a7e;
         line-height: 1.5;
         margin: 0;
-    }
+    }}
 
-    .roadmap-item .coming-soon {
+    .roadmap-item .coming-soon {{
         display: inline-block;
         background: #fff3e0;
         color: #e65100;
@@ -587,53 +649,53 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 0.5px;
         margin-top: 0.8rem;
-    }
+    }}
 
     /* ===== FOOTER ===== */
-    .footer {
+    .footer {{
         margin-top: 4rem;
         padding: 3rem 0 1.5rem 0;
         border-top: 1px solid rgba(13, 71, 161, 0.06);
-    }
+    }}
 
-    .footer-grid {
+    .footer-grid {{
         display: grid;
         grid-template-columns: 2fr 1fr 1fr 1fr;
         gap: 2rem;
         margin-bottom: 2rem;
-    }
+    }}
 
-    .footer-brand p {
+    .footer-brand p {{
         color: #5a6a7e;
         font-size: 0.9rem;
         line-height: 1.6;
         max-width: 300px;
         margin-top: 0.5rem;
-    }
+    }}
 
-    .footer-col h5 {
+    .footer-col h5 {{
         font-size: 0.8rem;
         font-weight: 700;
         color: #0a1e3c;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         margin-bottom: 1rem;
-    }
+    }}
 
-    .footer-col a {
+    .footer-col a {{
         display: block;
         color: #5a6a7e;
         text-decoration: none;
         font-size: 0.9rem;
         padding: 0.3rem 0;
         transition: color 0.3s ease;
-    }
+    }}
 
-    .footer-col a:hover {
+    .footer-col a:hover {{
         color: #0d47a1;
-    }
+    }}
 
-    .footer-bottom {
+    .footer-bottom {{
         border-top: 1px solid rgba(13, 71, 161, 0.06);
         padding-top: 1.5rem;
         display: flex;
@@ -641,120 +703,120 @@ st.markdown("""
         align-items: center;
         flex-wrap: wrap;
         gap: 1rem;
-    }
+    }}
 
-    .footer-bottom p {
+    .footer-bottom p {{
         font-size: 0.8rem;
         color: #5a6a7e;
         margin: 0;
-    }
+    }}
 
-    .footer-bottom .social-links {
+    .footer-bottom .social-links {{
         display: flex;
         gap: 1rem;
-    }
+    }}
 
-    .footer-bottom .social-links a {
+    .footer-bottom .social-links a {{
         color: #5a6a7e;
         text-decoration: none;
         font-size: 0.9rem;
         transition: color 0.3s ease;
-    }
+    }}
 
-    .footer-bottom .social-links a:hover {
+    .footer-bottom .social-links a:hover {{
         color: #0d47a1;
-    }
+    }}
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-        .hero-section {
+    @media (max-width: 768px) {{
+        .hero-section {{
             padding: 3rem 0 2rem 0;
-        }
-        .hero-title {
+        }}
+        .hero-title {{
             font-size: 2.2rem;
-        }
-        .hero-description {
+        }}
+        .hero-description {{
             font-size: 1rem;
-        }
-        .section-title {
+        }}
+        .section-title {{
             font-size: 1.8rem;
-        }
-        .section-subtitle {
+        }}
+        .section-subtitle {{
             font-size: 1rem;
-        }
-        .stats-grid {
+        }}
+        .stats-grid {{
             grid-template-columns: 1fr 1fr;
             padding: 2rem 1rem;
-        }
-        .stat-item-large .number {
+        }}
+        .stat-item-large .number {{
             font-size: 2rem;
-        }
-        .stat-divider {
+        }}
+        .stat-divider {{
             display: none;
-        }
-        .footer-grid {
+        }}
+        .footer-grid {{
             grid-template-columns: 1fr;
             gap: 1.5rem;
-        }
-        .footer-bottom {
+        }}
+        .footer-bottom {{
             flex-direction: column;
             text-align: center;
-        }
-        .main > div {
+        }}
+        .main > div {{
             padding: 0rem 1rem;
-        }
-        .hero-visual .floating-card {
+        }}
+        .hero-visual .floating-card {{
             padding: 1.5rem;
-        }
-        .floating-card .stat-grid {
+        }}
+        .floating-card .stat-grid {{
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
-        }
-        .floating-card .stat-number {
+        }}
+        .floating-card .stat-number {{
             font-size: 1.5rem;
-        }
-    }
+        }}
+    }}
 
-    @media (max-width: 480px) {
-        .hero-title {
+    @media (max-width: 480px) {{
+        .hero-title {{
             font-size: 1.8rem;
-        }
-        .hero-actions {
+        }}
+        .hero-actions {{
             flex-direction: column;
             width: 100%;
-        }
+        }}
         .hero-actions .btn-primary,
-        .hero-actions .btn-secondary {
+        .hero-actions .btn-secondary {{
             width: 100%;
             justify-content: center;
-        }
-        .products-grid {
+        }}
+        .products-grid {{
             grid-template-columns: 1fr;
-        }
-        .features-grid {
+        }}
+        .features-grid {{
             grid-template-columns: 1fr;
-        }
-        .roadmap-grid {
+        }}
+        .roadmap-grid {{
             grid-template-columns: 1fr;
-        }
-        .stats-grid {
+        }}
+        .stats-grid {{
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
-        }
-    }
+        }}
+    }}
 
     /* ===== UTILITY ===== */
-    .mt-1 { margin-top: 1rem; }
-    .mt-2 { margin-top: 2rem; }
-    .mt-3 { margin-top: 3rem; }
-    .mb-1 { margin-bottom: 1rem; }
-    .mb-2 { margin-bottom: 2rem; }
-    .gap-1 { gap: 1rem; }
-    .gap-2 { gap: 2rem; }
-    .flex { display: flex; }
-    .flex-center { display: flex; align-items: center; justify-content: center; }
-    .flex-between { display: flex; justify-content: space-between; align-items: center; }
-    .flex-wrap { flex-wrap: wrap; }
+    .mt-1 {{ margin-top: 1rem; }}
+    .mt-2 {{ margin-top: 2rem; }}
+    .mt-3 {{ margin-top: 3rem; }}
+    .mb-1 {{ margin-bottom: 1rem; }}
+    .mb-2 {{ margin-bottom: 2rem; }}
+    .gap-1 {{ gap: 1rem; }}
+    .gap-2 {{ gap: 2rem; }}
+    .flex {{ display: flex; }}
+    .flex-center {{ display: flex; align-items: center; justify-content: center; }}
+    .flex-between {{ display: flex; justify-content: space-between; align-items: center; }}
+    .flex-wrap {{ flex-wrap: wrap; }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -843,202 +905,200 @@ st.markdown("""
 st.markdown('</div></div>', unsafe_allow_html=True)
 
 # ============================================================================
-# ENGINEERING SOLUTIONS SECTION
+# ENGINEERING SOLUTIONS SECTION - Using Branding Module
 # ============================================================================
-st.markdown(f"""
-<div class="section-container" id="tools">
-    <div style="text-align:center; margin-bottom:2rem;">
-        <div class="section-label">Engineering Solutions</div>
-        <h2 class="section-title">Professional Tools for <span>Every Project</span></h2>
-        <p class="section-subtitle" style="margin:0 auto;">
-            Industry-standard tools designed for geotechnical and materials engineers.
-        </p>
-    </div>
-    <div class="products-grid">
-        <!-- Card 1: AASHTO -->
-        <div class="product-card">
-            <div class="icon-circle">📊</div>
-            <div class="badge">AASHTO M 145</div>
-            <h3>AASHTO Soil Classification</h3>
-            <p>Classify natural gravel materials using the AASHTO M 145 standard. Get Group Index, detailed logic, and professional PDF reports.</p>
-            <div class="card-footer">
-                <span class="status"><span class="dot"></span>Free Version</span>
-                <a href="https://aashtoclassificationtool.streamlit.app" target="_blank" class="btn-ghost" style="font-size:0.85rem;">Try Now →</a>
-            </div>
-        </div>
-        
-        <!-- Card 2: USCS -->
-        <div class="product-card">
-            <div class="icon-circle">🧱</div>
-            <div class="badge">ASTM D2487</div>
-            <h3>USCS Soil Classification</h3>
-            <p>Automated soil classification based on ASTM D2487. Includes gradation curves, plasticity charts, and comprehensive PDF reports.</p>
-            <div class="card-footer">
-                <span class="status"><span class="dot"></span>Free Version</span>
-                <a href="https://uscs-classification-tool.streamlit.app" target="_blank" class="btn-ghost" style="font-size:0.85rem;">Try Now →</a>
-            </div>
-        </div>
-        
-        <!-- Card 3: Concrete Optimizer -->
-        <div class="product-card">
-            <div class="icon-circle">🧪</div>
-            <div class="badge">ACI 211.1</div>
-            <h3>Concrete Mix Optimizer</h3>
-            <p>Automate your ACI 211.1 mix proportion calculations. Input design strength, exposure class, and aggregate properties for optimized mix ratios.</p>
-            <div class="card-footer">
-                <span class="status"><span class="dot"></span>Free Version</span>
-                <a href="https://Concreteoptimizationtool.streamlit.app" target="_blank" class="btn-ghost" style="font-size:0.85rem;">Try Now →</a>
-            </div>
+st.markdown('<div class="section-container" id="tools">', unsafe_allow_html=True)
+
+# Section Header
+st.markdown("""
+<div style="text-align:center; margin-bottom:2rem;">
+    <div class="section-label">Engineering Solutions</div>
+    <h2 class="section-title">Professional Tools for <span>Every Project</span></h2>
+    <p class="section-subtitle" style="margin:0 auto;">
+        Industry-standard tools designed for geotechnical and materials engineers.
+    </p>
+</div>
+<div class="products-grid">
+""", unsafe_allow_html=True)
+
+# --- Generate Cards Dynamically from Branding Data ---
+card_keys = ["aashto", "uscs", "concrete"]
+
+for key in card_keys:
+    data = get_card_data(key)
+    style = get_card_style(key)
+    pattern = get_bg_pattern(key)
+    svg = get_card_svg(key)
+    
+    card_html = f"""
+    <div class="product-card" style="{style}">
+        {svg}
+        <div class="card-pattern">{pattern}</div>
+        <div class="deco-badge">{data['icon']}</div>
+        <div class="icon-circle">{data['icon']}</div>
+        <div class="badge">{data['badge']}</div>
+        <h3>{data['title']}</h3>
+        <p>{data['description']}</p>
+        <div class="card-footer">
+            <span class="status"><span class="dot"></span>Free Version</span>
+            <a href="{data['link']}" target="_blank" class="btn-ghost" style="font-size:0.85rem;">Try Now →</a>
         </div>
     </div>
-    <div style="text-align:center; margin-top:2.5rem;">
-        <a href="#pro" class="btn-secondary" style="font-size:0.95rem;">🔐 Upgrade to Pro →</a>
-    </div>
+    """
+    st.markdown(card_html, unsafe_allow_html=True)
+
+# Close products grid and add Pro CTA
+st.markdown("""
+</div>
+<div style="text-align:center; margin-top:2.5rem;">
+    <a href="#pro" class="btn-secondary" style="font-size:0.95rem;">🔐 Upgrade to Pro →</a>
 </div>
 """, unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
 
 # ============================================================================
 # WHY AUTOMATION_HUB
 # ============================================================================
-st.markdown(f"""
-<div class="section-container" style="padding-top:1rem;">
-    <div style="text-align:center; margin-bottom:2rem;">
-        <div class="section-label">Why Automation_Hub</div>
-        <h2 class="section-title">Built for <span>Engineers</span>, Powered by Code</h2>
-        <p class="section-subtitle" style="margin:0 auto;">
-            We understand the challenges of engineering workflows. That's why we built tools that actually help.
-        </p>
+st.markdown('<div class="section-container" style="padding-top:1rem;">', unsafe_allow_html=True)
+st.markdown("""
+<div style="text-align:center; margin-bottom:2rem;">
+    <div class="section-label">Why Automation_Hub</div>
+    <h2 class="section-title">Built for <span>Engineers</span>, Powered by Code</h2>
+    <p class="section-subtitle" style="margin:0 auto;">
+        We understand the challenges of engineering workflows. That's why we built tools that actually help.
+    </p>
+</div>
+<div class="features-grid">
+    <div class="feature-badge">
+        <span class="emoji">⚡</span>
+        <div class="content">
+            <h4>Fast & Accurate</h4>
+            <p>Get results instantly with zero calculation errors</p>
+        </div>
     </div>
-    <div class="features-grid">
-        <div class="feature-badge">
-            <span class="emoji">⚡</span>
-            <div class="content">
-                <h4>Fast & Accurate</h4>
-                <p>Get results instantly with zero calculation errors</p>
-            </div>
+    <div class="feature-badge">
+        <span class="emoji">📋</span>
+        <div class="content">
+            <h4>Standard Compliant</h4>
+            <p>Follows ASTM, AASHTO, and ACI standards</p>
         </div>
-        <div class="feature-badge">
-            <span class="emoji">📋</span>
-            <div class="content">
-                <h4>Standard Compliant</h4>
-                <p>Follows ASTM, AASHTO, and ACI standards</p>
-            </div>
+    </div>
+    <div class="feature-badge">
+        <span class="emoji">📄</span>
+        <div class="content">
+            <h4>Professional Reports</h4>
+            <p>Generate PDF reports ready for project documentation</p>
         </div>
-        <div class="feature-badge">
-            <span class="emoji">📄</span>
-            <div class="content">
-                <h4>Professional Reports</h4>
-                <p>Generate PDF reports ready for project documentation</p>
-            </div>
-        </div>
-        <div class="feature-badge">
-            <span class="emoji">🔧</span>
-            <div class="content">
-                <h4>Practical Design</h4>
-                <p>Built by engineers who understand real project needs</p>
-            </div>
+    </div>
+    <div class="feature-badge">
+        <span class="emoji">🔧</span>
+        <div class="content">
+            <h4>Practical Design</h4>
+            <p>Built by engineers who understand real project needs</p>
         </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # ============================================================================
 # STATISTICS
 # ============================================================================
-st.markdown(f"""
-<div class="section-container" style="padding-top:0.5rem;">
-    <div class="stats-grid">
-        <div class="stat-item-large">
-            <div class="number">3</div>
-            <div class="label">Engineering Tools</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item-large">
-            <div class="number">100%</div>
-            <div class="label">Compliant</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item-large">
-            <div class="number">🚀</div>
-            <div class="label">Production Ready</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item-large">
-            <div class="number">📈</div>
-            <div class="label">Continuous Updates</div>
-        </div>
+st.markdown('<div class="section-container" style="padding-top:0.5rem;">', unsafe_allow_html=True)
+st.markdown("""
+<div class="stats-grid">
+    <div class="stat-item-large">
+        <div class="number">3</div>
+        <div class="label">Engineering Tools</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item-large">
+        <div class="number">100%</div>
+        <div class="label">Compliant</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item-large">
+        <div class="number">🚀</div>
+        <div class="label">Production Ready</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item-large">
+        <div class="number">📈</div>
+        <div class="label">Continuous Updates</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # ============================================================================
 # COMING SOON ROADMAP
 # ============================================================================
-st.markdown(f"""
-<div class="section-container" style="padding-top:0.5rem;">
-    <div style="text-align:center; margin-bottom:2rem;">
-        <div class="section-label">Roadmap</div>
-        <h2 class="section-title">What's <span>Coming Soon</span></h2>
-        <p class="section-subtitle" style="margin:0 auto;">
-            We're constantly expanding our suite of engineering tools.
-        </p>
+st.markdown('<div class="section-container" style="padding-top:0.5rem;">', unsafe_allow_html=True)
+st.markdown("""
+<div style="text-align:center; margin-bottom:2rem;">
+    <div class="section-label">Roadmap</div>
+    <h2 class="section-title">What's <span>Coming Soon</span></h2>
+    <p class="section-subtitle" style="margin:0 auto;">
+        We're constantly expanding our suite of engineering tools.
+    </p>
+</div>
+<div class="roadmap-grid">
+    <div class="roadmap-item">
+        <div class="phase">Phase 1</div>
+        <h4>Pro Version Launch</h4>
+        <p>Advanced features, batch processing, and priority support for enterprise users.</p>
+        <div class="coming-soon">Q4 2025</div>
     </div>
-    <div class="roadmap-grid">
-        <div class="roadmap-item">
-            <div class="phase">Phase 1</div>
-            <h4>Pro Version Launch</h4>
-            <p>Advanced features, batch processing, and priority support for enterprise users.</p>
-            <div class="coming-soon">Q4 2025</div>
-        </div>
-        <div class="roadmap-item">
-            <div class="phase">Phase 2</div>
-            <h4>API Access</h4>
-            <p>RESTful API for integrating our classification engines into your existing workflows.</p>
-            <div class="coming-soon">Q1 2026</div>
-        </div>
-        <div class="roadmap-item">
-            <div class="phase">Phase 3</div>
-            <h4>Team Collaboration</h4>
-            <p>Shared projects, version control, and team management features.</p>
-            <div class="coming-soon">Q2 2026</div>
-        </div>
-        <div class="roadmap-item">
-            <div class="phase">Phase 4</div>
-            <h4>Mobile App</h4>
-            <p>On-the-go access to all tools with a native mobile experience.</p>
-            <div class="coming-soon">Q3 2026</div>
-        </div>
+    <div class="roadmap-item">
+        <div class="phase">Phase 2</div>
+        <h4>API Access</h4>
+        <p>RESTful API for integrating our classification engines into your existing workflows.</p>
+        <div class="coming-soon">Q1 2026</div>
+    </div>
+    <div class="roadmap-item">
+        <div class="phase">Phase 3</div>
+        <h4>Team Collaboration</h4>
+        <p>Shared projects, version control, and team management features.</p>
+        <div class="coming-soon">Q2 2026</div>
+    </div>
+    <div class="roadmap-item">
+        <div class="phase">Phase 4</div>
+        <h4>Mobile App</h4>
+        <p>On-the-go access to all tools with a native mobile experience.</p>
+        <div class="coming-soon">Q3 2026</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # ============================================================================
 # PRO CTA SECTION
 # ============================================================================
-st.markdown(f"""
-<div class="section-container" id="pro" style="padding-top:0.5rem;">
-    <div style="background: linear-gradient(135deg, #0d47a1 0%, #1a237e 100%); 
-                border-radius: 24px; 
-                padding: 3rem 2.5rem; 
-                text-align: center;
-                color: white;
-                box-shadow: 0 20px 60px rgba(13, 71, 161, 0.25);">
-        <div style="font-size:3rem; margin-bottom:1rem;">🔐</div>
-        <h2 style="font-size:2rem; font-weight:800; margin-bottom:0.5rem; color:white;">Ready for Pro Access?</h2>
-        <p style="font-size:1.1rem; opacity:0.9; max-width:500px; margin:0 auto 1.5rem auto; line-height:1.6;">
-            Unlock advanced features, priority support, and enterprise-grade capabilities for your engineering team.
-        </p>
-        <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-            <a href="mailto:wiafe1713@gmail.com" class="btn-primary" style="background:white; color:#0d47a1; box-shadow:0 4px 20px rgba(255,255,255,0.2);">
-                Contact Sales →
-            </a>
-        </div>
-        <p style="font-size:0.8rem; opacity:0.7; margin-top:1.5rem;">
-            📩 wiafe1713@gmail.com · 📱 +233 (0) 24 000 0000
-        </p>
+st.markdown('<div class="section-container" id="pro" style="padding-top:0.5rem;">', unsafe_allow_html=True)
+st.markdown("""
+<div style="background: linear-gradient(135deg, #0d47a1 0%, #1a237e 100%); 
+            border-radius: 24px; 
+            padding: 3rem 2.5rem; 
+            text-align: center;
+            color: white;
+            box-shadow: 0 20px 60px rgba(13, 71, 161, 0.25);">
+    <div style="font-size:3rem; margin-bottom:1rem;">🔐</div>
+    <h2 style="font-size:2rem; font-weight:800; margin-bottom:0.5rem; color:white;">Ready for Pro Access?</h2>
+    <p style="font-size:1.1rem; opacity:0.9; max-width:500px; margin:0 auto 1.5rem auto; line-height:1.6;">
+        Unlock advanced features, priority support, and enterprise-grade capabilities for your engineering team.
+    </p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="mailto:wiafe1713@gmail.com" class="btn-primary" style="background:white; color:#0d47a1; box-shadow:0 4px 20px rgba(255,255,255,0.2);">
+            Contact Sales →
+        </a>
     </div>
+    <p style="font-size:0.8rem; opacity:0.7; margin-top:1.5rem;">
+        📩 wiafe1713@gmail.com · 📱 +233 (0) 24 000 0000
+    </p>
 </div>
 """, unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # ============================================================================
 # FOOTER
