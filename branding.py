@@ -96,7 +96,7 @@ def get_card_svg(card_key):
     return patterns.get(card_key, "")
 
 # ============================================================================
-# CARD CSS STYLES (ADD THIS - FIXES THE IMPORT ERROR)
+# CARD CSS STYLES - FIXES THE IMPORT ERROR
 # ============================================================================
 
 CARD_CSS = """
@@ -108,7 +108,6 @@ CARD_CSS = """
     box-shadow: 0 2px 10px rgba(13, 71, 161, 0.04);
 }
 
-/* Gradient top border accent */
 .product-card::before {
     content: '';
     position: absolute;
@@ -130,7 +129,6 @@ CARD_CSS = """
     box-shadow: 0 20px 60px rgba(13, 71, 161, 0.10);
 }
 
-/* Pattern overlay for visual depth */
 .product-card .card-pattern {
     position: absolute;
     bottom: -5px;
@@ -149,13 +147,11 @@ CARD_CSS = """
     opacity: 0.06;
 }
 
-/* Card content sits above background */
 .product-card > *:not(.card-pattern) {
     position: relative;
     z-index: 1;
 }
 
-/* ===== DECORATIVE FLOATING BADGE ===== */
 .product-card .deco-badge {
     position: absolute;
     top: 12px;
