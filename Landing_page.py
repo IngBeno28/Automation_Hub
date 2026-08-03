@@ -1101,4 +1101,423 @@ if logo_path:
     ''', unsafe_allow_html=True)
 else:
     st.markdown('''
-    <a href="#"
+    <a href="#" class="navbar-brand">
+        <span style="font-size:2rem;">🛠️</span>
+        <span class="brand-text">Automation_<span>Hub</span></span>
+    </a>
+    ''', unsafe_allow_html=True)
+
+# Nav Links
+st.markdown('''
+<div class="navbar-actions">
+    <a href="#tools" class="nav-link">Tools</a>
+    <a href="#trust" class="nav-link">Why Us</a>
+    <a href="#pro" class="nav-cta">Get Pro →</a>
+</div>
+''', unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ============================================================================
+# HERO SECTION
+# ============================================================================
+st.markdown('<div class="hero-section">', unsafe_allow_html=True)
+st.markdown('<div class="hero-content">', unsafe_allow_html=True)
+
+# Hero Text
+st.markdown("""
+<div class="hero-text">
+    <div class="hero-badge">
+        <span>🚀</span> Engineering Automation · v2.0
+    </div>
+    <h1 class="hero-title">
+        Empower Your <span class="highlight">Geotechnical & Materials</span> Projects
+    </h1>
+    <p class="hero-description">
+        Automation_Hub delivers professional-grade tools to increase productivity, ensure standard compliance, and deliver better project outcomes.
+    </p>
+    <div class="hero-pillars">
+        <div class="hero-pillar">
+            <strong>✅ Do more</strong>
+            <span>Streamline complex workflows</span>
+        </div>
+        <div class="hero-pillar">
+            <strong>✅ Ensure compliance</strong>
+            <span>Meet ASTM, AASHTO & ACI standards</span>
+        </div>
+        <div class="hero-pillar">
+            <strong>✅ Deliver better reports</strong>
+            <span>Professional PDFs in seconds</span>
+        </div>
+    </div>
+    <div class="hero-actions">
+        <a href="#tools" class="btn-primary">Explore Our Solutions →</a>
+        <a href="#trust" class="btn-secondary">Why Automation_Hub</a>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# Hero Visual
+st.markdown("""
+<div class="hero-visual">
+    <div class="floating-card">
+        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
+            <span style="font-size:2rem;">🛠️</span>
+            <div>
+                <div style="font-weight:700; color:#0a1e3c; font-size:1.1rem;">Engineering Suite</div>
+                <div style="font-size:0.8rem; color:#5a6a7e;">3 powerful tools available</div>
+            </div>
+        </div>
+        <div class="stat-grid">
+            <div class="stat-item">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Engineering Tools</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Compliant</div>
+            </div>
+        </div>
+        <div class="tool-preview">
+            <span class="icon">📊</span>
+            <div class="info">
+                <div class="name">AASHTO & USCS Classification</div>
+                <div class="desc">ASTM D2487 · AASHTO M 145</div>
+            </div>
+            <span style="color:#4caf50; font-size:0.8rem; font-weight:600;">Active</span>
+        </div>
+        <div class="tool-preview" style="border-left-color:#42a5f5;">
+            <span class="icon">🧪</span>
+            <div class="info">
+                <div class="name">Concrete Mix Optimizer</div>
+                <div class="desc">ACI 211.1 · Mix Design</div>
+            </div>
+            <span style="color:#4caf50; font-size:0.8rem; font-weight:600;">Active</span>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('</div></div>', unsafe_allow_html=True)
+
+# ============================================================================
+# ENGINEERING SOLUTIONS SECTION - Using Branding Module
+# ============================================================================
+st.markdown('<div class="section-container" id="tools">', unsafe_allow_html=True)
+
+# Section Header
+st.markdown("""
+<div style="text-align:center; margin-bottom:2rem;">
+    <div class="section-label">Our Solutions</div>
+    <h2 class="section-title">Product Value for <span>Every Project</span></h2>
+    <p class="section-subtitle" style="margin:0 auto;">
+        Our software spans engineering disciplines, helping you improve project delivery and asset performance.
+    </p>
+</div>
+<div class="products-grid">
+""", unsafe_allow_html=True)
+
+# --- Generate Cards Dynamically from Branding Data ---
+card_keys = ["aashto", "uscs", "concrete"]
+
+for key in card_keys:
+    data = get_card_data(key)
+    style = get_card_style(key)
+    pattern = get_bg_pattern(key)
+    svg = get_card_svg(key)
+    
+    card_html = f"""
+    <div class="product-card" style="{style}">
+        {svg}
+        <div class="card-pattern">{pattern}</div>
+        <div class="deco-badge">{data['icon']}</div>
+        <div class="icon-circle">{data['icon']}</div>
+        <div class="badge">{data['badge']}</div>
+        <h3>{data['title']}</h3>
+        <p>{data['description']}</p>
+        <div class="card-footer">
+            <span class="status"><span class="dot"></span>Free Version</span>
+            <a href="{data['link']}" target="_blank" class="btn-ghost" style="font-size:0.85rem;">Try Now →</a>
+        </div>
+    </div>
+    """
+    st.markdown(card_html, unsafe_allow_html=True)
+
+# Close products grid and add Pro CTA
+st.markdown("""
+</div>
+<div style="text-align:center; margin-top:2.5rem;">
+    <a href="#pro" class="btn-secondary" style="font-size:0.95rem;">🔐 Upgrade to Pro →</a>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ============================================================================
+# TECHNOLOGY INNOVATION SECTION
+# ============================================================================
+st.markdown('<div class="section-container" style="padding-top:1rem;">', unsafe_allow_html=True)
+st.markdown("""
+<div style="text-align:center; margin-bottom:2rem;">
+    <div class="section-label">Technology Innovation</div>
+    <h2 class="section-title">Leverage Data Across the <span>Engineering Lifecycle</span></h2>
+    <p class="section-subtitle" style="margin:0 auto;">
+        Unlock the value of your data with our AI-powered and automated solutions.
+    </p>
+</div>
+<div class="features-grid">
+    <div class="feature-badge">
+        <span class="emoji">🤖</span>
+        <div class="content">
+            <h4>Boost Productivity with AI</h4>
+            <p>Automated classification and mix design powered by intelligent algorithms.</p>
+        </div>
+    </div>
+    <div class="feature-badge">
+        <span class="emoji">📊</span>
+        <div class="content">
+            <h4>3D & Visual Data Insights</h4>
+            <p>Visualize gradation curves and plasticity charts for better understanding.</p>
+        </div>
+    </div>
+    <div class="feature-badge">
+        <span class="emoji">📄</span>
+        <div class="content">
+            <h4>Seamless Reporting</h4>
+            <p>Generate professional, shareable PDF reports directly from your data.</p>
+        </div>
+    </div>
+    <div class="feature-badge">
+        <span class="emoji">☁️</span>
+        <div class="content">
+            <h4>Cloud-Based Access</h4>
+            <p>Access your tools and data from anywhere, on any device.</p>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ============================================================================
+# STATISTICS
+# ============================================================================
+st.markdown('<div class="section-container" style="padding-top:0.5rem;">', unsafe_allow_html=True)
+st.markdown("""
+<div class="stats-grid">
+    <div class="stat-item-large">
+        <div class="number">3</div>
+        <div class="label">Engineering Tools</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item-large">
+        <div class="number">100%</div>
+        <div class="label">Compliant</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item-large">
+        <div class="number">🚀</div>
+        <div class="label">Production Ready</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item-large">
+        <div class="number">📈</div>
+        <div class="label">Continuous Updates</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ============================================================================
+# COMING SOON ROADMAP
+# ============================================================================
+st.markdown('<div class="section-container" style="padding-top:0.5rem;">', unsafe_allow_html=True)
+st.markdown("""
+<div style="text-align:center; margin-bottom:2rem;">
+    <div class="section-label">Roadmap</div>
+    <h2 class="section-title">What's <span>Coming Soon</span></h2>
+    <p class="section-subtitle" style="margin:0 auto;">
+        We're constantly expanding our suite of engineering tools.
+    </p>
+</div>
+<div class="roadmap-grid">
+    <div class="roadmap-item">
+        <div class="phase">Phase 1</div>
+        <h4>Pro Version Launch</h4>
+        <p>Advanced features, batch processing, and priority support for enterprise users.</p>
+        <div class="coming-soon">Q4 2025</div>
+    </div>
+    <div class="roadmap-item">
+        <div class="phase">Phase 2</div>
+        <h4>API Access</h4>
+        <p>RESTful API for integrating our classification engines into your existing workflows.</p>
+        <div class="coming-soon">Q1 2026</div>
+    </div>
+    <div class="roadmap-item">
+        <div class="phase">Phase 3</div>
+        <h4>Team Collaboration</h4>
+        <p>Shared projects, version control, and team management features.</p>
+        <div class="coming-soon">Q2 2026</div>
+    </div>
+    <div class="roadmap-item">
+        <div class="phase">Phase 4</div>
+        <h4>Mobile App</h4>
+        <p>On-the-go access to all tools with a native mobile experience.</p>
+        <div class="coming-soon">Q3 2026</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ============================================================================
+# TRUST & CONTACT SECTION (Bentley-Inspired "Industry Leadership")
+# ============================================================================
+st.markdown('<div class="section-container" id="trust" style="padding-top:0.5rem;">', unsafe_allow_html=True)
+st.markdown("""
+<div style="text-align:center; margin-bottom:2rem;">
+    <div class="section-label">Industry Leadership</div>
+    <h2 class="section-title">Your Trusted <span>Engineering Partner</span></h2>
+    <p class="section-subtitle" style="margin:0 auto;">
+        We are the partner of choice for digital delivery and asset analytics.
+    </p>
+</div>
+<div class="trust-section">
+    <div class="trust-grid">
+        <div class="trust-info">
+            <h3>🔒 Built on Trust & Standards</h3>
+            <p>We're committed to providing tools that engineers can rely on, with complete transparency and data ownership.</p>
+            <div class="trust-item">
+                <div class="icon">🔓</div>
+                <div class="text">
+                    <strong>Don't get locked-in</strong>
+                    <span>Our tools are free to try, with no long-term commitment or vendor lock-in.</span>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="icon">🛡️</div>
+                <div class="text">
+                    <strong>Your data is your data, always</strong>
+                    <span>We never use your project data without your explicit consent. Period.</span>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="icon">📋</div>
+                <div class="text">
+                    <strong>Committed to standards</strong>
+                    <span>Full compliance with ASTM D2487, AASHTO M 145, and ACI 211.1.</span>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="icon">🌍</div>
+                <div class="text">
+                    <strong>Built for engineers, by engineers</strong>
+                    <span>Every feature is designed with real-world engineering challenges in mind.</span>
+                </div>
+            </div>
+            <div style="margin-top: 1.5rem;">
+                <a href="mailto:wiafe1713@gmail.com" class="btn-primary">Contact Our Team →</a>
+            </div>
+        </div>
+        <div class="trust-form">
+            <h4>📝 Ready to Get Started?</h4>
+            <p>Have questions or want to explore Pro access? Reach out to us.</p>
+            <form action="mailto:wiafe1713@gmail.com" method="post" enctype="text/plain">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Tell us how we can help..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">
+                    Send Message ✉️
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ============================================================================
+# PRO CTA SECTION
+# ============================================================================
+st.markdown('<div class="section-container" id="pro" style="padding-top:0.5rem;">', unsafe_allow_html=True)
+st.markdown("""
+<div style="background: linear-gradient(135deg, #0d47a1 0%, #1a237e 100%); 
+            border-radius: 24px; 
+            padding: 3rem 2.5rem; 
+            text-align: center;
+            color: white;
+            box-shadow: 0 20px 60px rgba(13, 71, 161, 0.25);">
+    <div style="font-size:3rem; margin-bottom:1rem;">🔐</div>
+    <h2 style="font-size:2rem; font-weight:800; margin-bottom:0.5rem; color:white;">Ready for Pro Access?</h2>
+    <p style="font-size:1.1rem; opacity:0.9; max-width:500px; margin:0 auto 1.5rem auto; line-height:1.6;">
+        Unlock advanced features, priority support, and enterprise-grade capabilities for your engineering team.
+    </p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="mailto:wiafe1713@gmail.com" class="btn-primary" style="background:white; color:#0d47a1; box-shadow:0 4px 20px rgba(255,255,255,0.2);">
+            Contact Sales →
+        </a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.7; margin-top:1.5rem;">
+        📩 wiafe1713@gmail.com · 📱 +233 (0) 50 136 5878
+    </p>
+</div>
+""", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ============================================================================
+# FOOTER
+# ============================================================================
+current_year = datetime.now().year
+
+st.markdown(f"""
+<div class="footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+                <span style="font-size:1.8rem;">🛠️</span>
+                <span style="font-weight:800; font-size:1.3rem; color:#0a1e3c;">Automation_Hub</span>
+            </div>
+            <p>Smart, practical tools for Geotechnical and Materials Engineers. Built for engineers. Powered by code.</p>
+            <div style="margin-top:1rem;">
+                <span style="display:inline-block; background:rgba(13,71,161,0.06); color:#0d47a1; padding:0.2rem 1rem; border-radius:12px; font-size:0.7rem; font-weight:600;">MIT Licensed</span>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h5>Products</h5>
+            <a href="https://aashtoclassificationtool.streamlit.app" target="_blank">AASHTO Tool</a>
+            <a href="https://uscs-classification-tool.streamlit.app" target="_blank">USCS Tool</a>
+            <a href="https://Concreteoptimizationtool.streamlit.app" target="_blank">Concrete Optimizer</a>
+        </div>
+        <div class="footer-col">
+            <h5>Company</h5>
+            <a href="#tools">Tools</a>
+            <a href="#pro">Pro Access</a>
+            <a href="#trust">Why Us</a>
+        </div>
+        <div class="footer-col">
+            <h5>Connect</h5>
+            <a href="mailto:wiafe1713@gmail.com">Email</a>
+            <a href="https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-ghie-93005124b" target="_blank">LinkedIn</a>
+            <a href="https://github.com/IngBeno28" target="_blank">GitHub</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© {current_year} Automation_Hub. All rights reserved.</p>
+        <div class="social-links">
+            <a href="mailto:wiafe1713@gmail.com">✉️ Email</a>
+            <a href="https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-ghie-93005124b" target="_blank">🔗 LinkedIn</a>
+            <a href="https://github.com/IngBeno28" target="_blank">🐙 GitHub</a>
+        </div>
+    </div>
+    <div style="text-align:center; margin-top:1.5rem; font-size:0.7rem; color:#b0bec5;">
+        Built for engineers. Powered by code.
+    </div>
+</div>
+""", unsafe_allow_html=True)
