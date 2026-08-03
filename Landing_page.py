@@ -10,7 +10,7 @@ from branding import (
     get_bg_pattern, 
     get_card_data,
     get_card_svg,
-    CARD_CSS  # Now this exists in branding.py
+    CARD_CSS  # Now this exists in branding.py - FIXES THE ERROR
 )
 
 # --- Page Configuration ---
@@ -31,7 +31,6 @@ st.markdown("""
         box-sizing: border-box;
     }
 
-    /* Hide default Streamlit elements */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
@@ -46,18 +45,13 @@ st.markdown("""
         margin: 0 auto;
     }
 
-    /* ===== TYPOGRAPHY ===== */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     
     html, body, h1, h2, h3, h4, h5, h6, p, div, span, button {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    /* ================================================================
-       BACKGROUND ENHANCEMENTS (Option 1 + 2)
-       ================================================================ */
-
-    /* ----- HERO BACKGROUND: Grid + Floating Circles ----- */
+    /* ===== HERO BACKGROUND ENHANCEMENTS ===== */
     .hero-section {
         position: relative;
         overflow: hidden;
@@ -136,7 +130,7 @@ st.markdown("""
         flex-wrap: wrap;
     }
 
-    /* ----- SECTION GRADIENT BACKGROUNDS ----- */
+    /* ===== SECTION GRADIENT BACKGROUNDS ===== */
     .section-gradient-blue {
         background: linear-gradient(135deg, #e8f0fe 0%, #f8faff 100%);
         border-radius: 24px;
@@ -175,7 +169,7 @@ st.markdown("""
         z-index: 1;
     }
 
-    /* ===== TOP NAVBAR ===== */
+    /* ===== NAVBAR ===== */
     .navbar {
         display: flex;
         justify-content: space-between;
@@ -1139,7 +1133,6 @@ st.markdown("""
 
 # --- LOAD LOGO ---
 def load_logo():
-    """Load logo from assets folder with fallback."""
     logo_paths = [
         "assets/automation_hub_logo.png",
         "assets/logo.png",
