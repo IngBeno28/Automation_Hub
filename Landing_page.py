@@ -262,6 +262,30 @@ st.markdown(f"""
         margin-bottom: 2rem;
     }}
 
+    .hero-pillars {{
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+    }}
+
+    .hero-pillar {{
+        flex: 1;
+        min-width: 140px;
+    }}
+
+    .hero-pillar strong {{
+        display: block;
+        font-size: 1rem;
+        color: #0a1e3c;
+        margin-bottom: 0.2rem;
+    }}
+
+    .hero-pillar span {{
+        font-size: 0.9rem;
+        color: #5a6a7e;
+    }}
+
     .hero-actions {{
         display: flex;
         gap: 1rem;
@@ -722,8 +746,8 @@ st.markdown(f"""
         margin-top: 0.8rem;
     }}
 
-    /* ===== CONTACT SECTION ===== */
-    .contact-section {{
+    /* ===== TRUST & CONTACT SECTION ===== */
+    .trust-section {{
         background: white;
         border-radius: 24px;
         padding: 3rem 2.5rem;
@@ -732,39 +756,39 @@ st.markdown(f"""
         margin-top: 2rem;
     }}
 
-    .contact-grid {{
+    .trust-grid {{
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 3rem;
         align-items: start;
     }}
 
-    .contact-info h3 {{
+    .trust-info h3 {{
         font-size: 1.5rem;
         font-weight: 700;
         color: #0a1e3c;
         margin-bottom: 0.5rem;
     }}
 
-    .contact-info p {{
+    .trust-info p {{
         color: #5a6a7e;
         line-height: 1.7;
         margin-bottom: 1.5rem;
     }}
 
-    .contact-info .contact-item {{
+    .trust-info .trust-item {{
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 1rem;
         padding: 0.8rem 0;
         border-bottom: 1px solid rgba(13, 71, 161, 0.04);
     }}
 
-    .contact-info .contact-item:last-child {{
+    .trust-info .trust-item:last-child {{
         border-bottom: none;
     }}
 
-    .contact-info .contact-item .icon {{
+    .trust-info .trust-item .icon {{
         font-size: 1.3rem;
         width: 36px;
         height: 36px;
@@ -774,47 +798,45 @@ st.markdown(f"""
         background: rgba(13, 71, 161, 0.06);
         border-radius: 10px;
         flex-shrink: 0;
+        margin-top: 0.1rem;
     }}
 
-    .contact-info .contact-item .text {{
+    .trust-info .trust-item .text strong {{
+        display: block;
         font-size: 0.95rem;
         color: #0a1e3c;
+        margin-bottom: 0.1rem;
     }}
 
-    .contact-info .contact-item .text a {{
-        color: #0d47a1;
-        text-decoration: none;
-        font-weight: 500;
+    .trust-info .trust-item .text span {{
+        font-size: 0.9rem;
+        color: #5a6a7e;
     }}
 
-    .contact-info .contact-item .text a:hover {{
-        text-decoration: underline;
-    }}
-
-    .contact-form {{
+    .trust-form {{
         background: #f8faff;
         border-radius: 16px;
         padding: 1.5rem;
     }}
 
-    .contact-form h4 {{
+    .trust-form h4 {{
         font-size: 1.1rem;
         font-weight: 700;
         color: #0a1e3c;
         margin-bottom: 0.3rem;
     }}
 
-    .contact-form p {{
+    .trust-form p {{
         font-size: 0.9rem;
         color: #5a6a7e;
         margin-bottom: 1.5rem;
     }}
 
-    .contact-form .form-group {{
+    .trust-form .form-group {{
         margin-bottom: 1rem;
     }}
 
-    .contact-form .form-group label {{
+    .trust-form .form-group label {{
         display: block;
         font-size: 0.8rem;
         font-weight: 600;
@@ -822,8 +844,8 @@ st.markdown(f"""
         margin-bottom: 0.3rem;
     }}
 
-    .contact-form .form-group input,
-    .contact-form .form-group textarea {{
+    .trust-form .form-group input,
+    .trust-form .form-group textarea {{
         width: 100%;
         padding: 0.7rem 1rem;
         border: 1px solid rgba(13, 71, 161, 0.1);
@@ -834,14 +856,14 @@ st.markdown(f"""
         background: white;
     }}
 
-    .contact-form .form-group input:focus,
-    .contact-form .form-group textarea:focus {{
+    .trust-form .form-group input:focus,
+    .trust-form .form-group textarea:focus {{
         outline: none;
         border-color: #0d47a1;
         box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.08);
     }}
 
-    .contact-form .form-group textarea {{
+    .trust-form .form-group textarea {{
         resize: vertical;
         min-height: 100px;
     }}
@@ -948,6 +970,9 @@ st.markdown(f"""
         .hero-description {{
             font-size: 1rem;
         }}
+        .hero-pillars {{
+            gap: 1rem;
+        }}
         .section-title {{
             font-size: 1.8rem;
         }}
@@ -985,7 +1010,7 @@ st.markdown(f"""
         .floating-card .stat-number {{
             font-size: 1.5rem;
         }}
-        .contact-grid {{
+        .trust-grid {{
             grid-template-columns: 1fr;
             gap: 1.5rem;
         }}
@@ -1024,6 +1049,10 @@ st.markdown(f"""
         .navbar-actions {{
             width: 100%;
             justify-content: flex-start;
+        }}
+        .hero-pillars {{
+            flex-direction: column;
+            gap: 0.5rem;
         }}
     }}
 
@@ -1072,396 +1101,4 @@ if logo_path:
     ''', unsafe_allow_html=True)
 else:
     st.markdown('''
-    <a href="#" class="navbar-brand">
-        <span style="font-size:2rem;">🛠️</span>
-        <span class="brand-text">Automation_<span>Hub</span></span>
-    </a>
-    ''', unsafe_allow_html=True)
-
-# Nav Links
-st.markdown('''
-<div class="navbar-actions">
-    <a href="#tools" class="nav-link">Tools</a>
-    <a href="#contact" class="nav-link">Contact</a>
-    <a href="#pro" class="nav-cta">Get Pro →</a>
-</div>
-''', unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ============================================================================
-# HERO SECTION
-# ============================================================================
-st.markdown('<div class="hero-section">', unsafe_allow_html=True)
-st.markdown('<div class="hero-content">', unsafe_allow_html=True)
-
-# Hero Text
-st.markdown("""
-<div class="hero-text">
-    <div class="hero-badge">
-        <span>🚀</span> Engineering Automation · v2.0
-    </div>
-    <h1 class="hero-title">
-        Smart Tools for<br><span class="highlight">Geotechnical & Materials</span> Engineers
-    </h1>
-    <p class="hero-description">
-        Automation_Hub delivers professional-grade engineering tools 
-        that streamline soil classification, concrete mix design, and 
-        materials testing — all in one place.
-    </p>
-    <div class="hero-actions">
-        <a href="#tools" class="btn-primary">Explore Tools →</a>
-        <a href="#contact" class="btn-secondary">Contact Us</a>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-# Hero Visual
-st.markdown("""
-<div class="hero-visual">
-    <div class="floating-card">
-        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
-            <span style="font-size:2rem;">🛠️</span>
-            <div>
-                <div style="font-weight:700; color:#0a1e3c; font-size:1.1rem;">Engineering Suite</div>
-                <div style="font-size:0.8rem; color:#5a6a7e;">3 powerful tools available</div>
-            </div>
-        </div>
-        <div class="stat-grid">
-            <div class="stat-item">
-                <div class="stat-number">3</div>
-                <div class="stat-label">Engineering Tools</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Compliant</div>
-            </div>
-        </div>
-        <div class="tool-preview">
-            <span class="icon">📊</span>
-            <div class="info">
-                <div class="name">AASHTO & USCS Classification</div>
-                <div class="desc">ASTM D2487 · AASHTO M 145</div>
-            </div>
-            <span style="color:#4caf50; font-size:0.8rem; font-weight:600;">Active</span>
-        </div>
-        <div class="tool-preview" style="border-left-color:#42a5f5;">
-            <span class="icon">🧪</span>
-            <div class="info">
-                <div class="name">Concrete Mix Optimizer</div>
-                <div class="desc">ACI 211.1 · Mix Design</div>
-            </div>
-            <span style="color:#4caf50; font-size:0.8rem; font-weight:600;">Active</span>
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown('</div></div>', unsafe_allow_html=True)
-
-# ============================================================================
-# ENGINEERING SOLUTIONS SECTION - Using Branding Module
-# ============================================================================
-st.markdown('<div class="section-container" id="tools">', unsafe_allow_html=True)
-
-# Section Header
-st.markdown("""
-<div style="text-align:center; margin-bottom:2rem;">
-    <div class="section-label">Engineering Solutions</div>
-    <h2 class="section-title">Professional Tools for <span>Every Project</span></h2>
-    <p class="section-subtitle" style="margin:0 auto;">
-        Industry-standard tools designed for geotechnical and materials engineers.
-    </p>
-</div>
-<div class="products-grid">
-""", unsafe_allow_html=True)
-
-# --- Generate Cards Dynamically from Branding Data ---
-card_keys = ["aashto", "uscs", "concrete"]
-
-for key in card_keys:
-    data = get_card_data(key)
-    style = get_card_style(key)
-    pattern = get_bg_pattern(key)
-    svg = get_card_svg(key)
-    
-    card_html = f"""
-    <div class="product-card" style="{style}">
-        {svg}
-        <div class="card-pattern">{pattern}</div>
-        <div class="deco-badge">{data['icon']}</div>
-        <div class="icon-circle">{data['icon']}</div>
-        <div class="badge">{data['badge']}</div>
-        <h3>{data['title']}</h3>
-        <p>{data['description']}</p>
-        <div class="card-footer">
-            <span class="status"><span class="dot"></span>Free Version</span>
-            <a href="{data['link']}" target="_blank" class="btn-ghost" style="font-size:0.85rem;">Try Now →</a>
-        </div>
-    </div>
-    """
-    st.markdown(card_html, unsafe_allow_html=True)
-
-# Close products grid and add Pro CTA
-st.markdown("""
-</div>
-<div style="text-align:center; margin-top:2.5rem;">
-    <a href="#pro" class="btn-secondary" style="font-size:0.95rem;">🔐 Upgrade to Pro →</a>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ============================================================================
-# WHY AUTOMATION_HUB
-# ============================================================================
-st.markdown('<div class="section-container" style="padding-top:1rem;">', unsafe_allow_html=True)
-st.markdown("""
-<div style="text-align:center; margin-bottom:2rem;">
-    <div class="section-label">Why Automation_Hub</div>
-    <h2 class="section-title">Built for <span>Engineers</span>, Powered by Code</h2>
-    <p class="section-subtitle" style="margin:0 auto;">
-        We understand the challenges of engineering workflows. That's why we built tools that actually help.
-    </p>
-</div>
-<div class="features-grid">
-    <div class="feature-badge">
-        <span class="emoji">⚡</span>
-        <div class="content">
-            <h4>Fast & Accurate</h4>
-            <p>Get results instantly with zero calculation errors</p>
-        </div>
-    </div>
-    <div class="feature-badge">
-        <span class="emoji">📋</span>
-        <div class="content">
-            <h4>Standard Compliant</h4>
-            <p>Follows ASTM, AASHTO, and ACI standards</p>
-        </div>
-    </div>
-    <div class="feature-badge">
-        <span class="emoji">📄</span>
-        <div class="content">
-            <h4>Professional Reports</h4>
-            <p>Generate PDF reports ready for project documentation</p>
-        </div>
-    </div>
-    <div class="feature-badge">
-        <span class="emoji">🔧</span>
-        <div class="content">
-            <h4>Practical Design</h4>
-            <p>Built by engineers who understand real project needs</p>
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ============================================================================
-# STATISTICS
-# ============================================================================
-st.markdown('<div class="section-container" style="padding-top:0.5rem;">', unsafe_allow_html=True)
-st.markdown("""
-<div class="stats-grid">
-    <div class="stat-item-large">
-        <div class="number">3</div>
-        <div class="label">Engineering Tools</div>
-    </div>
-    <div class="stat-divider"></div>
-    <div class="stat-item-large">
-        <div class="number">100%</div>
-        <div class="label">Compliant</div>
-    </div>
-    <div class="stat-divider"></div>
-    <div class="stat-item-large">
-        <div class="number">🚀</div>
-        <div class="label">Production Ready</div>
-    </div>
-    <div class="stat-divider"></div>
-    <div class="stat-item-large">
-        <div class="number">📈</div>
-        <div class="label">Continuous Updates</div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ============================================================================
-# COMING SOON ROADMAP
-# ============================================================================
-st.markdown('<div class="section-container" style="padding-top:0.5rem;">', unsafe_allow_html=True)
-st.markdown("""
-<div style="text-align:center; margin-bottom:2rem;">
-    <div class="section-label">Roadmap</div>
-    <h2 class="section-title">What's <span>Coming Soon</span></h2>
-    <p class="section-subtitle" style="margin:0 auto;">
-        We're constantly expanding our suite of engineering tools.
-    </p>
-</div>
-<div class="roadmap-grid">
-    <div class="roadmap-item">
-        <div class="phase">Phase 1</div>
-        <h4>Pro Version Launch</h4>
-        <p>Advanced features, batch processing, and priority support for enterprise users.</p>
-        <div class="coming-soon">Q4 2025</div>
-    </div>
-    <div class="roadmap-item">
-        <div class="phase">Phase 2</div>
-        <h4>API Access</h4>
-        <p>RESTful API for integrating our classification engines into your existing workflows.</p>
-        <div class="coming-soon">Q1 2026</div>
-    </div>
-    <div class="roadmap-item">
-        <div class="phase">Phase 3</div>
-        <h4>Team Collaboration</h4>
-        <p>Shared projects, version control, and team management features.</p>
-        <div class="coming-soon">Q2 2026</div>
-    </div>
-    <div class="roadmap-item">
-        <div class="phase">Phase 4</div>
-        <h4>Mobile App</h4>
-        <p>On-the-go access to all tools with a native mobile experience.</p>
-        <div class="coming-soon">Q3 2026</div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ============================================================================
-# CONTACT SECTION (NEW - Fixes the "Contact Us" button)
-# ============================================================================
-st.markdown('<div class="section-container" id="contact" style="padding-top:0.5rem;">', unsafe_allow_html=True)
-st.markdown("""
-<div style="text-align:center; margin-bottom:2rem;">
-    <div class="section-label">Get in Touch</div>
-    <h2 class="section-title">Let's <span>Connect</span></h2>
-    <p class="section-subtitle" style="margin:0 auto;">
-        Have questions about our tools or interested in Pro access? Reach out to us.
-    </p>
-</div>
-<div class="contact-section">
-    <div class="contact-grid">
-        <div class="contact-info">
-            <h3>📬 Contact Information</h3>
-            <p>We're here to help. Reach out through any of these channels and we'll get back to you as soon as possible.</p>
-            <div class="contact-item">
-                <div class="icon">✉️</div>
-                <div class="text"><a href="mailto:wiafe1713@gmail.com">wiafe1713@gmail.com</a></div>
-            </div>
-            <div class="contact-item">
-                <div class="icon">🔗</div>
-                <div class="text"><a href="https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-ghie-93005124b" target="_blank">LinkedIn Profile</a></div>
-            </div>
-            <div class="contact-item">
-                <div class="icon">🐙</div>
-                <div class="text"><a href="https://github.com/IngBeno28" target="_blank">GitHub</a></div>
-            </div>
-            <div class="contact-item">
-                <div class="icon">📱</div>
-                <div class="text">+233 (0) 50 136 5878</div>
-            </div>
-        </div>
-        <div class="contact-form">
-            <h4>📝 Send a Message</h4>
-            <p>Fill out the form below and we'll get back to you within 24 hours.</p>
-            <form action="mailto:wiafe1713@gmail.com" method="post" enctype="text/plain">
-                <div class="form-group">
-                    <label for="name">Your Name</label>
-                    <input type="text" id="name" name="name" placeholder="John Doe" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Tell us how we can help..." required></textarea>
-                </div>
-                <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">
-                    Send Message ✉️
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ============================================================================
-# PRO CTA SECTION
-# ============================================================================
-st.markdown('<div class="section-container" id="pro" style="padding-top:0.5rem;">', unsafe_allow_html=True)
-st.markdown("""
-<div style="background: linear-gradient(135deg, #0d47a1 0%, #1a237e 100%); 
-            border-radius: 24px; 
-            padding: 3rem 2.5rem; 
-            text-align: center;
-            color: white;
-            box-shadow: 0 20px 60px rgba(13, 71, 161, 0.25);">
-    <div style="font-size:3rem; margin-bottom:1rem;">🔐</div>
-    <h2 style="font-size:2rem; font-weight:800; margin-bottom:0.5rem; color:white;">Ready for Pro Access?</h2>
-    <p style="font-size:1.1rem; opacity:0.9; max-width:500px; margin:0 auto 1.5rem auto; line-height:1.6;">
-        Unlock advanced features, priority support, and enterprise-grade capabilities for your engineering team.
-    </p>
-    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-        <a href="mailto:wiafe1713@gmail.com" class="btn-primary" style="background:white; color:#0d47a1; box-shadow:0 4px 20px rgba(255,255,255,0.2);">
-            Contact Sales →
-        </a>
-    </div>
-    <p style="font-size:0.8rem; opacity:0.7; margin-top:1.5rem;">
-        📩 wiafe1713@gmail.com · 📱 +233 (0) 50 136 5878
-    </p>
-</div>
-""", unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ============================================================================
-# FOOTER
-# ============================================================================
-current_year = datetime.now().year
-
-st.markdown(f"""
-<div class="footer">
-    <div class="footer-grid">
-        <div class="footer-brand">
-            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
-                <span style="font-size:1.8rem;">🛠️</span>
-                <span style="font-weight:800; font-size:1.3rem; color:#0a1e3c;">Automation_Hub</span>
-            </div>
-            <p>Smart, practical tools for Geotechnical and Materials Engineers. Built for engineers. Powered by code.</p>
-            <div style="margin-top:1rem;">
-                <span style="display:inline-block; background:rgba(13,71,161,0.06); color:#0d47a1; padding:0.2rem 1rem; border-radius:12px; font-size:0.7rem; font-weight:600;">MIT Licensed</span>
-            </div>
-        </div>
-        <div class="footer-col">
-            <h5>Products</h5>
-            <a href="https://aashtoclassificationtool.streamlit.app" target="_blank">AASHTO Tool</a>
-            <a href="https://uscs-classification-tool.streamlit.app" target="_blank">USCS Tool</a>
-            <a href="https://Concreteoptimizationtool.streamlit.app" target="_blank">Concrete Optimizer</a>
-        </div>
-        <div class="footer-col">
-            <h5>Company</h5>
-            <a href="#tools">Tools</a>
-            <a href="#pro">Pro Access</a>
-            <a href="#contact">Contact</a>
-        </div>
-        <div class="footer-col">
-            <h5>Connect</h5>
-            <a href="mailto:wiafe1713@gmail.com">Email</a>
-            <a href="https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-ghie-93005124b" target="_blank">LinkedIn</a>
-            <a href="https://github.com/IngBeno28" target="_blank">GitHub</a>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>© {current_year} Automation_Hub. All rights reserved.</p>
-        <div class="social-links">
-            <a href="mailto:wiafe1713@gmail.com">✉️ Email</a>
-            <a href="https://www.linkedin.com/in/bernard-wiafe-akenteng-p-e-ghie-93005124b" target="_blank">🔗 LinkedIn</a>
-            <a href="https://github.com/IngBeno28" target="_blank">🐙 GitHub</a>
-        </div>
-    </div>
-    <div style="text-align:center; margin-top:1.5rem; font-size:0.7rem; color:#b0bec5;">
-        Built for engineers. Powered by code.
-    </div>
-</div>
-""", unsafe_allow_html=True)
+    <a href="#"
