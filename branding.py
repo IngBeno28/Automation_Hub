@@ -96,7 +96,7 @@ def get_card_svg(card_key):
     return patterns.get(card_key, "")
 
 # ============================================================================
-# CARD CSS STYLES - FIXES THE IMPORT ERROR
+# CARD CSS STYLES - IMPORTANT: This fixes the ImportError
 # ============================================================================
 
 CARD_CSS = """
@@ -118,6 +118,7 @@ CARD_CSS = """
     background: linear-gradient(90deg, #0d47a1, #42a5f5);
     opacity: 0;
     transition: opacity 0.4s ease;
+    z-index: 2;
 }
 
 .product-card:hover::before {
@@ -165,7 +166,7 @@ CARD_CSS = """
     justify-content: center;
     font-size: 1rem;
     transition: all 0.3s ease;
-    z-index: 1;
+    z-index: 2;
 }
 
 .product-card:hover .deco-badge {
