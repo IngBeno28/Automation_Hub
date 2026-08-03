@@ -10,7 +10,7 @@ from branding import (
     get_bg_pattern, 
     get_card_data,
     get_card_svg,
-    CARD_CSS  # Now this exists in branding.py - FIXES THE ERROR
+    CARD_CSS  # Now this exists in branding.py
 )
 
 # --- Page Configuration ---
@@ -1176,7 +1176,7 @@ st.markdown('''
 st.markdown('</div>', unsafe_allow_html=True)
 
 # ============================================================================
-# HERO SECTION
+# HERO SECTION - COMPLETELY FIXED
 # ============================================================================
 st.markdown('''
 <div class="hero-section">
