@@ -36,7 +36,11 @@ footer {visibility: hidden;}
 header {visibility: hidden;}
 
 .stApp {
-background: linear-gradient(180deg, #faf9f6 0%, #ffffff 100%);
+background: #0a1526;
+background-image:
+linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+background-size: 48px 48px;
 }
 
 .main > div {
@@ -55,7 +59,8 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 .hero-section {
 position: relative;
 overflow: hidden;
-background: linear-gradient(155deg, #0b0f14 0%, #151b23 100%);
+background: linear-gradient(155deg, #131f33 0%, #1a2740 100%);
+border: 1px solid rgba(255, 255, 255, 0.08);
 border-radius: 6px;
 padding: 4rem 3rem;
 margin: 1.5rem 0 3rem 0;
@@ -111,7 +116,8 @@ flex-wrap: wrap;
 
 /* ===== SECTION GRADIENT BACKGROUNDS ===== */
 .section-gradient-blue {
-background: linear-gradient(155deg, #0b0f14 0%, #151b23 100%);
+background: linear-gradient(155deg, #131f33 0%, #1a2740 100%);
+border: 1px solid rgba(255, 255, 255, 0.08);
 border-radius: 6px;
 padding: 3.5rem 2.5rem;
 margin: 2rem 0;
@@ -151,7 +157,7 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 padding: 1rem 0;
-border-bottom: 1px solid rgba(11, 15, 20, 0.06);
+border-bottom: 1px solid rgba(255, 255, 255, 0.10);
 margin-bottom: 1rem;
 }
 
@@ -170,13 +176,13 @@ width: auto;
 .navbar-brand .brand-text {
 font-weight: 800;
 font-size: 1.2rem;
-color: #0b0f14;
+color: #ffffff;
 letter-spacing: -0.3px;
 text-transform: uppercase;
 }
 
 .navbar-brand .brand-text span {
-color: #2f5fa8;
+color: #7fa3d6;
 }
 
 .navbar-actions {
@@ -186,7 +192,7 @@ align-items: center;
 }
 
 .navbar-actions .nav-link {
-color: #0b0f14;
+color: rgba(255, 255, 255, 0.7);
 text-decoration: none;
 font-size: 0.82rem;
 font-weight: 600;
@@ -197,12 +203,12 @@ padding: 0.4rem 0;
 }
 
 .navbar-actions .nav-link:hover {
-color: #2f5fa8;
+color: #ffffff;
 }
 
 .navbar-actions .nav-cta {
-background: #0b0f14;
-color: white;
+background: #ffffff;
+color: #0b0f14;
 padding: 0.55rem 1.4rem;
 border-radius: 4px;
 font-weight: 600;
@@ -214,7 +220,7 @@ transition: all 0.25s ease;
 }
 
 .navbar-actions .nav-cta:hover {
-background: #2f5fa8;
+background: #b5522a;
 color: white;
 }
 
@@ -229,7 +235,7 @@ padding: 4rem 1rem;
 display: inline-flex;
 align-items: center;
 gap: 0.6rem;
-color: #6b6f76;
+color: rgba(255, 255, 255, 0.55);
 font-size: 0.72rem;
 font-weight: 600;
 letter-spacing: 2px;
@@ -249,18 +255,18 @@ background: #b5522a;
 font-size: 2.4rem;
 font-weight: 800;
 letter-spacing: -0.5px;
-color: #0b0f14;
+color: #ffffff;
 line-height: 1.2;
 margin-bottom: 0.75rem;
 }
 
 .section-title span {
-color: #2f5fa8;
+color: #7fa3d6;
 }
 
 .section-subtitle {
 font-size: 1.1rem;
-color: #6b6f76;
+color: rgba(255, 255, 255, 0.55);
 font-weight: 400;
 line-height: 1.6;
 max-width: 600px;
@@ -478,12 +484,12 @@ display: inline-flex;
 align-items: center;
 gap: 0.5rem;
 background: transparent;
-color: #0b0f14;
+color: #ffffff;
 padding: 0.8rem 1.9rem;
 border-radius: 4px;
 font-weight: 600;
 font-size: 0.95rem;
-border: 1px solid rgba(11, 15, 20, 0.25);
+border: 1px solid rgba(255, 255, 255, 0.3);
 cursor: pointer;
 text-decoration: none;
 transition: all 0.25s ease;
@@ -491,17 +497,7 @@ font-family: 'Inter', sans-serif;
 }
 
 .btn-secondary:hover {
-background: rgba(11, 15, 20, 0.04);
-border-color: #0b0f14;
-}
-
-.hero-actions .btn-secondary {
-color: #ffffff;
-border-color: rgba(255,255,255,0.35);
-}
-
-.hero-actions .btn-secondary:hover {
-background: rgba(255,255,255,0.08);
+background: rgba(255, 255, 255, 0.08);
 border-color: #ffffff;
 }
 
@@ -653,7 +649,8 @@ display: grid;
 grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 gap: 2rem;
 margin-top: 2rem;
-background: #0b0f14;
+background: linear-gradient(155deg, #131f33 0%, #1a2740 100%);
+border: 1px solid rgba(255, 255, 255, 0.08);
 border-radius: 6px;
 padding: 3rem 2rem;
 position: relative;
@@ -934,7 +931,8 @@ margin-top: 4rem;
 margin-left: -2rem;
 margin-right: -2rem;
 padding: 3.5rem 2rem 1.5rem 2rem;
-background: #0b0f14;
+background: #060b14;
+border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-grid {
@@ -1530,9 +1528,10 @@ Send Message ✉️
 # ============================================================================
 st.markdown('''
 <div class="section-container" id="pro" style="padding-top:0.5rem;">
-<div style="background: #0b0f14;
-border-radius: 6px;
+<div style="background: linear-gradient(155deg, #131f33 0%, #1a2740 100%);
+border: 1px solid rgba(255, 255, 255, 0.08);
 border-top: 3px solid #b5522a;
+border-radius: 6px;
 padding: 3.5rem 2.5rem;
 text-align: center;
 color: white;
