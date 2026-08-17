@@ -12,6 +12,7 @@ PAPER = "#faf9f6"         # warm off-white background
 STEEL = "#2f5fa8"         # primary engineering-blue accent
 GRAPHITE = "#4a5568"      # secondary slate accent
 OXIDE = "#b5522a"         # rust/rebar accent, used sparingly
+CLAY = "#8a6f47"          # compacted-earth/soil accent, for compaction tools
 CONCRETE = "#6b6f76"      # muted body-copy gray
 LINE = "rgba(11,15,20,0.10)"  # hairline border
 
@@ -49,6 +50,16 @@ CARD_STYLES = {
         "title": "Concrete Mix Optimizer",
         "description": "Automate your ACI 211.1 mix proportion calculations. Input design strength, exposure class, and aggregate properties for optimized mix ratios.",
         "link": "https://Concreteoptimizationtool.streamlit.app"
+    },
+    "proctor": {
+        "accent_color": CLAY,
+        "border_accent": CLAY,
+        "icon": "🏗️",
+        "badge": "ASTM D698 / AASHTO T 99",
+        "eyebrow": "Compaction Testing",
+        "title": "Proctor Compaction Calculator",
+        "description": "Determine Maximum Dry Density and Optimum Moisture Content from Standard or Modified Proctor data, assess field compaction, and export branded PDF reports.",
+        "link": "https://proctor-compaction-calculator.streamlit.app"
     }
 }
 
@@ -104,6 +115,14 @@ def get_card_svg(card_key):
             <rect x="20" y="35" width="30" height="30" fill="none" stroke="{accent}" stroke-width="1"/>
             <rect x="70" y="35" width="30" height="30" fill="none" stroke="{accent}" stroke-width="1"/>
             <rect x="120" y="35" width="24" height="30" fill="none" stroke="{accent}" stroke-width="1"/>
+        </svg>''',
+        "proctor": f'''<svg viewBox="0 0 160 120" style="position:absolute; inset:0; width:100%; height:100%; opacity:0.16; pointer-events:none; z-index:0;">
+            <line x1="0" y1="20" x2="160" y2="20" stroke="{accent}" stroke-width="0.5"/>
+            <line x1="0" y1="100" x2="160" y2="100" stroke="{accent}" stroke-width="0.5"/>
+            <line x1="20" y1="0" x2="20" y2="120" stroke="{accent}" stroke-width="0.5"/>
+            <line x1="140" y1="0" x2="140" y2="120" stroke="{accent}" stroke-width="0.5"/>
+            <path d="M 20 95 Q 80 25 140 95" fill="none" stroke="{accent}" stroke-width="1.5"/>
+            <circle cx="80" cy="34" r="4" fill="{accent}"/>
         </svg>'''
     }
     return patterns.get(card_key, "")
