@@ -5,9 +5,9 @@ from datetime import datetime
 
 # Import branding module
 from branding import (
-    CARD_STYLES, 
-    get_card_style, 
-    get_bg_pattern, 
+    CARD_STYLES,
+    get_card_style,
+    get_bg_pattern,
     get_card_data,
     get_card_svg,
     CARD_CSS  # Now this exists in branding.py
@@ -83,7 +83,7 @@ top: 0;
 left: 0;
 right: 0;
 bottom: 0;
-background-image: 
+background-image:
 linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
 linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 background-size: 48px 48px;
@@ -1228,13 +1228,13 @@ Automation_Hub delivers professional-grade tools to increase productivity, ensur
 <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.5rem;">
 <span style="font-size:2rem;">🛠️</span>
 <div>
-<div style="font-weight:700; color:#ffffff; font-size:1.1rem;">4 tools available</div>
+<div style="font-weight:700; color:#ffffff; font-size:1.1rem;">5 tools available</div>
 <div style="font-size:0.8rem; color:rgba(255,255,255,0.5);">Free to try, no lock-in</div>
 </div>
 </div>
 <div class="stat-grid">
 <div class="stat-item">
-<div class="stat-number">4</div>
+<div class="stat-number">5</div>
 <div class="stat-label">Engineering Tools</div>
 </div>
 <div class="stat-item">
@@ -1266,6 +1266,13 @@ Automation_Hub delivers professional-grade tools to increase productivity, ensur
 </div>
 <span style="color:#4caf50; font-size:0.8rem; font-weight:600;">Active</span>
 </div>
+<div class="tool-preview">
+<span class="icon">🛣️</span>
+<div class="info">
+<div class="name">Asphalt Aggregate Proportioning</div>
+<div class="desc">GHA Table 17.3 · Mix Design</div>
+</div>
+<span style="color:#4caf50; font-size:0.8rem; font-weight:600;">Active</span>
 </div>
 </div>
 </div>
@@ -1289,14 +1296,14 @@ Our software spans engineering disciplines, helping you improve project delivery
 """, unsafe_allow_html=True)
 
 # --- Generate Cards ---
-card_keys = ["aashto", "uscs", "concrete", "proctor"]
+card_keys = ["aashto", "uscs", "concrete", "proctor", "aggreblend"]
 
 for key in card_keys:
     data = get_card_data(key)
     style = get_card_style(key)
     pattern = get_bg_pattern(key)
     svg = get_card_svg(key)
-    
+
     card_html = f"""
 <div class="product-card">
 <div class="card-panel" style="{style}">
@@ -1384,7 +1391,7 @@ st.markdown('''
 <div class="stats-grid">
 <div class="glow-orb"></div>
 <div class="stat-item-large">
-<div class="number">4</div>
+<div class="number">5</div>
 <div class="label">Engineering Tools</div>
 </div>
 <div class="stat-divider"></div>
@@ -1490,7 +1497,7 @@ We are the partner of choice for digital delivery and asset analytics.
 <div class="icon">📋</div>
 <div class="text">
 <strong>Committed to standards</strong>
-<span>Full compliance with ASTM D2487, AASHTO M 145, and ACI 211.1.</span>
+<span>Full compliance with ASTM D2487, AASHTO M 145, ACI 211.1, and Ghana Highway Authority Table 17.3.</span>
 </div>
 </div>
 <div class="trust-item">
@@ -1596,6 +1603,7 @@ st.markdown(f'''
 <a href="https://uscs-classification-tool.streamlit.app" target="_blank">USCS Tool</a>
 <a href="https://Concreteoptimizationtool.streamlit.app" target="_blank">Concrete Optimizer</a>
 <a href="https://proctor-compaction-calculator.streamlit.app" target="_blank">Proctor Compaction Calculator</a>
+<a href="https://aggre-blend.streamlit.app" target="_blank">AggreBlend (Asphalt)</a>
 </div>
 <div class="footer-col">
 <h5>Company</h5>
