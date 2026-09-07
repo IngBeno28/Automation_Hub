@@ -50,7 +50,7 @@ CARD_STYLES = {
         "eyebrow": "Mix Design",
         "title": "Concrete Mix Optimizer",
         "description": "Automate your ACI 211.1 mix proportion calculations. Input design strength, exposure class, and aggregate properties for optimized mix ratios.",
-        "link": "https://Concreteoptimizationtool.streamlit.app"
+        "link": "https://enhancedconcretemixdesign.streamlit.app/"
     },
     "proctor": {
         "accent_color": CLAY,
