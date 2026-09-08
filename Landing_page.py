@@ -1228,13 +1228,13 @@ Automation_Hub delivers professional-grade tools to increase productivity, ensur
 <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.5rem;">
 <span style="font-size:2rem;">🛠️</span>
 <div>
-<div style="font-weight:700; color:#ffffff; font-size:1.1rem;">5 tools available</div>
+<div style="font-weight:700; color:#ffffff; font-size:1.1rem;">6 tools available</div>
 <div style="font-size:0.8rem; color:rgba(255,255,255,0.5);">Free to try, no lock-in</div>
 </div>
 </div>
 <div class="stat-grid">
 <div class="stat-item">
-<div class="stat-number">5</div>
+<div class="stat-number">6</div>
 <div class="stat-label">Engineering Tools</div>
 </div>
 <div class="stat-item">
@@ -1274,6 +1274,14 @@ Automation_Hub delivers professional-grade tools to increase productivity, ensur
 </div>
 <span style="color:#4caf50; font-size:0.8rem; font-weight:600;">Active</span>
 </div>
+<div class="tool-preview">
+<span class="icon">⚙️</span>
+<div class="info">
+<div class="name">CBR Test Analyzer</div>
+<div class="desc">BS 1377-4:1990 · Compaction Testing</div>
+</div>
+<span style="color:#4caf50; font-size:0.8rem; font-weight:600;">Active</span>
+</div>
 </div>
 </div>
 </div>
@@ -1296,7 +1304,7 @@ Our software spans engineering disciplines, helping you improve project delivery
 """, unsafe_allow_html=True)
 
 # --- Generate Cards ---
-card_keys = ["aashto", "uscs", "concrete", "proctor", "aggreblend"]
+card_keys = ["aashto", "uscs", "concrete", "proctor", "aggreblend", "cbr"]
 
 for key in card_keys:
     data = get_card_data(key)
@@ -1391,7 +1399,7 @@ st.markdown('''
 <div class="stats-grid">
 <div class="glow-orb"></div>
 <div class="stat-item-large">
-<div class="number">5</div>
+<div class="number">6</div>
 <div class="label">Engineering Tools</div>
 </div>
 <div class="stat-divider"></div>
@@ -1604,6 +1612,7 @@ st.markdown(f'''
 <a href="https://enhancedconcretemixdesign.streamlit.app/" target="_blank">Concrete Optimizer</a>
 <a href="https://proctor-compaction-calculator.streamlit.app" target="_blank">Proctor Compaction Calculator</a>
 <a href="https://aggre-blend.streamlit.app" target="_blank">AggreBlend (Asphalt)</a>
+<a href="https://cbr-test-analyzer.streamlit.app" target="_blank">CBR Test Analyzer</a>
 </div>
 <div class="footer-col">
 <h5>Company</h5>
