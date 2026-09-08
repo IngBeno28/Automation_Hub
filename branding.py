@@ -14,6 +14,7 @@ GRAPHITE = "#4a5568"      # secondary slate accent
 OXIDE = "#b5522a"         # rust/rebar accent, used sparingly
 CLAY = "#8a6f47"          # compacted-earth/soil accent, for compaction tools
 ASPHALT = "#0f766e"       # teal accent, for asphalt/bituminous tools (matches AggreBlend's PDF branding)
+BRASS = "#9c7a2e"         # brass/proving-ring accent, for load-penetration & bearing-ratio testing tools
 CONCRETE = "#6b6f76"      # muted body-copy gray
 LINE = "rgba(11,15,20,0.10)"  # hairline border
 
@@ -71,6 +72,16 @@ CARD_STYLES = {
         "title": "Asphalt Aggregate Proportioning",
         "description": "Blend 2-6 aggregate stockpiles against Ghana Highway Authority Table 17.3 gradation bands. Compare coarse, balanced, and fine trial blends, then export branded PDF reports.",
         "link": "https://aggre-blend.streamlit.app"
+    },
+    "cbr": {
+        "accent_color": BRASS,
+        "border_accent": BRASS,
+        "icon": "⚙️",
+        "badge": "BS 1377-4:1990 · Cl.7",
+        "eyebrow": "Compaction & CBR Testing",
+        "title": "CBR Test Analyzer",
+        "description": "Automate California Bearing Ratio lab reporting to BS 1377-4:1990. Covers Proctor compaction, CBR-compaction specimens, penetration testing, and design CBR — with a full branded PDF report.",
+        "link": "https://cbr-test-analyzer.streamlit.app"
     }
 }
 
@@ -143,6 +154,16 @@ def get_card_svg(card_key):
             <path d="M 15 100 L 45 80 L 75 55 L 105 35 L 145 20" fill="none" stroke="{accent}" stroke-width="1.5"/>
             <circle cx="45" cy="80" r="3" fill="{accent}"/>
             <circle cx="105" cy="35" r="3" fill="{accent}"/>
+        </svg>''',
+        "cbr": f'''<svg viewBox="0 0 160 120" style="position:absolute; inset:0; width:100%; height:100%; opacity:0.16; pointer-events:none; z-index:0;">
+            <line x1="0" y1="20" x2="160" y2="20" stroke="{accent}" stroke-width="0.5"/>
+            <line x1="0" y1="100" x2="160" y2="100" stroke="{accent}" stroke-width="0.5"/>
+            <line x1="25" y1="0" x2="25" y2="120" stroke="{accent}" stroke-width="0.5"/>
+            <line x1="115" y1="0" x2="115" y2="120" stroke="{accent}" stroke-width="0.5"/>
+            <path d="M 25 100 C 55 95, 75 70, 82 15" fill="none" stroke="{accent}" stroke-width="1.5"/>
+            <line x1="82" y1="15" x2="82" y2="55" stroke="{accent}" stroke-width="1.5"/>
+            <line x1="70" y1="15" x2="94" y2="15" stroke="{accent}" stroke-width="1.5"/>
+            <circle cx="82" cy="55" r="3.5" fill="{accent}"/>
         </svg>'''
     }
     return patterns.get(card_key, "")
