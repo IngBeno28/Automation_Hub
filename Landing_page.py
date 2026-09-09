@@ -169,8 +169,9 @@ text-decoration: none;
 }
 
 .navbar-brand img {
-height: 40px;
+height: 64px;
 width: auto;
+object-fit: contain;
 }
 
 .navbar-brand .brand-text {
@@ -1138,6 +1139,7 @@ st.markdown(f"<style>{CARD_CSS}</style>", unsafe_allow_html=True)
 # --- LOAD LOGO ---
 def load_logo():
     logo_paths = [
+        "assets/automation_hub_icon.png",   # tight-cropped icon, no baked-in wordmark/tagline — reads clearly at navbar size
         "assets/automation_hub_logo.png",
         "assets/logo.png",
         "assets/Automation_Hub_Logo.png"
