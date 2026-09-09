@@ -156,7 +156,7 @@ z-index: 1;
 display: flex;
 justify-content: space-between;
 align-items: center;
-padding: 1rem 0;
+padding: 1.1rem 0;
 border-bottom: 1px solid rgba(255, 255, 255, 0.10);
 margin-bottom: 1rem;
 }
@@ -169,7 +169,7 @@ text-decoration: none;
 }
 
 .navbar-brand img {
-height: 64px;
+height: 92px;
 width: auto;
 object-fit: contain;
 }
